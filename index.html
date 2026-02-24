@@ -516,7 +516,7 @@ body{display:flex;align-items:center;justify-content:center;}
         HARD MODE
       </label>
     </div>
-    <div id="hard-desc" style="font-family:'Press Start 2P',monospace;font-size:7px;color:#306230;margin-top:6px;text-align:center;line-height:2;">ハイライトなし / 商材2倍 / 充填100-150%</div>
+    <div id="hard-desc" style="font-family:'Press Start 2P',monospace;font-size:7px;color:#306230;margin-top:6px;text-align:center;line-height:2;">ハイライトなし</div>
   </div>
 </div>
 
@@ -901,14 +901,10 @@ function advanceBatchCursors(){
 }
 
 // ── Player ──
-const P={x:4.5*T,y:15.5*T,tx:null,ty:null,spd:4.0,face:1,hasCart:true};
+const P={x:4.5*T,y:15.5*T,tx:null,ty:null,spd:8.0,face:1,hasCart:true};
 
 // ── Bots ──
 const bots=[];
-const BOT_SPECS=[
-  {e:1,spd:3.5,cart:true,n:3},
-  {e:2,spd:4.5,cart:false,n:2},
-];
 function floorTiles(){
   const tiles=[];
   for(let r=0;r<MROWS;r++)for(let c=0;c<MCOLS;c++)if(map[r][c]!==SHELF)tiles.push({r,c});
@@ -918,9 +914,12 @@ _floorTiles=null;
 function initBots(){
   _floorTiles=floorTiles();
   bots.length=0;
-  for(const {e,spd,cart,n} of BOT_SPECS) for(let i=0;i<n;i++){
+  const specs=hardMode
+    ? [{e:1,spd:7.0,cart:true,n:5},{e:2,spd:9.0,cart:false,n:4}]
+    : [{e:1,spd:7.0,cart:true,n:3},{e:2,spd:9.0,cart:false,n:2}];
+  for(const {e,spd,cart,n} of specs) for(let i=0;i<n;i++){
     const t=rrc(_floorTiles);
-    bots.push({e,spd,cart,x:t.c*T+T/2,y:t.r*T+T/2,tx:null,ty:null,timer:rri(60,180),face:1});
+    bots.push({e,spd,cart,x:t.c*T+T/2,y:t.r*T+T/2,tx:null,ty:null,timer:rri(30,90),face:1});
   }
 }
 
@@ -928,7 +927,7 @@ function initBots(){
 function botPickTarget(b){
   const t=rrc(_floorTiles||floorTiles());
   b.tx=t.c*T+T/2; b.ty=t.r*T+T/2;
-  b.timer=rri(80,220);
+  b.timer=rri(40,110);
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -965,55 +964,81 @@ function moveEnt(e,isBotMoving=false){
 }
 
 // ══════════════════════════════════════════════════════════════
-//  PIXEL ART SPRITES  (11w × 11h for more detail)
+//  PIXEL ART SPRITES — chibi cute style, PX_SIZE=2
 // ══════════════════════════════════════════════════════════════
-const PX_SIZE=4;
-// Player: person pushing cart (facing right by default)
-// Cart is drawn AT the front (right side) of the character
-const SPR_PLAYER=[ // 9w x 10h
-  [0,0,0,1,1,1,0,0,0],
-  [0,0,1,3,3,3,1,0,0],
-  [0,0,1,3,2,3,1,0,0],
-  [0,0,0,1,1,1,0,0,0],
-  [0,1,2,2,2,1,0,0,0],
-  [0,1,3,2,3,1,1,2,1],  // arms reaching forward
-  [0,1,2,2,2,1,2,2,1],
-  [0,0,1,0,1,0,0,0,0],
-  [0,0,1,0,1,0,0,0,0],
+const PX_SIZE=3;
+// Colors: 1=darkest outline, 2=body/dark, 3=accent/medium, 4=face/lightest
+
+// ── Player: cute chibi worker with cap ── 13w × 17h
+const SPR_PLAYER=[
+  [0,0,0,1,2,2,2,2,2,1,0,0,0],  //  0 hat top
+  [0,0,1,2,2,2,2,2,2,2,1,0,0],  //  1 hat
+  [0,1,1,1,1,1,1,1,1,1,1,1,0],  //  2 hat brim
+  [0,0,1,4,4,4,4,4,4,4,1,0,0],  //  3 head top
+  [0,1,4,4,4,4,4,4,4,4,4,1,0],  //  4 head
+  [0,1,4,1,1,4,4,4,1,1,4,1,0],  //  5 eyes (square dot eyes)
+  [0,1,4,4,4,4,4,4,4,4,4,1,0],  //  6 face
+  [0,1,4,4,3,4,3,4,3,4,4,1,0],  //  7 blush + tiny smile dots
+  [0,0,1,4,4,4,4,4,4,4,1,0,0],  //  8 chin
+  [0,0,0,1,2,2,2,2,1,0,0,0,0],  //  9 collar
+  [0,0,1,2,2,2,2,2,2,1,0,0,0],  // 10 body
+  [0,0,1,2,2,4,2,2,2,1,1,2,1],  // 11 body + right arm grip start
+  [0,0,1,2,2,2,2,2,2,1,2,2,1],  // 12 arm pushing forward
+  [0,0,0,1,1,2,2,1,1,0,0,0,0],  // 13 hips
+  [0,0,0,1,2,1,0,1,2,1,0,0,0],  // 14 legs
+  [0,0,0,1,2,1,0,1,2,1,0,0,0],  // 15 legs
+  [0,0,0,1,1,0,0,0,1,1,0,0,0],  // 16 shoes
 ];
-// Cart sprite (pushed in front of player)
-const SPR_CART=[  // 7w x 7h — taller box shape
-  [0,1,1,1,1,1,0],
-  [1,2,3,3,3,2,1],
-  [1,2,3,3,3,2,1],
-  [1,2,2,2,2,2,1],
-  [1,1,1,1,1,1,1],
-  [0,0,1,0,1,0,0],
-  [0,0,1,0,1,0,0],
+
+// ── Cart ── 11w × 9h
+const SPR_CART=[
+  [0,1,1,1,1,1,1,1,1,1,0],  // 0 top rail
+  [1,4,4,4,4,4,4,4,4,4,1],  // 1 inside
+  [1,4,3,3,3,3,3,3,3,4,1],  // 2 items
+  [1,4,3,3,3,3,3,3,3,4,1],  // 3 items
+  [1,4,4,4,4,4,4,4,4,4,1],  // 4 inside
+  [1,2,2,2,2,2,2,2,2,2,1],  // 5 base
+  [1,1,1,1,1,1,1,1,1,1,1],  // 6 bottom bar
+  [0,0,1,0,0,0,0,0,1,0,0],  // 7 wheels
+  [0,0,1,0,0,0,0,0,1,0,0],  // 8 wheels
 ];
-// Restock bot: boxy robot pushing cart
-const SPR_BOT1=[  // 9w x 10h
-  [0,1,1,1,1,1,0,0,0],
-  [1,2,1,1,1,2,1,0,0],
-  [1,2,3,1,3,2,1,0,0],
-  [1,1,1,1,1,1,1,0,0],
-  [0,1,2,2,2,1,0,0,0],
-  [1,1,2,1,2,1,1,2,1],
-  [0,1,1,0,1,1,2,2,1],
-  [0,0,1,0,1,0,0,0,0],
-  [0,0,1,0,1,0,0,0,0],
+
+// ── Restock bot: cute round robot with cart ── 12w × 16h
+const SPR_BOT1=[
+  [0,0,0,1,2,2,2,2,2,1,0,0],  //  0 head top dome
+  [0,0,1,2,2,2,2,2,2,2,1,0],  //  1 head
+  [0,1,2,2,2,2,2,2,2,2,2,1],  //  2 head wide
+  [0,1,2,1,3,2,2,3,1,2,2,1],  //  3 camera eyes
+  [0,1,2,2,2,2,2,2,2,2,2,1],  //  4 face
+  [0,1,2,3,2,1,1,2,3,2,2,1],  //  5 LEDs + mouth line
+  [0,0,1,2,2,2,2,2,2,2,1,0],  //  6 chin
+  [0,0,0,1,2,2,2,2,1,0,0,0],  //  7 neck
+  [0,0,1,2,2,2,2,2,2,1,0,0],  //  8 body top
+  [0,1,2,2,3,2,2,2,2,2,1,0],  //  9 body badge
+  [1,2,2,2,2,2,2,2,2,2,2,1],  // 10 arms out
+  [0,0,1,2,2,2,2,2,2,1,0,0],  // 11 body lower
+  [0,0,0,1,2,2,2,2,1,0,0,0],  // 12 waist
+  [0,0,0,1,2,1,0,1,2,1,0,0],  // 13 legs
+  [0,0,0,1,2,1,0,1,2,1,0,0],  // 14 legs
+  [0,0,0,1,1,1,0,1,1,1,0,0],  // 15 feet
 ];
-// Picker bot: smaller agile bot
-const SPR_BOT2=[  // 7w x 9h
-  [0,1,1,1,1,1,0],
-  [1,1,1,1,1,1,1],
-  [0,1,3,2,3,1,0],
-  [0,0,1,1,1,0,0],
-  [0,1,2,1,2,1,0],
-  [1,1,2,2,2,1,1],
-  [0,1,2,1,2,1,0],
-  [0,0,1,0,1,0,0],
-  [0,0,1,0,1,0,0],
+
+// ── Picker bot: small cute robot ── 10w × 14h
+const SPR_BOT2=[
+  [0,0,1,2,2,2,2,2,1,0],  //  0 head top
+  [0,1,2,2,2,2,2,2,2,1],  //  1 head
+  [1,2,2,1,2,2,1,2,2,1],  //  2 dot eyes
+  [1,2,2,2,2,2,2,2,2,1],  //  3 face
+  [1,2,4,2,1,1,2,4,2,1],  //  4 highlights + mouth
+  [0,1,2,2,2,2,2,2,1,0],  //  5 chin
+  [0,0,1,1,2,2,1,1,0,0],  //  6 neck
+  [0,1,2,2,2,2,2,2,1,0],  //  7 body
+  [1,2,2,3,2,2,2,2,2,1],  //  8 body + arm
+  [0,1,2,2,2,2,2,2,1,0],  //  9 body lower
+  [0,0,1,2,2,2,2,1,0,0],  // 10 waist
+  [0,0,1,2,1,0,1,2,1,0],  // 11 legs
+  [0,0,1,2,1,0,1,2,1,0],  // 12 legs
+  [0,0,1,1,1,0,1,1,1,0],  // 13 feet
 ];
 const GB_PAL=[GB0,GB1,GB2,GB3];
 function drawSprite(ctx,spr,x,y,flipH=false){
@@ -1071,15 +1096,109 @@ function drawItemShape(cv,code,size){
 }
 
 // ══════════════════════════════════════════════════════════════
+//  STATIC MAP CACHE — drawn once, blitted each frame
+// ══════════════════════════════════════════════════════════════
+let floorCacheCanvas=null, floorCacheDirty=true;
+
+function buildFloorCache(){
+  const CW=MCOLS*T, CH=MROWS*T;
+  if(!floorCacheCanvas) floorCacheCanvas=document.createElement('canvas');
+  floorCacheCanvas.width=CW; floorCacheCanvas.height=CH;
+  const fc=floorCacheCanvas.getContext('2d');
+  fc.imageSmoothingEnabled=false;
+
+  // Floor tiles
+  for(let r=0;r<MROWS;r++){
+    for(let c=0;c<MCOLS;c++){
+      const x=c*T,y=r*T,t=map[r][c];
+      if(t===SHELF) continue;
+      let col=GBbg;
+      if(t===RETURN_ZONE) col='#7a9c08';
+      else if(t===EMPTY_ZONE) col='#6e8c07';
+      else if(t===ENTRANCE) col='#8bac0f';
+      else if(t===EXIT_ZONE) col='#4a7a04';
+      fc.fillStyle=col; fc.fillRect(x,y,T,T);
+      fc.fillStyle='rgba(15,56,15,.12)';
+      for(let dy=8;dy<T;dy+=16) for(let dx=8;dx<T;dx+=16) fc.fillRect(x+dx,y+dy,2,2);
+      if(c===0&&ROW_LTR[r]){
+        fc.fillStyle=GB1; fc.font=`700 ${T*.22|0}px '${PX}'`;
+        fc.textAlign='center'; fc.textBaseline='middle';
+        fc.fillText(ROW_LTR[r],x+T/2,y+T/2);
+      }
+      if(r===0&&c>=1&&c<=9){
+        fc.fillStyle=GB1; fc.font=`${T*.15|0}px '${PX}'`;
+        fc.textAlign='center'; fc.textBaseline='middle';
+        fc.fillText(COL_NUMS[c-1],x+T/2,y+T/2);
+      }
+    }
+  }
+  // Shelf tiles (static — no pulse)
+  for(const [r] of ROW_CFG){
+    for(let c=1;c<=9;c++){
+      const x=c*T,y=r*T;
+      const shelf=SMAP[`${r},${c}`];
+      fc.fillStyle=GB1; fc.fillRect(x,y,T,T);
+      fc.fillStyle=GB0;
+      fc.fillRect(x,y,T,2);
+      for(let i=1;i<4;i++){fc.fillStyle=GB0;fc.fillRect(x,y+i*(T/4),T,2);}
+      fc.fillRect(x,y+T-2,T,2);
+      fc.fillRect(x,y,2,T); fc.fillRect(x+T-2,y,2,T);
+      fc.fillStyle=GB2; fc.fillRect(x+2,y+2,T-4,2);
+      if(shelf){
+        fc.fillStyle=GB3;
+        fc.font=`900 ${T*.42|0}px '${PX}'`;
+        fc.textAlign='center'; fc.textBaseline='middle';
+        fc.fillText(shelf.ltr,x+T/2,y+T*.33);
+        fc.fillStyle=GB2;
+        fc.font=`${T*.18|0}px '${PX}'`;
+        fc.fillText(String(shelf.colNum/100|0).padStart(2,'0'),x+T/2,y+T*.72);
+      }
+    }
+  }
+  // Zone labels
+  fc.save(); fc.textAlign='center'; fc.textBaseline='middle';
+  const zr16=16*T;
+  {const zx=1*T,zw=3*T;
+   fc.fillStyle=GB0; fc.font=`bold ${T*.38|0}px '${PX}'`;
+   fc.fillText('回収',zx+zw/2,zr16+T*.32);
+   fc.font=`bold ${T*.2|0}px '${PX}'`;
+   fc.fillText('ゾーン',zx+zw/2,zr16+T*.72);}
+  {const zx=4*T,zw=3*T;
+   fc.fillStyle=GB0; fc.font=`bold ${T*.38|0}px '${PX}'`;
+   fc.fillText('出入口',zx+zw/2,zr16+T*.32);
+   fc.font=`bold ${T*.2|0}px '${PX}'`;
+   fc.fillText('EXIT',zx+zw/2,zr16+T*.72);}
+  {const zx=7*T,zw=3*T;
+   fc.fillStyle=GB0; fc.font=`bold ${T*.28|0}px '${PX}'`;
+   fc.fillText('空コンテナ',zx+zw/2,zr16+T*.32);
+   fc.font=`bold ${T*.2|0}px '${PX}'`;
+   fc.fillText('ゾーン',zx+zw/2,zr16+T*.72);}
+  {const zx=4*T,zw=3*T,zy=17*T;
+   fc.fillStyle=GB0; fc.font=`bold ${T*.22|0}px '${PX}'`;
+   fc.fillText('業務終了',zx+zw/2,zy+T*.35);
+   fc.font=`bold ${T*.16|0}px '${PX}'`;
+   fc.fillText('ここを通過',zx+zw/2,zy+T*.72);}
+  fc.restore();
+  floorCacheDirty=false;
+}
+// Rebuild cache after Google Font loads
+document.fonts.ready.then(()=>{floorCacheDirty=true;});
+
+
+
+// ══════════════════════════════════════════════════════════════
 //  MAP RENDERING
 // ══════════════════════════════════════════════════════════════
 const cv=document.getElementById('c');
 const ctx=cv.getContext('2d');
 ctx.imageSmoothingEnabled=false;
-camX=0,camY=0,pulseTick=0;
-
 function renderMap(){
-  pulseTick+=0.05;
+  if(floorCacheDirty) buildFloorCache();
+
+  // Only pulse when there's a target and not in hard mode
+  const tc=bidx<batch.length?batch[bidx].code:null;
+  if(tc&&!hardMode) pulseTick+=0.05;
+
   const W=cv.width,H=cv.height;
   const hudH=document.getElementById('hud').offsetHeight||68;
   const viewH=H-hudH;
@@ -1095,120 +1214,31 @@ function renderMap(){
 
   ctx.save();ctx.translate(-camX|0,-camY|0);
 
-  const tc=bidx<batch.length?batch[bidx].code:null;
+  // Blit static map cache
+  ctx.drawImage(floorCacheCanvas,0,0);
 
-  for(let r=0;r<MROWS;r++){
-    for(let c=0;c<MCOLS;c++){
-      const x=c*T,y=r*T,t=map[r][c];
-
-      if(t===SHELF){
-        const shelf=SMAP[`${r},${c}`];
-        // Shelf body
-        ctx.fillStyle=GB1;ctx.fillRect(x,y,T,T);
-        // Shelf horizontal dividers (3 lines = looks like drawers)
-        ctx.fillStyle=GB0;
-        ctx.fillRect(x,y,T,2);
-        for(let i=1;i<4;i++){ctx.fillStyle=GB0;ctx.fillRect(x,y+i*(T/4),T,2);}
-        ctx.fillRect(x,y+T-2,T,2);
-        ctx.fillRect(x,y,2,T);ctx.fillRect(x+T-2,y,2,T);
-
-        // Front edge highlight
-        ctx.fillStyle=GB2;ctx.fillRect(x+2,y+2,T-4,2);
-
-        if(shelf){
-          // Letter (big)
-          ctx.fillStyle=GB3;
-          ctx.font=`900 ${T*.42|0}px '${PX}'`;
-          ctx.textAlign='center';ctx.textBaseline='middle';
-          ctx.fillText(shelf.ltr,x+T/2,y+T*.33);
-          // 棚番号: A10 形式 (col番号2桁)
-          ctx.fillStyle=GB2;
-          ctx.font=`${T*.18|0}px '${PX}'`;
-          ctx.fillText(String(shelf.colNum/100|0).padStart(2,'0'),x+T/2,y+T*.72);
-
-          // Target highlight — only the exact shelf containing the scanner's BOX
-          // Hidden in hard mode (even with scanner held)
-          if(tc&&!hardMode){
-            const targetBox=getTargetBoxLabel();
-            const isTargetShelf = targetBox &&
-              shelf.drawers.some(dr=>dr.label===targetBox);
-            if(isTargetShelf){
-              const a=.28+.18*Math.sin(pulseTick*3);
-              ctx.fillStyle=`rgba(155,188,15,${a})`;ctx.fillRect(x,y,T,T);
-              ctx.strokeStyle=GB3;ctx.lineWidth=3;
-              ctx.strokeRect(x+2,y+2,T-4,T-4);
-              ctx.fillStyle=GB3;
-              ctx.font=`${T*.22|0}px serif`;
-              ctx.textAlign='center';ctx.textBaseline='top';
-              ctx.fillText('▼',x+T/2,y+2);
-            }
+  // Pulse overlay on target shelf only
+  if(tc&&!hardMode){
+    const targetBox=getTargetBoxLabel();
+    if(targetBox){
+      for(const [r] of ROW_CFG){
+        for(let c=1;c<=9;c++){
+          const shelf=SMAP[`${r},${c}`];
+          if(shelf&&shelf.drawers.some(dr=>dr.label===targetBox)){
+            const x=c*T,y=r*T;
+            const a=.28+.18*Math.sin(pulseTick*3);
+            ctx.fillStyle=`rgba(155,188,15,${a})`;ctx.fillRect(x,y,T,T);
+            ctx.strokeStyle=GB3;ctx.lineWidth=3;
+            ctx.strokeRect(x+2,y+2,T-4,T-4);
+            ctx.fillStyle=GB3;
+            ctx.font=`${T*.22|0}px serif`;
+            ctx.textAlign='center';ctx.textBaseline='top';
+            ctx.fillText('▼',x+T/2,y+2);
           }
-        }
-      } else {
-        // Floor — all same color (#10: no special aisle colors for left/right walls)
-        let fc=GBbg;
-        if(t===RETURN_ZONE) fc='#7a9c08';
-        else if(t===EMPTY_ZONE) fc='#6e8c07';
-        else if(t===ENTRANCE) fc='#8bac0f';
-        else if(t===EXIT_ZONE) fc='#4a7a04';
-        ctx.fillStyle=fc;ctx.fillRect(x,y,T,T);
-
-        // Floor dot pattern
-        ctx.fillStyle='rgba(15,56,15,.12)';
-        for(let dy=8;dy<T;dy+=16)for(let dx=8;dx<T;dx+=16)
-          ctx.fillRect(x+dx,y+dy,2,2);
-
-        // ── ゾーンラベル: タイルループ外で描くため、ここでは何もしない ──
-        // （下のzone pass で描画）
-        // Row letter on left aisle (col 0)
-        if(c===0&&ROW_LTR[r]){
-          ctx.fillStyle=GB1;ctx.font=`700 ${T*.22|0}px '${PX}'`;
-          ctx.textAlign='center';ctx.textBaseline='middle';
-          ctx.fillText(ROW_LTR[r],x+T/2,y+T/2);
-        }
-        // Col numbers on top aisle (row 0)
-        if(r===0&&c>=1&&c<=9){
-          ctx.fillStyle=GB1;ctx.font=`${T*.15|0}px '${PX}'`;
-          ctx.textAlign='center';ctx.textBaseline='middle';
-          ctx.fillText(COL_NUMS[c-1],x+T/2,y+T/2);
         }
       }
     }
   }
-
-  // ── ゾーンラベル: 全タイル描画後に上書き、各3タイルに1つ大きく ──
-  ctx.save();
-  ctx.textAlign='center';ctx.textBaseline='middle';
-  const zr16=16*T;
-  // 回収ゾーン c1-3
-  {const zx=1*T,zw=3*T;
-   ctx.fillStyle=GB0;
-   ctx.font=`bold ${T*.38|0}px '${PX}'`;
-   ctx.fillText('回収',zx+zw/2,zr16+T*.32);
-   ctx.font=`bold ${T*.2|0}px '${PX}'`;
-   ctx.fillText('ゾーン',zx+zw/2,zr16+T*.72);}
-  // 出入口 c4-6
-  {const zx=4*T,zw=3*T;
-   ctx.fillStyle=GB0;
-   ctx.font=`bold ${T*.38|0}px '${PX}'`;
-   ctx.fillText('出入口',zx+zw/2,zr16+T*.32);
-   ctx.font=`bold ${T*.2|0}px '${PX}'`;
-   ctx.fillText('EXIT',zx+zw/2,zr16+T*.72);}
-  // 空コンテナ c7-9
-  {const zx=7*T,zw=3*T;
-   ctx.fillStyle=GB0;
-   ctx.font=`bold ${T*.28|0}px '${PX}'`;
-   ctx.fillText('空コンテナ',zx+zw/2,zr16+T*.32);
-   ctx.font=`bold ${T*.2|0}px '${PX}'`;
-   ctx.fillText('ゾーン',zx+zw/2,zr16+T*.72);}
-  // 業務終了ゾーン row17 c4-6（出入口の真下）
-  {const zx=4*T,zw=3*T,zy=17*T;
-   ctx.fillStyle=GB0;
-   ctx.font=`bold ${T*.22|0}px '${PX}'`;
-   ctx.fillText('業務終了',zx+zw/2,zy+T*.35);
-   ctx.font=`bold ${T*.16|0}px '${PX}'`;
-   ctx.fillText('ここを通過',zx+zw/2,zy+T*.72);}
-  ctx.restore();
 
   // Bots
   for(const b of bots){
@@ -1217,9 +1247,8 @@ function renderMap(){
     const bx=b.x-sw/2, by=b.y-sh;
     drawSprite(ctx,spr,bx,by,b.face<0);
     if(b.cart){
-      // Cart drawn in front of bot
       const cw=SPR_CART[0].length*PX_SIZE, ch=SPR_CART.length*PX_SIZE;
-      const cartX=b.face>0 ? b.x+sw/2-4 : b.x-sw/2-cw+4;
+      const cartX=b.face>0 ? b.x+sw/2-2 : b.x-sw/2-cw+2;
       drawSprite(ctx,SPR_CART,cartX,b.y-ch,false);
     }
   }
@@ -1235,15 +1264,15 @@ function renderMap(){
 
   // Player shadow
   ctx.fillStyle='rgba(15,56,15,.25)';
-  for(let i=-12;i<=12;i+=4)ctx.fillRect(P.x+i-2,P.y+2,4,4);
+  for(let i=-10;i<=10;i+=4)ctx.fillRect(P.x+i-2,P.y+2,4,3);
 
-  // Player sprite + cart (#2)
+  // Player sprite + cart
   const pw=SPR_PLAYER[0].length*PX_SIZE, ph=SPR_PLAYER.length*PX_SIZE;
   const px=P.x-pw/2, py=P.y-ph;
   drawSprite(ctx,SPR_PLAYER,px,py,P.face<0);
   if(P.hasCart){
     const cw=SPR_CART[0].length*PX_SIZE, ch=SPR_CART.length*PX_SIZE;
-    const cartX=P.face>0 ? P.x+pw/2-4 : P.x-pw/2-cw+4;
+    const cartX=P.face>0 ? P.x+pw/2-2 : P.x-pw/2-cw+2;
     drawSprite(ctx,SPR_CART,cartX,P.y-ch,false);
   }
 
@@ -1261,15 +1290,19 @@ function initScanlines(){
 }
 
 // ══════════════════════════════════════════════════════════════
-//  GAME LOOP
+//  GAME LOOP — 30fps cap for battery
 // ══════════════════════════════════════════════════════════════
 running=false;
-function loop(){
+let _lastRaf=0;
+let drawerPhysicsActive=true;
+function loop(now){
   if(!running)return;
+  requestAnimationFrame(loop);
+  if(now-_lastRaf<31)return; // ~30fps cap
+  _lastRaf=now;
   // Move player
   const arr=moveEnt(P);
   if(arr&&pendingShelf){
-    // 到着後も正面チェック（念のため）
     const ar=accessRow(pendingShelf.row);
     const atx=pendingShelf.col*T+T/2, aty=ar*T+T/2;
     if(Math.hypot(P.x-atx,P.y-aty)<T*0.55){openShelfPanel(pendingShelf);}
@@ -1277,15 +1310,14 @@ function loop(){
   }
   // Check zone triggers
   if(!panelOpen&&!drawerOpen)checkZoneTrigger();
-  // Bots — tile-based movement like player
+  // Bots
   for(const b of bots){
     b.timer--;
     const ba=moveEnt(b,true);
     if(ba||b.timer<=0||!b.tx) botPickTarget(b);
   }
   if(!panelOpen&&!drawerOpen)renderMap();
-  if(drawerOpen)renderDrawerCanvas();
-  requestAnimationFrame(loop);
+  if(drawerOpen&&(drawerPhysicsActive||dragIdx>=0))renderDrawerCanvas();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1299,16 +1331,16 @@ function checkZoneTrigger(){
   exitTimer=0;
   const t=map[tr][tc];
   if(t===RETURN_ZONE&&gameState===GS.RETURNING){
-    gameState=GS.DEPOSITED;zoneCooldown=120;
+    gameState=GS.DEPOSITED;zoneCooldown=60;
     show('wf-return');
   }
   if(t===EMPTY_ZONE&&gameState===GS.DEPOSITED){
-    gameState=GS.GETTING_EMPTY;zoneCooldown=120;
+    gameState=GS.GETTING_EMPTY;zoneCooldown=60;
     show('wf-empty');
   }
   if(t===ENTRANCE){
     exitTimer++;
-    if(exitTimer===180) showExitConfirm(); // 出入口に3秒で確認
+    if(exitTimer===90) showExitConfirm(); // 出入口に3秒で確認
   }
   if(t===EXIT_ZONE){
     // 業務終了ゾーンに踏み込んだら即座に確認
@@ -1349,9 +1381,10 @@ document.getElementById('wf-exit-no').onclick=()=>{
   P.x=5*T+T/2; P.y=16*T+T/2;
   P.tx=null; P.ty=null;
   exitTimer=0;
-  zoneCooldown=180; // 3秒間ゾーントリガー無効
+  zoneCooldown=90; // 3秒間ゾーントリガー無効
   running=true;
-  loop();
+  _lastRaf=0;
+  requestAnimationFrame(loop);
 };
 document.getElementById('wf-end-restart').onclick=()=>{
   hide('wf-end');
@@ -1578,18 +1611,20 @@ function openDrawerPanel(dr,shelf){
   hide('shelf-panel');panelOpen=false;
   document.getElementById('scan-btn').style.display='none';
   document.getElementById('voice-btn').style.display='none';
-  document.getElementById('bgm-wrap').style.display='none'; // #6
+  document.getElementById('bgm-wrap').style.display='none';
   updateDrawerScannerBar();
   show('drawer-panel');
-  requestAnimationFrame(()=>{
-    const wrap=document.getElementById('dp-canvas-wrap');
-    const wW=Math.max(wrap.clientWidth,window.innerWidth);
-    const wH=Math.max(wrap.clientHeight,200);
-    dpCv.width=wW;dpCv.height=wH;
-    dpCv.style.width=wW+'px';dpCv.style.height=wH+'px';
-    initPhysItems(dr,wW,wH);
-    if(dr.items.length===0)show('dp-empty');
-  });
+  // offsetWidth/Height available synchronously after show()
+  const wrap=document.getElementById('dp-canvas-wrap');
+  const wW=wrap.offsetWidth||window.innerWidth;
+  const wH=Math.max(wrap.offsetHeight,200);
+  dpCv.width=wW;dpCv.height=wH;
+  dpCv.style.width=wW+'px';dpCv.style.height=wH+'px';
+  drawerBgCanvas=null; // invalidate bg cache for new size
+  initPhysItems(dr,wW,wH);
+  drawerPhysicsActive=true;
+  if(dr.items.length===0)show('dp-empty');
+  renderDrawerCanvas();
 }
 
 function initPhysItems(dr,W,H){
@@ -1623,24 +1658,34 @@ function initPhysItems(dr,W,H){
   }
 }
 
+let drawerBgCanvas=null,drawerBgW=0,drawerBgH=0;
+function ensureDrawerBg(W,H){
+  if(drawerBgCanvas&&drawerBgW===W&&drawerBgH===H)return;
+  if(!drawerBgCanvas)drawerBgCanvas=document.createElement('canvas');
+  drawerBgCanvas.width=W;drawerBgCanvas.height=H;
+  drawerBgW=W;drawerBgH=H;
+  const dc=drawerBgCanvas.getContext('2d');
+  dc.fillStyle='#2a1e12';dc.fillRect(0,0,W,H);
+  dc.strokeStyle='rgba(255,255,255,.04)';dc.lineWidth=1;
+  for(let y=0;y<H;y+=10){
+    dc.beginPath();dc.moveTo(0,y);dc.lineTo(W,y+Math.sin(y*.3)*3);dc.stroke();
+  }
+  dc.fillStyle='rgba(0,0,0,.5)';
+  dc.fillRect(0,0,5,H);dc.fillRect(W-5,0,5,H);
+  dc.fillRect(0,0,W,5);dc.fillRect(0,H-5,W,5);
+}
+
 function renderDrawerCanvas(){
   const W=dpCv.width,H=dpCv.height;
   dpCtx.clearRect(0,0,W,H);
   if(W===0||H===0)return;
 
-  // Drawer interior: dark wood-ish
-  dpCtx.fillStyle='#2a1e12';dpCtx.fillRect(0,0,W,H);
-  // Wood grain
-  dpCtx.strokeStyle='rgba(255,255,255,.04)';dpCtx.lineWidth=1;
-  for(let y=0;y<H;y+=10){
-    dpCtx.beginPath();dpCtx.moveTo(0,y);dpCtx.lineTo(W,y+Math.sin(y*.3)*3);dpCtx.stroke();
-  }
-  // Inner edge shadows
-  dpCtx.fillStyle='rgba(0,0,0,.5)';
-  dpCtx.fillRect(0,0,5,H);dpCtx.fillRect(W-5,0,5,H);
-  dpCtx.fillRect(0,0,W,5);dpCtx.fillRect(0,H-5,W,5);
+  // Blit cached drawer background
+  ensureDrawerBg(W,H);
+  dpCtx.drawImage(drawerBgCanvas,0,0);
 
-  // Apply physics (friction)
+  // Apply physics (friction) + detect idle
+  let anyMoving=false;
   for(const item of physItems){
     if(!item.dragging){
       item.x+=item.vx;item.y+=item.vy;item.rot+=item.vrot;
@@ -1648,8 +1693,12 @@ function renderDrawerCanvas(){
       const hw=item.iw/2+4,hh=item.ih/2+4;
       item.x=Math.max(hw,Math.min(W-hw,item.x));
       item.y=Math.max(hh,Math.min(H-hh,item.y));
+      if(Math.abs(item.vx)>.1||Math.abs(item.vy)>.1||Math.abs(item.vrot)>.003) anyMoving=true;
+    } else {
+      anyMoving=true;
     }
   }
+  drawerPhysicsActive=anyMoving;
 
   // Draw items sorted by z
   const tc=bidx<batch.length?batch[bidx].code:null;
@@ -1818,6 +1867,8 @@ document.getElementById('dpc-ok').onclick=()=>{
   if(drItemIdx>=0)drawer.items.splice(drItemIdx,1);
   // Remove from physics
   physItems.splice(physIdx,1);
+  drawerPhysicsActive=true; // force canvas re-render
+  renderDrawerCanvas();     // immediate redraw so item vanishes instantly
   container.push(code);
   hide('dp-confirm');selItemData=null;
   if(code===tc){
@@ -2010,8 +2061,9 @@ document.getElementById('intro-go').onclick=()=>{
   gameState=GS.PICKING;
   running=true;
   resize();
+  _lastRaf=0;
   renderMap();
-  loop();
+  requestAnimationFrame(loop);
 };
 </script>
 </body>
