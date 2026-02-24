@@ -1228,7 +1228,11 @@ function showEndStats(){
 document.getElementById('wf-exit-yes').onclick=showEndStats;
 document.getElementById('wf-exit-no').onclick=()=>{
   hide('wf-exit-confirm');
+  // プレイヤーを業務終了ゾーンの1つ上（出入口row16の中央）へ押し戻す
+  P.x=5*T+T/2; P.y=16*T+T/2;
+  P.tx=null; P.ty=null;
   exitTimer=0;
+  zoneCooldown=180; // 3秒間ゾーントリガー無効
   running=true;
   loop();
 };
