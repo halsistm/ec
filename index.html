@@ -1883,7 +1883,7 @@ document.getElementById('dpc-scan').onclick=()=>{
     iconEl.textContent='✗';
     matchEl.textContent='商材がちがいます';
     matchEl.className='ng';
-    totalMisses++;
+    // ミスはコンテナに入れた時点で記録（スキャン時点ではエラーにしない）
   }
   hide('dp-pre-scan');
   show('dp-confirm');
@@ -1892,6 +1892,11 @@ document.getElementById('dpc-scan').onclick=()=>{
 document.getElementById('dpc-ok').onclick=()=>{
   if(!selItemData)return;
   const{physIdx,code,drawer}=selItemData;
+  // 違う商材をコンテナに入れた場合はエラー（ミス）
+  if(!selItemData.scanned){
+    totalMisses++;
+    showToast('違う商材です！','ミスが記録されました','ng');
+  }
   // Remove from drawer items array
   const drItemIdx=drawer.items.indexOf(code);
   if(drItemIdx>=0)drawer.items.splice(drItemIdx,1);
