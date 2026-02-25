@@ -558,6 +558,14 @@ body{display:flex;align-items:center;justify-content:center;}
     <button class="wf-btn" id="wf-end-restart" style="margin-top:20px;font-size:9px;">もう一度プレイ</button>
   </div>
 
+  <!-- Start hint overlay (non-tutorial mode only) -->
+  <div class="wf-overlay" id="wf-start-hint">
+    <div class="wf-icon">🗃️</div>
+    <div class="wf-title" id="wf-sh-title">まず空コンテナゾーンへ！</div>
+    <div class="wf-sub" id="wf-sh-sub">画面右下の<br>「空コンテナゾーン」へ移動して<br>スキャナーを長押しし<br>コンテナをセットしよう</div>
+    <button class="wf-btn" id="wf-sh-go">OK ▶</button>
+  </div>
+
   <!-- Tutorial hint overlay -->
   <div id="tut-hint"><div id="tut-step">STEP 1/7</div><span id="tut-arrow">▼</span><div id="tut-msg">空コンテナゾーンへ移動しよう</div></div>
 
@@ -2010,6 +2018,9 @@ function closeDrawerPanel(){
 // ══════════════════════════════════════════════════════════════
 //  CONTAINER WORKFLOW
 // ══════════════════════════════════════════════════════════════
+document.getElementById('wf-sh-go').onclick=()=>{
+  hide('wf-start-hint');
+};
 document.getElementById('wf-batch-go').onclick=()=>{
   hide('wf-batch');gameState=GS.RETURNING;
   updateHUDStateMsg(t('hudReturn'));
@@ -2168,6 +2179,10 @@ const LANG={
     endThanks:'お疲れ様でした',
     endRestart:'もう一度プレイ',
     endStatsFmt:(hh,mm,ss,picks,misses,acc,prod)=>`勤務時間　　${hh}:${mm}:${ss}<br>ピック総数　${picks}個<br>ピックミス　${misses}回<br>正確率　　　${acc}%<br>生産性　　　${prod}個/時`,
+    // start hint
+    startHintTitle:'まず空コンテナゾーンへ！',
+    startHintSub:'画面右下の「空コンテナゾーン」へ移動して\nスキャナーを長押しして\nコンテナをセットしよう',
+    startHintBtn:'OK ▶',
     // toast
     toastWrongItem:'違う商材です！',
     toastMissNote:'ミスが記録されました',
@@ -2248,6 +2263,10 @@ const LANG={
     endThanks:'Good work today!',
     endRestart:'PLAY AGAIN',
     endStatsFmt:(hh,mm,ss,picks,misses,acc,prod)=>`Shift Time　${hh}:${mm}:${ss}<br>Total Picks　${picks}<br>Mistakes　　${misses}<br>Accuracy　　${acc}%<br>Productivity ${prod}/hr`,
+    // start hint
+    startHintTitle:'First: Go to Empty Box Zone!',
+    startHintSub:'Move to the EMPTY BOX ZONE\nin the bottom-right of the map,\nthen hold SCAN\nto grab a container.',
+    startHintBtn:'OK ▶',
     toastWrongItem:'Wrong item!',
     toastMissNote:'Miss recorded',
     toastPickedItem:'Item picked!',
@@ -2320,6 +2339,10 @@ function applyLang(){
   document.getElementById('wf-end-title').textContent=L.endTitle;
   document.getElementById('wf-end-thanks').textContent=L.endThanks;
   document.getElementById('wf-end-restart').textContent=L.endRestart;
+  // Start hint overlay
+  document.getElementById('wf-sh-title').textContent=L.startHintTitle;
+  document.getElementById('wf-sh-sub').innerHTML=L.startHintSub.replace(/\n/g,'<br>');
+  document.getElementById('wf-sh-go').textContent=L.startHintBtn;
   // Map canvas rebuild
   floorCacheDirty=true;
   if(running) renderMap();
@@ -2511,6 +2534,7 @@ document.getElementById('intro-go').onclick=()=>{
     showTutStep();
   } else {
     updateHUDStateMsg(t('hudNoContainer'));
+    show('wf-start-hint');
   }
   running=true;
   resize();
