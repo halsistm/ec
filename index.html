@@ -473,8 +473,8 @@ body{display:flex;align-items:center;justify-content:center;}
         <div id="dpc-match">--</div>
       </div>
       <div class="dpc-btns">
-        <button class="dpc-btn dpc-ok" id="dpc-ok">📦 コンテナへ</button>
-        <button class="dpc-btn dpc-no" id="dpc-no">↩ 引き出しに戻す</button>
+        <button class="dpc-btn dpc-ok" id="dpc-ok" style="font-size:11px;padding:14px 4px;">📦 コンテナへ</button>
+        <button class="dpc-btn dpc-no" id="dpc-no" style="font-size:10px;padding:14px 4px;">↩ 引き出しに戻す</button>
       </div>
     </div>
   </div>
@@ -1391,8 +1391,7 @@ function showEndStats(){
   document.getElementById('wf-end-stats').innerHTML=
     `勤務時間　　${hh}:${mm}:${ss}<br>`+
     `ピック総数　${totalPicks}個<br>`+
-    `ミスの数　　${totalMisses}回<br>`+
-    `ピックショート　${totalLost}回<br>`+
+    `ピックミス　${totalMisses}回<br>`+
     `正確率　　　${accuracy}%<br>`+
     `生産性　　　${productivity}個/時`;
   hide('wf-exit-confirm');
