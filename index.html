@@ -626,6 +626,21 @@ body{display:flex;align-items:center;justify-content:center;}
     <div class="intro-title">EC<span>倉庫</span><br>PICKING</div>
     <div class="intro-sub" id="intro-sub">〜 安全第一 〜</div>
 
+    <!-- Mode checkboxes (上に移動) -->
+    <div style="margin-top:14px;display:flex;align-items:center;gap:10px;font-family:'Press Start 2P',monospace;font-size:7px;color:#8bac0f;">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+        <input type="checkbox" id="hard-mode-chk" style="width:16px;height:16px;cursor:pointer;accent-color:#9bbc0f;">
+        <span id="hard-mode-lbl">HARD MODE</span>
+      </label>
+    </div>
+    <div id="tut-choice" style="margin-top:8px;">
+      <label id="tut-chk-wrap" style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Press Start 2P',monospace;font-size:7px;color:#9bbc0f;">
+        <input type="checkbox" id="tutorial-chk" checked style="width:16px;height:16px;cursor:pointer;accent-color:#9bbc0f;">
+        <span id="tut-chk-lbl">チュートリアルあり</span>
+      </label>
+    </div>
+    <div id="hard-desc" style="font-family:'Press Start 2P',monospace;font-size:7px;color:#306230;margin-top:4px;margin-bottom:14px;text-align:center;line-height:2;">ハイライトなし</div>
+
     <!-- Player name input -->
     <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:14px;width:100%;max-width:300px;">
       <label style="font-family:'Press Start 2P',monospace;font-size:6px;color:#8bac0f;" id="name-lbl">あなたの名前</label>
@@ -668,19 +683,6 @@ body{display:flex;align-items:center;justify-content:center;}
       <li>バッチ終了後は回収ゾーンへ</li>
       <li>出入口から出ると業務終了</li>
     </ul>
-    <div style="margin-top:14px;display:flex;align-items:center;gap:10px;font-family:'Press Start 2P',monospace;font-size:7px;color:#8bac0f;">
-      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-        <input type="checkbox" id="hard-mode-chk" style="width:16px;height:16px;cursor:pointer;accent-color:#9bbc0f;">
-        <span id="hard-mode-lbl">HARD MODE</span>
-      </label>
-    </div>
-    <div id="tut-choice" style="margin-top:8px;">
-      <label id="tut-chk-wrap" style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Press Start 2P',monospace;font-size:7px;color:#9bbc0f;">
-        <input type="checkbox" id="tutorial-chk" checked style="width:16px;height:16px;cursor:pointer;accent-color:#9bbc0f;">
-        <span id="tut-chk-lbl">チュートリアルあり</span>
-      </label>
-    </div>
-    <div id="hard-desc" style="font-family:'Press Start 2P',monospace;font-size:7px;color:#306230;margin-top:6px;text-align:center;line-height:2;">ハイライトなし</div>
   </div>
 </div>
 
@@ -2709,6 +2711,17 @@ document.getElementById('lang-en').addEventListener('click',()=>{
   if(lang==='en')return; lang='en'; applyLang();
 });
 applyLang(); // apply on initial load
+
+// ── 名前をlocalStorageから復元 ──
+try{
+  const saved=localStorage.getItem('ecgame_player_name');
+  if(saved) document.getElementById('player-name').value=saved;
+}catch(e){}
+
+// 名前欄を変更したら即保存
+document.getElementById('player-name').addEventListener('input',function(){
+  try{ localStorage.setItem('ecgame_player_name', this.value); }catch(e){}
+});
 
 // ハードモード選択でチュートリアル選択を非表示
 document.getElementById('hard-mode-chk').addEventListener('change',function(){
