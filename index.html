@@ -2815,14 +2815,34 @@ try{
   if(saved) document.getElementById('player-name').value=saved;
 }catch(e){}
 
+// ── モード設定をlocalStorageから復元 ──
+try{
+  const savedHard=localStorage.getItem('ecgame_hard_mode');
+  const savedTut=localStorage.getItem('ecgame_tutorial');
+  if(savedHard!==null){
+    const isHard=savedHard==='true';
+    document.getElementById('hard-mode-chk').checked=isHard;
+    document.getElementById('tut-choice').style.display=isHard?'none':'flex';
+  }
+  if(savedTut!==null){
+    document.getElementById('tutorial-chk').checked=savedTut==='true';
+  }
+}catch(e){}
+
 // 名前欄を変更したら即保存
 document.getElementById('player-name').addEventListener('input',function(){
   try{ localStorage.setItem('ecgame_player_name', this.value); }catch(e){}
 });
 
-// ハードモード選択でチュートリアル選択を非表示
+// モード変更時も即保存
+document.getElementById('tutorial-chk').addEventListener('change',function(){
+  try{ localStorage.setItem('ecgame_tutorial', this.checked); }catch(e){}
+});
+
+// ハードモード選択でチュートリアル選択を非表示 ＋ localStorage保存
 document.getElementById('hard-mode-chk').addEventListener('change',function(){
   document.getElementById('tut-choice').style.display=this.checked?'none':'flex';
+  try{ localStorage.setItem('ecgame_hard_mode', this.checked); }catch(e){}
 });
 
 document.getElementById('intro-go').onclick=()=>{
