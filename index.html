@@ -393,7 +393,13 @@ body{display:flex;align-items:center;justify-content:center;}
 #tut-choice{margin-top:14px;display:flex;align-items:center;gap:10px;font-family:'Press Start 2P',monospace;font-size:7px;color:#8bac0f;}
 #tut-chk-wrap{display:flex;align-items:center;gap:8px;cursor:pointer;}
 
-/* ── Language switcher ── */
+/* ── Ranking table ── */
+#ranking-table td, #ranking-table th{
+  color:#8bac0f;border-bottom:1px solid #1a3e0a;white-space:nowrap;
+}
+#ranking-table tr.rank-top td{ color:#9bbc0f; }
+#ranking-table tr:first-child td{ color:#ffdd00; }
+.rank-name{ max-width:70px;overflow:hidden;text-overflow:ellipsis; }
 #lang-switch{
   display:flex;gap:8px;margin-bottom:16px;
 }
@@ -540,6 +546,40 @@ body{display:flex;align-items:center;justify-content:center;}
     <div style="font-family:'Press Start 2P';font-size:6px;color:#306230;margin-top:4px;" id="wf-scan-msg">スキャナーボタンを長押し…</div>
   </div>
 
+  <!-- Ranking overlay (in-game) -->
+  <div class="wf-overlay" id="wf-ranking" style="padding:16px 12px;">
+    <div style="width:100%;max-width:360px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:#5ab4ff;">🏆 RANKING</div>
+        <button onclick="hide('wf-ranking');zoneCooldown=120;"
+          style="font-family:'Press Start 2P',monospace;font-size:6px;
+                 background:#1a3e6a;border:2px solid #5ab4ff;color:#5ab4ff;
+                 padding:6px 10px;cursor:pointer;">✕ とじる</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-family:'Press Start 2P',monospace;font-size:6px;">
+          <thead>
+            <tr style="color:#306230;border-bottom:2px solid #1a3e6a;">
+              <th style="padding:4px 3px;">#</th>
+              <th style="padding:4px 6px;text-align:left;">名前</th>
+              <th style="padding:4px 3px;">PICK</th>
+              <th style="padding:4px 3px;">精度</th>
+              <th style="padding:4px 3px;">個/時</th>
+              <th style="padding:4px 3px;">時間</th>
+              <th style="padding:4px 3px;">M</th>
+            </tr>
+          </thead>
+          <tbody id="wf-ranking-tbody">
+            <tr><td colspan="7" style="color:#5ab4ff;text-align:center;padding:10px;">読み込み中...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-family:'Press Start 2P',monospace;font-size:5px;color:#1a3e6a;margin-top:8px;text-align:center;">
+        💀=HARD MODE  🟢=NORMAL
+      </div>
+    </div>
+  </div>
+
   <!-- 業務終了確認 -->
   <div class="wf-overlay" id="wf-exit-confirm">
     <div class="wf-icon">🏠</div>
@@ -585,14 +625,49 @@ body{display:flex;align-items:center;justify-content:center;}
     <div style="font-size:32px;margin-bottom:12px;">📦</div>
     <div class="intro-title">EC<span>倉庫</span><br>PICKING</div>
     <div class="intro-sub" id="intro-sub">〜 安全第一 〜</div>
-    <ul class="intro-rules" id="intro-rules-list">
+
+    <!-- Player name input -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:14px;width:100%;max-width:300px;">
+      <label style="font-family:'Press Start 2P',monospace;font-size:6px;color:#8bac0f;" id="name-lbl">あなたの名前</label>
+      <input id="player-name" type="text" maxlength="12" placeholder="NAME"
+        style="width:100%;background:#0a2808;border:2px solid #306230;color:#9bbc0f;
+               font-family:'Press Start 2P',monospace;font-size:11px;padding:8px 10px;
+               text-align:center;outline:none;letter-spacing:.05em;"
+        onfocus="this.style.borderColor='#9bbc0f'" onblur="this.style.borderColor='#306230'">
+    </div>
+
+    <button id="intro-go">START GAME</button>
+
+    <!-- Ranking table -->
+    <div style="width:100%;max-width:380px;margin-top:18px;">
+      <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:#9bbc0f;margin-bottom:8px;text-align:left;">🏆 RANKING</div>
+      <div style="overflow-x:auto;">
+        <table id="ranking-table" style="width:100%;border-collapse:collapse;font-family:'Press Start 2P',monospace;font-size:6px;">
+          <thead>
+            <tr style="color:#306230;border-bottom:2px solid #306230;">
+              <th style="padding:4px 3px;">#</th>
+              <th style="padding:4px 3px;text-align:left;" id="rh-name">名前</th>
+              <th style="padding:4px 3px;">PICK</th>
+              <th style="padding:4px 3px;">精度</th>
+              <th style="padding:4px 3px;">個/時</th>
+              <th style="padding:4px 3px;">時間</th>
+              <th style="padding:4px 3px;">M</th>
+            </tr>
+          </thead>
+          <tbody id="ranking-tbody">
+            <tr><td colspan="7" style="color:#306230;text-align:center;padding:12px;">読み込み中...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <ul class="intro-rules" id="intro-rules-list" style="margin-top:14px;">
       <li>📱をみて行き先を確認</li>
       <li>棚をタップして📱に表示された引き出しをタップ</li>
       <li>商材をスキャンしてコンテナにいれる</li>
       <li>バッチ終了後は回収ゾーンへ</li>
       <li>出入口から出ると業務終了</li>
     </ul>
-    <button id="intro-go">START GAME</button>
     <div style="margin-top:14px;display:flex;align-items:center;gap:10px;font-family:'Press Start 2P',monospace;font-size:7px;color:#8bac0f;">
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
         <input type="checkbox" id="hard-mode-chk" style="width:16px;height:16px;cursor:pointer;accent-color:#9bbc0f;">
@@ -608,6 +683,66 @@ body{display:flex;align-items:center;justify-content:center;}
     <div id="hard-desc" style="font-family:'Press Start 2P',monospace;font-size:7px;color:#306230;margin-top:6px;text-align:center;line-height:2;">ハイライトなし</div>
   </div>
 </div>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getDatabase, ref, push, onValue, query, orderByChild, limitToLast }
+  from "https://www.gstatic.com/firebasejs/12.9.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDr4qgWeIbR-rKZdh031qu86mfjAUhQbVc",
+  authDomain: "ec-warehouse-game.firebaseapp.com",
+  databaseURL: "https://ec-warehouse-game-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "ec-warehouse-game",
+  storageBucket: "ec-warehouse-game.firebasestorage.app",
+  messagingSenderId: "373660043945",
+  appId: "1:373660043945:web:36839d08c6591be8adf7b8",
+  measurementId: "G-X457LB2VBZ"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const fbDb  = getDatabase(fbApp);
+
+// ── グローバルに公開（メインスクリプトから呼べるように）──
+window._fbDb        = fbDb;
+window._fbRef       = ref;
+window._fbPush      = push;
+window._fbOnValue   = onValue;
+window._fbQuery     = query;
+window._fbOrderBy   = orderByChild;
+window._fbLimitToLast = limitToLast;
+
+// ランキングをイントロ画面に表示（ページ読み込み時＆毎分更新）
+function loadRanking(){
+  const container = document.getElementById('ranking-tbody');
+  if(!container) return;
+  const q = query(ref(fbDb,'scores'), orderByChild('picks'), limitToLast(20));
+  onValue(q, snap => {
+    const rows = [];
+    snap.forEach(child => rows.push(child.val()));
+    rows.sort((a,b) => b.picks - a.picks);
+    container.innerHTML = rows.map((r,i) => {
+      const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+      const acc   = r.accuracy != null ? r.accuracy+'%' : '--';
+      const prod  = r.productivity != null ? r.productivity : '--';
+      const time  = r.shiftTime || '--:--:--';
+      const mode  = r.hardMode ? '💀' : '🟢';
+      return `<tr class="${i<3?'rank-top':''}">
+        <td>${medal||('#'+(i+1))}</td>
+        <td class="rank-name">${escHtml(r.name||'???')}</td>
+        <td>${r.picks}</td>
+        <td>${acc}</td>
+        <td>${prod}</td>
+        <td>${time}</td>
+        <td>${mode}</td>
+      </tr>`;
+    }).join('') || '<tr><td colspan="7" style="color:#306230;text-align:center;padding:12px;">まだ記録がありません</td></tr>';
+  });
+}
+function escHtml(s){ return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+document.addEventListener('DOMContentLoaded', loadRanking);
+</script>
 
 <script>
 'use strict';
@@ -851,7 +986,7 @@ buildDB(TYPES_NORMAL); // default; rebuilt on game start
 
 const T=52; // tile px
 const MCOLS=11, MROWS=18;
-const FLOOR=0, SHELF=2, RETURN_ZONE=3, EMPTY_ZONE=4, ENTRANCE=5, EXIT_ZONE=6;
+const FLOOR=0, SHELF=2, RETURN_ZONE=3, EMPTY_ZONE=4, ENTRANCE=5, EXIT_ZONE=6, RANKING_ZONE=7;
 
 // shelf letter → map row
 const ROW_CFG=[
@@ -875,6 +1010,9 @@ for(let c=4;c<=6;c++) map[16][c]=ENTRANCE;
 for(let c=7;c<=9;c++) map[16][c]=EMPTY_ZONE;
 // row17 col4-6に業務終了ゾーン（出入口の真下）
 for(let col=4;col<=6;col++) map[17][col]=EXIT_ZONE;
+// row15-16 col0にランキングゾーン（出入口左の掲示板）
+map[15][0]=RANKING_ZONE;
+map[16][0]=RANKING_ZONE;
 
 const SMAP={};
 const ITEM_IDX={};
@@ -1210,6 +1348,7 @@ function buildFloorCache(){
       else if(t===EMPTY_ZONE) col='#6e8c07';
       else if(t===ENTRANCE) col='#8bac0f';
       else if(t===EXIT_ZONE) col='#4a7a04';
+      else if(t===RANKING_ZONE) col='#1a3e6a';
       fc.fillStyle=col; fc.fillRect(x,y,T,T);
       fc.fillStyle='rgba(15,56,15,.12)';
       for(let dy=8;dy<T;dy+=16) for(let dx=8;dx<T;dx+=16) fc.fillRect(x+dx,y+dy,2,2);
@@ -1271,6 +1410,16 @@ function buildFloorCache(){
    fc.fillText(t('mapEnd'),zx+zw/2,zy+T*.35);
    fc.font=`bold ${T*.16|0}px '${PX}'`;
    fc.fillText(t('mapEndSub'),zx+zw/2,zy+T*.72);}
+  // ランキングゾーンラベル (col0, row15-16)
+  {const zx=0,zw=T;
+   fc.fillStyle='#5ab4ff';
+   fc.font=`bold ${T*.22|0}px '${PX}'`;
+   fc.fillText('🏆',zx+zw/2,15*T+T*.35);
+   fc.font=`bold ${T*.14|0}px '${PX}'`;
+   fc.fillText('RANK',zx+zw/2,15*T+T*.72);
+   fc.fillText('ING',zx+zw/2,16*T+T*.35);
+   fc.fillStyle='rgba(90,180,255,0.3)';
+   fc.fillRect(zx+2,15*T+2,zw-4,T*2-4);}
   fc.restore();
   floorCacheDirty=false;
 }
@@ -1445,6 +1594,11 @@ function checkZoneTrigger(){
     if(exitTimer===0) showExitConfirm();
     exitTimer++;
   }
+  if(t===RANKING_ZONE){
+    if(!document.getElementById('wf-ranking').classList.contains('show')){
+      showRankingOverlay();
+    }
+  }
 }
 
 function showExitConfirm(){
@@ -1453,18 +1607,67 @@ function showExitConfirm(){
   show('wf-exit-confirm');
 }
 
+function showRankingOverlay(){
+  show('wf-ranking');
+  // Firebaseからリアルタイムで読み込み
+  const tbody = document.getElementById('wf-ranking-tbody');
+  if(!tbody) return;
+  tbody.innerHTML='<tr><td colspan="7" style="color:#5ab4ff;text-align:center;padding:10px;">読み込み中...</td></tr>';
+  try{
+    if(!window._fbOnValue) return;
+    const q = window._fbQuery(
+      window._fbRef(window._fbDb,'scores'),
+      window._fbOrderBy('picks'),
+      window._fbLimitToLast(20)
+    );
+    window._fbOnValue(q, snap => {
+      const rows=[];
+      snap.forEach(child=>rows.push(child.val()));
+      rows.sort((a,b)=>b.picks-a.picks);
+      const escH=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      tbody.innerHTML = rows.map((r,i)=>{
+        const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1);
+        const mode=r.hardMode?'💀':'🟢';
+        return`<tr style="color:${i<3?'#5ab4ff':'#8bac0f'};border-bottom:1px solid #1a3e0a;">
+          <td style="padding:4px 3px;text-align:center;">${medal}</td>
+          <td style="padding:4px 6px;max-width:60px;overflow:hidden;text-overflow:ellipsis;">${escH(r.name||'???')}</td>
+          <td style="padding:4px 3px;text-align:right;">${r.picks}</td>
+          <td style="padding:4px 3px;text-align:right;">${r.accuracy!=null?r.accuracy+'%':'--'}</td>
+          <td style="padding:4px 3px;text-align:right;">${r.productivity||'--'}</td>
+          <td style="padding:4px 3px;text-align:center;">${r.shiftTime||'--'}</td>
+          <td style="padding:4px 3px;text-align:center;">${mode}</td>
+        </tr>`;
+      }).join('')||'<tr><td colspan="7" style="color:#306230;text-align:center;padding:12px;">まだ記録がありません</td></tr>';
+    },{onlyOnce:true});
+  }catch(e){console.warn('ranking load failed',e);}
+}
+
 function showEndStats(){
   const elapsed=Date.now()-startTime;
   const hh=Math.floor(elapsed/3600000).toString().padStart(2,'0');
   const mm=Math.floor((elapsed%3600000)/60000).toString().padStart(2,'0');
   const ss=Math.floor((elapsed%60000)/1000).toString().padStart(2,'0');
   const accuracy=totalPicks>0?Math.round((totalPicks/(totalPicks+totalMisses))*100):0;
-  // 生産性: ピック数 / 勤務時間(時間)
   const hrs=elapsed/3600000||1/60;
   const productivity=Math.round(totalPicks/hrs);
   document.getElementById('wf-end-stats').innerHTML=t('endStatsFmt',hh,mm,ss,totalPicks,totalMisses,accuracy,productivity);
   hide('wf-exit-confirm');
   show('wf-end');
+  // ── Firebase にスコア送信 ──
+  try{
+    const playerName=(document.getElementById('player-name').value.trim()||'名無し').slice(0,12);
+    if(window._fbPush && totalPicks>0){
+      window._fbPush(window._fbRef(window._fbDb,'scores'),{
+        name: playerName,
+        picks: totalPicks,
+        accuracy: accuracy,
+        productivity: productivity,
+        shiftTime: `${hh}:${mm}:${ss}`,
+        hardMode: hardMode,
+        ts: Date.now()
+      });
+    }
+  }catch(e){ console.warn('Firebase send failed',e); }
 }
 
 document.getElementById('wf-exit-yes').onclick=showEndStats;
