@@ -14,9 +14,7 @@ body{display:flex;align-items:center;justify-content:center;}
 #screen{
   position:relative;
   width:100vw;
-  /* Use dvh so it fills the real viewport on iOS */
-  height:100dvh;
-  /* Also account for safe areas so content isn't hidden behind browser chrome */
+  height:100svh; /* JS(visualViewport)で上書きされる。svhはXのバー込み最小高さ */
   padding-top:env(safe-area-inset-top);
   padding-bottom:env(safe-area-inset-bottom);
   padding-left:env(safe-area-inset-left);
@@ -2793,14 +2791,29 @@ function drawTutPath(ctx){
 }
 
 // ══════════════════════════════════════════════════════════════
-//  RESIZE
+//  RESIZE — Visual Viewport API でXのツールバー対応
 // ══════════════════════════════════════════════════════════════
-function resize(){
+function applyViewportSize(){
   const s=document.getElementById('screen');
-  cv.width=s.clientWidth;cv.height=s.clientHeight;
+  // visualViewport があれば実際に見える高さ・幅を使う（Xのバー分を自動除外）
+  const vvw = window.visualViewport ? window.visualViewport.width  : window.innerWidth;
+  const vvh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+  // PCはiPhone枠固定なのでスキップ
+  if(window.innerWidth < 600){
+    s.style.width  = vvw + 'px';
+    s.style.height = vvh + 'px';
+  }
+  cv.width  = s.clientWidth;
+  cv.height = s.clientHeight;
   initScanlines();
 }
-window.addEventListener('resize',()=>{resize();renderMap();});
+function resize(){ applyViewportSize(); }
+
+window.addEventListener('resize', ()=>{ applyViewportSize(); renderMap(); });
+if(window.visualViewport){
+  window.visualViewport.addEventListener('resize', ()=>{ applyViewportSize(); if(running) renderMap(); });
+  window.visualViewport.addEventListener('scroll', ()=>{ applyViewportSize(); if(running) renderMap(); });
+}
 
 // ══════════════════════════════════════════════════════════════
 //  START
@@ -2828,6 +2841,8 @@ function setBgmOn(on){
 
 window.addEventListener('pagehide', mpLeave);
 window.addEventListener('beforeunload', mpLeave);
+// 初回viewport適用
+document.addEventListener('DOMContentLoaded', applyViewportSize);
 
 document.getElementById('bgm-btn').addEventListener('click',()=>{
   setBgmOn(!bgmOn);
