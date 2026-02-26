@@ -93,21 +93,19 @@ body{display:flex;align-items:center;justify-content:center;}
 #scan-btn:active,#scan-btn.held{background:#8bac0f;transform:scale(.91);box-shadow:inset 0 -1px 0 rgba(255,255,255,.15),inset 0 2px 0 rgba(0,0,0,.25);}
 #scan-ico{font-size:18px;line-height:1;}
 
-/* Voice button — right side, immediately left of scan-btn */
-#voice-btn{
+/* ── どいてヒント（ダブルタップ時に一時表示） ── */
+#doit-hint{
   position:absolute;
-  bottom:calc(20px + env(safe-area-inset-bottom));
-  right:calc(14px + 56px + 10px + 44px + 10px);  /* scan + gap + bgm + gap */
-  width:56px;height:56px;border-radius:50%;
-  background:#306230;border:3px solid #9bbc0f;
-  font-family:'Press Start 2P',monospace;font-size:5px;color:#9bbc0f;
-  cursor:pointer;z-index:65;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
-  user-select:none;-webkit-user-select:none;transition:all .08s;flex-shrink:0;
-  box-shadow:inset 0 3px 0 rgba(255,255,255,.1),inset 0 -3px 0 rgba(0,0,0,.35);
+  bottom:calc(82px + env(safe-area-inset-bottom));
+  left:50%;transform:translateX(-50%);
+  background:rgba(155,188,15,.92);color:#0f380f;
+  padding:4px 10px;
+  font-family:'Press Start 2P',monospace;font-size:6px;
+  border:2px solid #306230;z-index:32;
+  display:none;pointer-events:none;white-space:nowrap;
+  border-radius:2px;
 }
-#voice-btn:active{background:#0f380f;transform:scale(.91);}
-#voice-ico{font-size:18px;line-height:1;}
+
 
 /* BGM wrap */
 #bgm-wrap{
@@ -429,8 +427,8 @@ body{display:flex;align-items:center;justify-content:center;}
     </div>
   </div>
 
-  <!-- Voice button — floats right, always on top -->
-  <button id="voice-btn"><div id="voice-ico">📢</div><span id="voice-lbl">どいて</span></button>
+  <!-- ダブルタップ通知ヒント -->
+  <div id="doit-hint">📢</div>
 
   <!-- BGM toggle button -->
   <div id="bgm-wrap">
@@ -453,7 +451,7 @@ body{display:flex;align-items:center;justify-content:center;}
       </div>
     </div>
     <div id="sp-footer">
-      <span id="sp-rem">--個残り</span>
+      <span id="sp-rem">--</span>
       <span id="sp-pg">--/--</span>
     </div>
   </div>
@@ -490,7 +488,7 @@ body{display:flex;align-items:center;justify-content:center;}
       <canvas id="dsb-canvas" width="64" height="64"></canvas>
       <div id="dsb-info">
         <div id="dsb-box-lbl">スキャン指示</div>
-        <div id="dsb-box">------のBOXをスキャン</div>
+        <div id="dsb-box">------</div>
         <div id="dsb-code">---- / --</div>
         <div id="dsb-prog">-- / --</div>
       </div>
@@ -549,26 +547,26 @@ body{display:flex;align-items:center;justify-content:center;}
     <div style="width:100%;max-width:360px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
         <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:#5ab4ff;">🏆 RANKING</div>
-        <button onclick="hide('wf-ranking');zoneCooldown=120;"
+        <button id="rank-close-btn" onclick="hide('wf-ranking');zoneCooldown=120;"
           style="font-family:'Press Start 2P',monospace;font-size:6px;
                  background:#1a3e6a;border:2px solid #5ab4ff;color:#5ab4ff;
-                 padding:6px 10px;cursor:pointer;">✕ とじる</button>
+                 padding:6px 10px;cursor:pointer;">✕ CLOSE</button>
       </div>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;font-family:'Press Start 2P',monospace;font-size:6px;">
           <thead>
             <tr style="color:#306230;border-bottom:2px solid #1a3e6a;">
               <th style="padding:4px 3px;">#</th>
-              <th style="padding:4px 6px;text-align:left;">名前</th>
+              <th style="padding:4px 6px;text-align:left;" id="rk-name">NAME</th>
               <th style="padding:4px 3px;">PICK</th>
-              <th style="padding:4px 3px;">精度</th>
-              <th style="padding:4px 3px;">個/時</th>
-              <th style="padding:4px 3px;">時間</th>
+              <th style="padding:4px 3px;" id="rk-acc">ACC</th>
+              <th style="padding:4px 3px;" id="rk-pph">/HR</th>
+              <th style="padding:4px 3px;" id="rk-time">TIME</th>
               <th style="padding:4px 3px;">M</th>
             </tr>
           </thead>
           <tbody id="wf-ranking-tbody">
-            <tr><td colspan="7" style="color:#5ab4ff;text-align:center;padding:10px;">読み込み中...</td></tr>
+            <tr><td colspan="7" style="color:#5ab4ff;text-align:center;padding:10px;" id="rk-loading-row">Loading...</td></tr>
           </tbody>
         </table>
       </div>
@@ -641,7 +639,7 @@ body{display:flex;align-items:center;justify-content:center;}
 
     <!-- Player name input -->
     <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:14px;width:100%;max-width:300px;">
-      <label style="font-family:'Press Start 2P',monospace;font-size:6px;color:#8bac0f;" id="name-lbl">あなたの名前</label>
+      <label style="font-family:'Press Start 2P',monospace;font-size:6px;color:#8bac0f;" id="name-lbl">Your Name</label>
       <input id="player-name" type="text" maxlength="12" placeholder="NAME"
         style="width:100%;background:#0a2808;border:2px solid #306230;color:#9bbc0f;
                font-family:'Press Start 2P',monospace;font-size:11px;padding:8px 10px;
@@ -659,16 +657,16 @@ body{display:flex;align-items:center;justify-content:center;}
           <thead>
             <tr style="color:#306230;border-bottom:2px solid #306230;">
               <th style="padding:4px 3px;">#</th>
-              <th style="padding:4px 3px;text-align:left;" id="rh-name">名前</th>
+              <th style="padding:4px 3px;text-align:left;" id="rh-name">NAME</th>
               <th style="padding:4px 3px;">PICK</th>
-              <th style="padding:4px 3px;">精度</th>
-              <th style="padding:4px 3px;">個/時</th>
-              <th style="padding:4px 3px;">時間</th>
+              <th style="padding:4px 3px;" id="rh-acc">ACC</th>
+              <th style="padding:4px 3px;" id="rh-pph">/HR</th>
+              <th style="padding:4px 3px;" id="rh-time">TIME</th>
               <th style="padding:4px 3px;">M</th>
             </tr>
           </thead>
           <tbody id="ranking-tbody">
-            <tr><td colspan="7" style="color:#306230;text-align:center;padding:12px;">読み込み中...</td></tr>
+            <tr><td colspan="7" style="color:#306230;text-align:center;padding:12px;" id="rh-loading-row">Loading...</td></tr>
           </tbody>
         </table>
       </div>
@@ -740,7 +738,7 @@ function loadRanking(){
         <td>${time}</td>
         <td>${mode}</td>
       </tr>`;
-    }).join('') || '<tr><td colspan="7" style="color:#306230;text-align:center;padding:12px;">まだ記録がありません</td></tr>';
+    }).join('') || `<tr><td colspan="7" style="color:#306230;text-align:center;padding:12px;">${window._t?window._t('rankEmpty'):'No records yet'}</td></tr>`;
   });
 }
 function escHtml(s){ return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
@@ -1182,7 +1180,7 @@ function mpJoin(){
   if(!window._fbSet) return;
   // ユニークIDを生成（タブごとに1つ）
   myPlayerId = 'p_' + Math.random().toString(36).slice(2,10);
-  const playerName = (document.getElementById('player-name').value.trim()||'名無し').slice(0,12);
+  const playerName = (document.getElementById('player-name').value.trim()||t('defaultName')).slice(0,12);
   const myRef = window._fbRef(window._fbDb, `players/${myPlayerId}`);
   // 切断時に自動削除
   window._fbOnDisconnect(myRef).remove();
@@ -1217,7 +1215,7 @@ function mpSendPos(now){
   if(now - _lastPosSend < 100) return; // 10fps制限
   _lastPosSend = now;
   window._fbSet(window._fbRef(window._fbDb, `players/${myPlayerId}`), {
-    name: (document.getElementById('player-name').value.trim()||'名無し').slice(0,12),
+    name: (document.getElementById('player-name').value.trim()||t('defaultName')).slice(0,12),
     x: Math.round(P.x), y: Math.round(P.y),
     face: P.face, hasCart: P.hasCart,
     hardMode: hardMode,
@@ -1470,7 +1468,7 @@ function buildFloorCache(){
    fc.font=`bold ${T*.26|0}px '${PX}'`;
    fc.fillText('🏆 RANKING',zx+zw/2,zy+T*.38);
    fc.font=`bold ${T*.14|0}px '${PX}'`;
-   fc.fillText('ここに来ると見られる',zx+zw/2,zy+T*.72);
+   fc.fillText(t('mapRankingSub'),zx+zw/2,zy+T*.72);
    fc.fillStyle='rgba(90,180,255,0.18)';
    fc.fillRect(zx+2,zy+2,zw-4,T-4);}
   fc.restore();
@@ -1707,7 +1705,7 @@ function depositContainer(){
     const accuracy=totalPicks>0?Math.round((totalPicks/(totalPicks+totalMisses))*100):0;
     const hrs=elapsed/3600000||1/60;
     const productivity=Math.round(totalPicks/hrs);
-    const playerName=(document.getElementById('player-name').value.trim()||'名無し').slice(0,12);
+    const playerName=(document.getElementById('player-name').value.trim()||t('defaultName')).slice(0,12);
     if(window._fbPush && totalPicks>0){
       window._fbPush(window._fbRef(window._fbDb,'scores'),{
         name: playerName,
@@ -1733,7 +1731,7 @@ function showRankingOverlay(){
   // Firebaseからリアルタイムで読み込み
   const tbody = document.getElementById('wf-ranking-tbody');
   if(!tbody) return;
-  tbody.innerHTML='<tr><td colspan="7" style="color:#5ab4ff;text-align:center;padding:10px;">読み込み中...</td></tr>';
+  tbody.innerHTML='<tr><td colspan="7" style="color:#5ab4ff;text-align:center;padding:10px;">'+(window._t?window._t('rankLoading'):'Loading...')+'</td></tr>';
   try{
     if(!window._fbOnValue) return;
     const q = window._fbQuery(
@@ -1758,7 +1756,7 @@ function showRankingOverlay(){
           <td style="padding:4px 3px;text-align:center;">${r.shiftTime||'--'}</td>
           <td style="padding:4px 3px;text-align:center;">${mode}</td>
         </tr>`;
-      }).join('')||'<tr><td colspan="7" style="color:#306230;text-align:center;padding:12px;">まだ記録がありません</td></tr>';
+      }).join('')||'<tr><td colspan="7" style="color:#306230;text-align:center;padding:12px;">'+(window._t?window._t('rankEmpty'):'No records yet')+'</td></tr>';
     },{onlyOnce:true});
   }catch(e){console.warn('ranking load failed',e);}
 }
@@ -1776,7 +1774,7 @@ function showEndStats(){
   show('wf-end');
   // 最後の回収後にプレイした分を送信（コンテナに何か入っていれば）
   try{
-    const playerName=(document.getElementById('player-name').value.trim()||'名無し').slice(0,12);
+    const playerName=(document.getElementById('player-name').value.trim()||t('defaultName')).slice(0,12);
     if(window._fbPush && totalPicks>0 && container.length>0){
       window._fbPush(window._fbRef(window._fbDb,'scores'),{
         name: playerName,
@@ -1817,8 +1815,18 @@ function worldPos(cx,cy){
   const rc=cv.getBoundingClientRect();
   return{wx:(cx-rc.left)*(cv.width/rc.width)+camX,wy:(cy-rc.top)*(cv.height/rc.height)+camY};
 }
+// touchstartから発火した合成clickか判別するフラグ
+let _fromTouch=false;
 cv.addEventListener('click',e=>{
   if(panelOpen||drawerOpen)return;
+  // マウスクリック（touch由来でない）時のみここでダブルタップ判定
+  if(!_fromTouch){
+    if(checkDoubleTap(e.clientX,e.clientY)){
+      triggerBotDodge();
+      return;
+    }
+  }
+  _fromTouch=false;
   const{wx,wy}=worldPos(e.clientX,e.clientY);
   const tc=Math.floor(wx/T),tr=Math.floor(wy/T);
   if(tr<0||tr>=MROWS||tc<0||tc>=MCOLS)return;
@@ -1826,7 +1834,6 @@ cv.addEventListener('click',e=>{
     const shelf=SMAP[`${tr},${tc}`];if(!shelf)return;
     const ar=accessRow(tr);
     const atx=tc*T+T/2, aty=ar*T+T/2;
-    // 棚の正面（アクセスタイルの中心から0.55タイル以内）にいる時だけ即開く
     const dist=Math.hypot(P.x-atx, P.y-aty);
     if(dist<T*0.55){openShelfPanel(shelf);}
     else if(!blocked(atx,aty,false)){P.tx=atx;P.ty=aty;pendingShelf=shelf;moveCount++;}
@@ -1837,8 +1844,15 @@ cv.addEventListener('click',e=>{
 });
 cv.addEventListener('touchstart',e=>{
   e.preventDefault();
-  const t=e.touches[0];
-  cv.dispatchEvent(new MouseEvent('click',{clientX:t.clientX,clientY:t.clientY}));
+  const touch=e.touches[0];
+  // ダブルタップ判定はtouchstartでのみ行う
+  if(checkDoubleTap(touch.clientX,touch.clientY)){
+    triggerBotDodge();
+    return;
+  }
+  // 通常タップ → 合成clickとして処理（clickハンドラで二重判定しないようフラグ）
+  _fromTouch=true;
+  cv.dispatchEvent(new MouseEvent('click',{clientX:touch.clientX,clientY:touch.clientY}));
 },{passive:false});
 
 // ══════════════════════════════════════════════════════════════
@@ -1954,7 +1968,6 @@ function openShelfPanel(shelf){
   const shelfLabel=shelf.ltr+String(shelf.colNum/100|0).padStart(2,'0');
   document.getElementById('sp-hdr-title').textContent=(lang==='ja'?'棚 ':'Shelf ')+shelfLabel;
   document.getElementById('sp-hdr-sub').textContent='';
-  document.getElementById('voice-btn').style.display='none';
   document.getElementById('bgm-wrap').style.display='none'; // #6
   buildShelfGrid(shelf);
   show('shelf-panel');
@@ -1972,7 +1985,7 @@ function buildShelfGrid(shelf){
     if(isExactTarget&&(scanHoldActive||tutorialMode)&&!hardMode) btn.classList.add('target-glow');
     // #8: small count on top, big label on bottom
     btn.innerHTML=`
-      <div class="dr-count-bar">${dr.items.length}こ</div>
+      <div class="dr-count-bar">${t('drCountFmt',dr.items.length)}</div>
       <div class="dr-label-bar">${dr.label}</div>`;
     btn.addEventListener('click',()=>openDrawerPanel(dr,shelf));
     grid.appendChild(btn);
@@ -1992,7 +2005,6 @@ function refreshShelfPanelHighlights(glow){
 }
 document.getElementById('sp-hdr-back').onclick=()=>{
   hide('shelf-panel');panelOpen=false;currentShelf=null;pendingShelf=null;
-  document.getElementById('voice-btn').style.display='';
   document.getElementById('bgm-wrap').style.display=''; // #6: restore
 };
 
@@ -2030,7 +2042,6 @@ function openDrawerPanel(dr,shelf){
   hide('dp-confirm');hide('dp-pre-scan');hide('dp-empty');
   hide('shelf-panel');panelOpen=false;
   document.getElementById('scan-btn').style.display='none';
-  document.getElementById('voice-btn').style.display='none';
   document.getElementById('bgm-wrap').style.display='none';
   updateDrawerScannerBar();
   show('drawer-panel');
@@ -2309,7 +2320,7 @@ document.getElementById('dpc-ok').onclick=()=>{
     setTimeout(()=>{
       closeDrawerPanel();
       gameState=GS.BATCH_DONE;
-      showToast('バッチ完了！','回収ゾーンへ持っていこう','ok');
+      showToast(t('batchDoneToast'),t('batchDoneToastSub'),'ok');
       updateHUDStateMsg(t('hudReturn'));
       if(tutorialMode) advanceTut(7);
     },300);
@@ -2334,7 +2345,6 @@ function closeDrawerPanel(){
   selItemData=null;
   currentDrawer=null;currentDrawerShelf=null;
   document.getElementById('scan-btn').style.display='';
-  document.getElementById('voice-btn').style.display='';
   document.getElementById('bgm-wrap').style.display=''; // #6 restore
   if(currentShelf){openShelfPanel(currentShelf);}
   renderMap();
@@ -2432,17 +2442,43 @@ function showToast(m,s,type){
 }
 
 // ══════════════════════════════════════════════════════════════
-//  VOICE BOT
+//  DOUBLE-TAP → BOT AVOIDANCE
+//  マップ上のダブルタップ（300ms以内に2回タップ）でBotが道をあける
 // ══════════════════════════════════════════════════════════════
-document.getElementById('voice-btn').addEventListener('click',()=>{
-  const bb=document.getElementById('bbub');
-  bb.textContent=rrc(t('voiceMsgs'));bb.style.display='block';
-  setTimeout(()=>bb.style.display='none',1600);
+function triggerBotDodge(){
+  // 近くのBotを引き離す
+  let anyNearby=false;
   for(const b of bots){
     const dx=b.x-P.x,dy=b.y-P.y,d=Math.hypot(dx,dy);
-    if(d<T*4){b.tx=b.x+dx/d*T*5;b.ty=b.y+dy/d*T*5;}
+    if(d<T*4&&d>0){
+      b.tx=b.x+dx/d*T*5;b.ty=b.y+dy/d*T*5;
+      anyNearby=true;
+    }
   }
-});
+  // 近くにBotがいる時だけセリフを出す
+  if(anyNearby){
+    const bb=document.getElementById('bbub');
+    bb.textContent=rrc(t('voiceMsgs'));bb.style.display='block';
+    setTimeout(()=>bb.style.display='none',1600);
+    const dh=document.getElementById('doit-hint');
+    dh.style.display='block';
+    setTimeout(()=>dh.style.display='none',900);
+  }
+}
+
+// ── ダブルタップ検出（タッチ・マウス共通）──
+let _lastTapTime=0, _lastTapX=0, _lastTapY=0;
+const DOUBLE_TAP_MS=320;   // この時間内に2回でダブルタップ
+const DOUBLE_TAP_PX=60;    // このピクセル以内なら同一タップと判定
+
+function checkDoubleTap(clientX,clientY){
+  if(panelOpen||drawerOpen)return false;
+  const now=Date.now();
+  const dist=Math.hypot(clientX-_lastTapX,clientY-_lastTapY);
+  const isDouble=(now-_lastTapTime<DOUBLE_TAP_MS)&&(dist<DOUBLE_TAP_PX);
+  _lastTapTime=now; _lastTapX=clientX; _lastTapY=clientY;
+  return isDouble;
+}
 
 // ══════════════════════════════════════════════════════════════
 //  I18N — LANGUAGE DATA
@@ -2522,11 +2558,21 @@ const LANG={
     toastTutNote:'あとは自分でやってみよう',
     // voice
     voiceMsgs:['「すみません！」','「どきます！」','「ちょっと！」','「はい！すぐ！」'],
+    doitHint:'📢 どいて！',
     // map canvas
     mapReturn:'回収', mapReturnSub:'ゾーン',
     mapExit:'出入口', mapExitSub:'EXIT',
     mapEmpty:'空コンテナ', mapEmptySub:'ゾーン',
     mapEnd:'業務終了', mapEndSub:'ここを通過',
+    mapRankingSub:'ここに来ると見られる',
+    // misc
+    nameLbl:'あなたの名前',
+    rankName:'名前', rankAcc:'精度', rankPph:'個/時', rankTime:'時間',
+    rankLoading:'読み込み中...', rankEmpty:'まだ記録がありません',
+    rankClose:'✕ とじる',
+    defaultName:'名無し',
+    drCountFmt:(n)=>`${n}こ`,
+    batchDoneToast:'バッチ完了！', batchDoneToastSub:'回収ゾーンへ持っていこう',
     // tutorial
     tutSteps:[
       {step:'STEP 1/7',arrow:'→',msg:'右の「空コンテナゾーン」へ移動しよう！\nスキャナーボタンを長押しでコンテナをセット'},
@@ -2604,10 +2650,19 @@ const LANG={
     toastTutDone:'Tutorial complete!',
     toastTutNote:'Now try on your own!',
     voiceMsgs:['"Excuse me!"','"Coming thru!"','"Hey!"','"Right away!"'],
+    doitHint:'📢 Move!',
     mapReturn:'RETURN', mapReturnSub:'ZONE',
     mapExit:'EXIT', mapExitSub:'DOOR',
     mapEmpty:'EMPTY', mapEmptySub:'BOX',
     mapEnd:'END', mapEndSub:'WALK THRU',
+    mapRankingSub:'VIEW HERE',
+    nameLbl:'Your Name',
+    rankName:'NAME', rankAcc:'ACC', rankPph:'/HR', rankTime:'TIME',
+    rankLoading:'Loading...', rankEmpty:'No records yet',
+    rankClose:'✕ CLOSE',
+    defaultName:'Player',
+    drCountFmt:(n)=>`${n}pc`,
+    batchDoneToast:'BATCH DONE!', batchDoneToastSub:'Go to Return Zone!',
     tutSteps:[
       {step:'STEP 1/7',arrow:'→',msg:'Go to EMPTY BOX ZONE on the right!\nHold SCAN to grab a container'},
       {step:'STEP 2/7',arrow:'📱',msg:'Press the SCAN button\nto check your pick destination'},
@@ -2624,6 +2679,8 @@ function t(key,...args){
   const d=LANG[lang][key];
   return typeof d==='function'?d(...args):d;
 }
+// Firebase moduleなど別スコープから呼べるようにグローバル公開
+window._t=t;
 function applyLang(){
   const L=LANG[lang];
   // Lang buttons
@@ -2656,6 +2713,7 @@ function applyLang(){
   document.getElementById('dpc-no').textContent=L.putBackBtn;
   // Workflow overlays
   document.getElementById('wf-batch-title').textContent=L.batchTitle;
+  document.getElementById('wf-batch-sub').innerHTML=L.batchDoneToastSub;
   document.getElementById('wf-batch-go').textContent=L.batchGoBtn;
   document.getElementById('wf-return-title').textContent=L.returnTitle;
   document.getElementById('wf-return-sub').innerHTML=L.returnSub;
@@ -2673,6 +2731,22 @@ function applyLang(){
   document.getElementById('wf-sh-title').textContent=L.startHintTitle;
   document.getElementById('wf-sh-sub').innerHTML=L.startHintSub.replace(/\n/g,'<br>');
   document.getElementById('wf-sh-go').textContent=L.startHintBtn;
+  // Voice / double-tap hint
+  const dh=document.getElementById('doit-hint');
+  if(dh) dh.textContent=L.doitHint;
+  // Name label
+  const nl=document.getElementById('name-lbl');
+  if(nl) nl.textContent=L.nameLbl;
+  // Ranking close button
+  const rcb=document.getElementById('rank-close-btn');
+  if(rcb) rcb.textContent=L.rankClose;
+  // Intro ranking table headers
+  const setTh=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  setTh('rh-name',L.rankName);setTh('rh-acc',L.rankAcc);setTh('rh-pph',L.rankPph);setTh('rh-time',L.rankTime);
+  setTh('rk-name',L.rankName);setTh('rk-acc',L.rankAcc);setTh('rk-pph',L.rankPph);setTh('rk-time',L.rankTime);
+  // Loading row text
+  const rlr=document.getElementById('rh-loading-row');if(rlr)rlr.textContent=L.rankLoading;
+  const rkr=document.getElementById('rk-loading-row');if(rkr)rkr.textContent=L.rankLoading;
   // Map canvas rebuild
   floorCacheDirty=true;
   if(running) renderMap();
