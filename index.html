@@ -389,12 +389,53 @@ body{display:flex;align-items:center;justify-content:center;}
 #tut-choice{margin-top:14px;display:flex;align-items:center;gap:10px;font-family:'Press Start 2P',monospace;font-size:7px;color:#8bac0f;}
 #tut-chk-wrap{display:flex;align-items:center;gap:8px;cursor:pointer;}
 
-/* ── Ranking table ── */
-#ranking-table td, #ranking-table th{
-  color:#8bac0f;border-bottom:1px solid #1a3e0a;white-space:nowrap;
+/* ── Today's Stats Dashboard ── */
+#today-stats{
+  width:100%;max-width:380px;margin-top:18px;
+  font-family:'Press Start 2P',monospace;
 }
-#ranking-table tr.rank-top td{ color:#9bbc0f; }
-#ranking-table tr:first-child td{ color:#ffdd00; }
+.stats-header{
+  font-size:7px;color:#9bbc0f;margin-bottom:10px;text-align:left;
+  display:flex;align-items:center;gap:6px;
+}
+.stats-date{font-size:5px;color:#306230;margin-left:auto;}
+.stats-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;
+}
+.stat-card{
+  background:#0a2808;border:2px solid #1a3e0a;padding:8px;
+}
+.stat-card.accent{border-color:#306230;}
+.stat-lbl{font-size:5px;color:#306230;margin-bottom:4px;letter-spacing:.03em;}
+.stat-val{font-size:16px;color:#9bbc0f;letter-spacing:.02em;}
+.stat-val.dim{color:#8bac0f;font-size:13px;}
+.stat-unit{font-size:5px;color:#306230;margin-left:2px;}
+/* progress bar */
+.stats-prog-wrap{margin-bottom:6px;}
+.stats-prog-lbl{
+  display:flex;justify-content:space-between;
+  font-size:5px;color:#306230;margin-bottom:4px;
+}
+.stats-prog-lbl span{color:#8bac0f;}
+.stats-prog-bar-bg{
+  width:100%;height:10px;background:#0a2808;border:2px solid #1a3e0a;position:relative;overflow:hidden;
+}
+.stats-prog-bar-fill{
+  height:100%;background:#9bbc0f;transition:width 1s ease-out;
+  position:relative;
+}
+.stats-prog-bar-fill::after{
+  content:'';position:absolute;top:0;right:0;bottom:0;width:3px;background:#fff;opacity:.4;
+}
+.stats-prog-bar-fill.over{background:#ffdd00;}
+/* wide stat row */
+.stat-row{
+  background:#0a2808;border:2px solid #1a3e0a;padding:6px 8px;
+  display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;
+}
+.stat-row-lbl{font-size:5px;color:#306230;}
+.stat-row-val{font-size:9px;color:#8bac0f;}
+/* Ranking table (in-game overlay only) */
 .rank-name{ max-width:70px;overflow:hidden;text-overflow:ellipsis; }
 #lang-switch{
   display:flex;gap:8px;margin-bottom:16px;
@@ -649,26 +690,48 @@ body{display:flex;align-items:center;justify-content:center;}
 
     <button id="intro-go">START GAME</button>
 
-    <!-- Ranking table -->
-    <div style="width:100%;max-width:380px;margin-top:18px;">
-      <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:#9bbc0f;margin-bottom:8px;text-align:left;">🏆 RANKING</div>
-      <div style="overflow-x:auto;">
-        <table id="ranking-table" style="width:100%;border-collapse:collapse;font-family:'Press Start 2P',monospace;font-size:6px;">
-          <thead>
-            <tr style="color:#306230;border-bottom:2px solid #306230;">
-              <th style="padding:4px 3px;">#</th>
-              <th style="padding:4px 3px;text-align:left;" id="rh-name">NAME</th>
-              <th style="padding:4px 3px;">PICK</th>
-              <th style="padding:4px 3px;" id="rh-acc">ACC</th>
-              <th style="padding:4px 3px;" id="rh-pph">/HR</th>
-              <th style="padding:4px 3px;" id="rh-time">TIME</th>
-              <th style="padding:4px 3px;">M</th>
-            </tr>
-          </thead>
-          <tbody id="ranking-tbody">
-            <tr><td colspan="7" style="color:#306230;text-align:center;padding:12px;" id="rh-loading-row">Loading...</td></tr>
-          </tbody>
-        </table>
+    <!-- Today's Stats Dashboard -->
+    <div id="today-stats">
+      <div class="stats-header">
+        📊 TODAY'S STATUS
+        <span class="stats-date" id="stats-date-lbl">----/--/--</span>
+      </div>
+
+      <!-- 出荷数 & 目標 big numbers -->
+      <div class="stats-grid">
+        <div class="stat-card accent">
+          <div class="stat-lbl" id="stats-ship-lbl">📦 出荷数</div>
+          <div class="stat-val"><span id="stats-ship-count">--</span><span class="stat-unit">個</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-lbl" id="stats-target-lbl">🎯 本日目標</div>
+          <div class="stat-val dim"><span id="stats-target-val">500</span><span class="stat-unit">個</span></div>
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="stats-prog-wrap">
+        <div class="stats-prog-lbl">
+          <span id="stats-prog-left">達成率</span>
+          <span id="stats-prog-pct">--%</span>
+        </div>
+        <div class="stats-prog-bar-bg">
+          <div class="stats-prog-bar-fill" id="stats-prog-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- 入荷数 / 在庫数 row -->
+      <div class="stat-row">
+        <span class="stat-row-lbl" id="stats-arrival-lbl">📥 本日入荷</span>
+        <span class="stat-row-val"><span id="stats-arrival-val">---</span> 個</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-row-lbl" id="stats-stock-lbl">📋 残在庫</span>
+        <span class="stat-row-val"><span id="stats-stock-val">---</span> 個</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-row-lbl" id="stats-workers-lbl">👤 本日稼働</span>
+        <span class="stat-row-val"><span id="stats-workers-val">-</span> 名</span>
       </div>
     </div>
 
@@ -714,35 +777,77 @@ window._fbSet       = set;
 window._fbRemove    = remove;
 window._fbOnDisconnect = onDisconnect;
 
-// ランキングをイントロ画面に表示（ページ読み込み時＆毎分更新）
-function loadRanking(){
-  const container = document.getElementById('ranking-tbody');
-  if(!container) return;
-  const q = query(ref(fbDb,'scores'), orderByChild('picks'), limitToLast(20));
+// ── 今日の出荷状況をイントロ画面に表示 ──
+function loadTodayStats(){
+  // 今日のJST開始タイムスタンプ（UTC+9）
+  const now = new Date();
+  const jstOffset = 9 * 60 * 60 * 1000;
+  const jstNow = new Date(now.getTime() + jstOffset);
+  const jstMidnight = new Date(Date.UTC(
+    jstNow.getUTCFullYear(), jstNow.getUTCMonth(), jstNow.getUTCDate()
+  )).getTime() - jstOffset;
+
+  // 日付ラベル更新
+  const dl = document.getElementById('stats-date-lbl');
+  if(dl) dl.textContent = `${jstNow.getUTCFullYear()}/${String(jstNow.getUTCMonth()+1).padStart(2,'0')}/${String(jstNow.getUTCDate()).padStart(2,'0')}`;
+
+  // 入荷数：日付シードベースでそれっぽい数をでっち上げ
+  const seed = jstNow.getUTCFullYear()*10000 + (jstNow.getUTCMonth()+1)*100 + jstNow.getUTCDate();
+  const fakeArrival = 480 + (seed % 7) * 30 + (seed % 13) * 5; // 480〜720くらい
+  const target = 500;
+
+  const arrivalEl = document.getElementById('stats-arrival-val');
+  if(arrivalEl) arrivalEl.textContent = fakeArrival;
+
+  if(!window._fbOnValue || !window._fbRef || !window._fbDb) {
+    // Firebase未接続時はダミー表示
+    updateStatsUI(0, target, fakeArrival);
+    return;
+  }
+
+  const q = query(
+    ref(fbDb, 'scores'),
+    orderByChild('ts'),
+    limitToLast(200)
+  );
   onValue(q, snap => {
-    const rows = [];
-    snap.forEach(child => rows.push(child.val()));
-    rows.sort((a,b) => b.picks - a.picks);
-    container.innerHTML = rows.map((r,i) => {
-      const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
-      const acc   = r.accuracy != null ? r.accuracy+'%' : '--';
-      const prod  = r.productivity != null ? r.productivity : '--';
-      const time  = r.shiftTime || '--:--:--';
-      const mode  = r.hardMode ? '💀' : '🟢';
-      return `<tr class="${i<3?'rank-top':''}">
-        <td>${medal||('#'+(i+1))}</td>
-        <td class="rank-name">${escHtml(r.name||'???')}</td>
-        <td>${r.picks}</td>
-        <td>${acc}</td>
-        <td>${prod}</td>
-        <td>${time}</td>
-        <td>${mode}</td>
-      </tr>`;
-    }).join('') || `<tr><td colspan="7" style="color:#306230;text-align:center;padding:12px;">${window._t?window._t('rankEmpty'):'No records yet'}</td></tr>`;
+    let totalShipped = 0;
+    const workerSet = new Set();
+    snap.forEach(child => {
+      const r = child.val();
+      // 今日JST分のみ集計
+      if(r.ts && r.ts >= jstMidnight) {
+        totalShipped += (r.picks || 0);
+        if(r.name) workerSet.add(r.name);
+      }
+    });
+    updateStatsUI(totalShipped, target, fakeArrival, workerSet.size);
   });
 }
+
+function updateStatsUI(shipped, target, arrival, workers){
+  const shipEl   = document.getElementById('stats-ship-count');
+  const pctEl    = document.getElementById('stats-prog-pct');
+  const fillEl   = document.getElementById('stats-prog-fill');
+  const stockEl  = document.getElementById('stats-stock-val');
+  const workEl   = document.getElementById('stats-workers-val');
+
+  if(shipEl)  shipEl.textContent  = shipped;
+  const pct = Math.min(Math.round(shipped / target * 100), 999);
+  if(pctEl)   pctEl.textContent   = pct + '%';
+  if(fillEl){
+    const barW = Math.min(pct, 100);
+    fillEl.style.width = barW + '%';
+    if(pct >= 100) fillEl.classList.add('over');
+    else           fillEl.classList.remove('over');
+  }
+  const stock = Math.max(arrival - shipped, 0);
+  if(stockEl) stockEl.textContent = stock;
+  if(workEl)  workEl.textContent  = workers != null ? workers : '-';
+}
+
 function escHtml(s){ return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-document.addEventListener('DOMContentLoaded', loadRanking);
+document.addEventListener('DOMContentLoaded', loadTodayStats);
 </script>
 
 <script>
@@ -2740,12 +2845,22 @@ function applyLang(){
   // Ranking close button
   const rcb=document.getElementById('rank-close-btn');
   if(rcb) rcb.textContent=L.rankClose;
-  // Intro ranking table headers
+  // Intro stats labels (language switch)
+  const statsShipLbl = document.getElementById('stats-ship-lbl');
+  if(statsShipLbl) statsShipLbl.textContent = lang==='ja' ? '📦 出荷数' : '📦 Shipped';
+  const statsTargetLbl = document.getElementById('stats-target-lbl');
+  if(statsTargetLbl) statsTargetLbl.textContent = lang==='ja' ? '🎯 本日目標' : '🎯 Target';
+  const statsProgLeft = document.getElementById('stats-prog-left');
+  if(statsProgLeft) statsProgLeft.textContent = lang==='ja' ? '達成率' : 'Achievement';
+  const statsArrivalLbl = document.getElementById('stats-arrival-lbl');
+  if(statsArrivalLbl) statsArrivalLbl.textContent = lang==='ja' ? '📥 本日入荷' : '📥 Received';
+  const statsStockLbl = document.getElementById('stats-stock-lbl');
+  if(statsStockLbl) statsStockLbl.textContent = lang==='ja' ? '📋 残在庫' : '📋 Remaining';
+  const statsWorkersLbl = document.getElementById('stats-workers-lbl');
+  if(statsWorkersLbl) statsWorkersLbl.textContent = lang==='ja' ? '👤 本日稼働' : '👤 Workers';
+  // In-game ranking table headers
   const setTh=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
-  setTh('rh-name',L.rankName);setTh('rh-acc',L.rankAcc);setTh('rh-pph',L.rankPph);setTh('rh-time',L.rankTime);
   setTh('rk-name',L.rankName);setTh('rk-acc',L.rankAcc);setTh('rk-pph',L.rankPph);setTh('rk-time',L.rankTime);
-  // Loading row text
-  const rlr=document.getElementById('rh-loading-row');if(rlr)rlr.textContent=L.rankLoading;
   const rkr=document.getElementById('rk-loading-row');if(rkr)rkr.textContent=L.rankLoading;
   // Map canvas rebuild
   floorCacheDirty=true;
