@@ -2098,6 +2098,7 @@ function drawTutPath(ctx){
 }
 
 // ══ RESIZE ══
+function resize(){ applyViewportSize(); }
 function applyViewportSize(){
   const s=document.getElementById('screen');
   const vvw=window.visualViewport?window.visualViewport.width:window.innerWidth;
