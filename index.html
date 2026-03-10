@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>EC倉庫 PICKING</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{width:100%;height:100%;overflow:hidden;background:#0f380f;}
@@ -61,6 +61,9 @@ body{display:flex;align-items:center;justify-content:center;}
 #c, #scanlines{position:absolute;top:0;left:0;width:100%;height:100%;image-rendering:pixelated;}
 #scanlines{pointer-events:none;z-index:100;opacity:.18;}
 
+/* ── Base Japanese Gothic font ── */
+.jp{font-family:'Noto Sans JP','Hiragino Sans',sans-serif!important;}
+
 /* ── HUD ── */
 #hud{
   position:absolute;bottom:0;left:0;right:0;z-index:30;
@@ -68,12 +71,12 @@ body{display:flex;align-items:center;justify-content:center;}
   padding:8px 12px;
   padding-bottom:calc(8px + env(safe-area-inset-bottom));
   display:flex;align-items:center;gap:10px;
-  min-height:calc(68px + env(safe-area-inset-bottom));
+  min-height:calc(76px + env(safe-area-inset-bottom));
 }
-#hud-left{flex:1;display:flex;flex-direction:column;gap:4px;}
-#hud-batch{font-family:'Press Start 2P',monospace;font-size:7px;color:#9bbc0f;}
-#hud-prog{font-family:'Press Start 2P',monospace;font-size:11px;color:#9bbc0f;letter-spacing:.05em;}
-#hud-state-msg{font-family:'Press Start 2P',monospace;font-size:6px;color:#8bac0f;letter-spacing:.03em;}
+#hud-left{flex:1;display:flex;flex-direction:column;gap:5px;}
+#hud-batch{font-family:'Press Start 2P',monospace;font-size:9px;color:#9bbc0f;}
+#hud-prog{font-family:'Press Start 2P',monospace;font-size:13px;color:#9bbc0f;letter-spacing:.05em;}
+#hud-state-msg{font-family:'Noto Sans JP','Hiragino Sans',sans-serif;font-size:12px;font-weight:700;color:#8bac0f;letter-spacing:.03em;line-height:1.4;}
 
 /* Scan button always on top — above all panels */
 #scan-btn{
@@ -83,7 +86,7 @@ body{display:flex;align-items:center;justify-content:center;}
   width:56px;height:56px;border-radius:50%;
   background:#9bbc0f;border:3px solid #306230;
   outline:3px solid #9bbc0f;
-  font-family:'Press Start 2P',monospace;font-size:5px;
+  font-family:'Noto Sans JP',sans-serif;font-size:8px;font-weight:900;
   color:#0f380f;cursor:pointer;z-index:65;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
   user-select:none;-webkit-user-select:none;
@@ -100,7 +103,7 @@ body{display:flex;align-items:center;justify-content:center;}
   left:50%;transform:translateX(-50%);
   background:rgba(155,188,15,.92);color:#0f380f;
   padding:4px 10px;
-  font-family:'Press Start 2P',monospace;font-size:6px;
+  font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;
   border:2px solid #306230;z-index:32;
   display:none;pointer-events:none;white-space:nowrap;
   border-radius:2px;
@@ -141,45 +144,54 @@ body{display:flex;align-items:center;justify-content:center;}
   left:8px;right:8px;
   background:#0f380f;border:3px solid #8bac0f;border-radius:2px;
   padding:10px 12px;z-index:66;display:none;
-  font-family:'Press Start 2P',monospace;
+  font-family:'Noto Sans JP',sans-serif;
   image-rendering:pixelated;
 }
 #sp.show{display:block;}
-.sp-h{font-size:7px;color:#306230;margin-bottom:8px;border-bottom:1px solid #306230;padding-bottom:5px;}
+.sp-h{font-size:10px;font-weight:700;color:#306230;margin-bottom:8px;border-bottom:1px solid #306230;padding-bottom:5px;}
 #sp-main-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 #sp-shape-area{width:56px;height:56px;flex-shrink:0;border:2px solid #306230;background:#0a2808;display:flex;align-items:center;justify-content:center;overflow:hidden;}
 #sp-cnv{display:block;}
 #sp-info{flex:1;}
-#sp-shelf-lbl{font-size:6px;color:#8bac0f;margin-bottom:4px;}
-#sp-shelf-id{font-size:11px;color:#9bbc0f;margin-bottom:4px;}
-#sp-code{font-size:9px;color:#9bbc0f;}
-#sp-type{font-size:6px;color:#8bac0f;margin-top:2px;}
-#sp-footer{display:flex;justify-content:space-between;font-size:7px;color:#306230;border-top:1px solid #306230;padding-top:5px;}
+#sp-shelf-lbl{font-size:10px;color:#8bac0f;margin-bottom:4px;font-weight:700;}
+#sp-shelf-id{font-size:15px;color:#9bbc0f;margin-bottom:4px;font-weight:900;}
+#sp-code{font-family:'Press Start 2P',monospace;font-size:12px;color:#9bbc0f;}
+#sp-type{font-size:11px;color:#8bac0f;margin-top:2px;font-weight:700;}
+#sp-footer{display:flex;justify-content:space-between;font-size:10px;color:#306230;border-top:1px solid #306230;padding-top:5px;font-weight:700;}
 
 /* ── Shelf Panel ── */
 #shelf-panel{
   position:absolute;inset:0;z-index:40;
   background:#0f380f;display:none;flex-direction:column;
-  font-family:'Press Start 2P',monospace;
+  font-family:'Noto Sans JP',sans-serif;
 }
 #shelf-panel.show{display:flex;}
 #sp-hdr{
   background:#0a2808;border-bottom:3px solid #306230;
-  padding:10px 12px;display:flex;justify-content:space-between;align-items:center;
+  padding:10px 12px;display:flex;justify-content:center;align-items:center;
   flex-shrink:0;
 }
-#sp-hdr-title{font-size:10px;color:#9bbc0f;}
+#sp-hdr-title{font-size:14px;color:#9bbc0f;font-weight:900;}
 #sp-hdr-sub{display:none;}
 #sp-hdr-back{
-  background:#306230;border:2px solid #8bac0f;
-  color:#9bbc0f;padding:6px 10px;font-family:'Press Start 2P',monospace;
-  font-size:6px;cursor:pointer;transition:all .08s;
+  background:#306230;border:3px solid #8bac0f;
+  color:#9bbc0f;padding:12px 18px;font-family:'Noto Sans JP',sans-serif;
+  font-size:13px;font-weight:900;cursor:pointer;transition:all .08s;
+  border-radius:4px;
 }
-#sp-hdr-back:active{background:#0f380f;}
+#sp-hdr-back:active{background:#0f380f;transform:scale(.93);}
+/* Footer bar for back button */
+#sp-footer-bar{
+  flex-shrink:0;
+  background:#0a2808;border-top:3px solid #306230;
+  padding:10px 12px;
+  padding-bottom:calc(10px + env(safe-area-inset-bottom));
+  display:flex;align-items:center;
+}
 #sp-scan-hold-hint{
-  padding:6px 12px;font-size:6px;color:#306230;text-align:center;
+  padding:8px 12px;font-size:11px;color:#306230;text-align:center;
   border-bottom:1px solid #1a4010;flex-shrink:0;
-  font-family:'Press Start 2P',monospace;
+  font-family:'Noto Sans JP',sans-serif;font-weight:700;
 }
 #sp-scan-hold-hint.revealed{color:#9bbc0f;}
 #shelf-grid-wrap{flex:1;overflow-y:auto;padding:8px;}
@@ -199,16 +211,17 @@ body{display:flex;align-items:center;justify-content:center;}
   box-shadow:0 0 0 2px rgba(155,188,15,.4);}
 /* count bar on top (small) */
 .dr-count-bar{
-  background:#0a2808;padding:3px 2px;
-  font-family:'Press Start 2P',monospace;font-size:5px;
+  background:#0a2808;padding:2px 2px;
+  font-family:'Noto Sans JP',sans-serif;font-size:7px;font-weight:400;
   text-align:center;color:#306230;
   border-bottom:1px solid #1a3e0a;
+  line-height:1.2;
 }
 /* label (big) at bottom */
 .dr-label-bar{
   flex:1;display:flex;align-items:center;justify-content:center;
-  font-family:'Press Start 2P',monospace;font-size:7px;
-  color:#8bac0f;padding:4px 2px;letter-spacing:.02em;
+  font-family:'Press Start 2P',monospace;font-size:8px;
+  color:#8bac0f;padding:6px 2px;letter-spacing:.02em;
   text-align:center;line-height:1.3;
 }
 .dr-btn.target-glow .dr-label-bar{color:#9bbc0f;}
@@ -220,28 +233,31 @@ body{display:flex;align-items:center;justify-content:center;}
 #drawer-panel{
   position:absolute;inset:0;z-index:50;
   background:#0f380f;display:none;flex-direction:column;
-  font-family:'Press Start 2P',monospace;
+  font-family:'Noto Sans JP',sans-serif;
 }
 #drawer-panel.show{display:flex;animation:drawerOpen .2s ease-out;}
 #dp-hdr{
   background:#0a2808;border-bottom:3px solid #306230;
-  padding:8px 12px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;
+  padding:8px 12px;display:flex;justify-content:center;align-items:center;flex-shrink:0;
 }
-#dp-title{font-size:8px;color:#9bbc0f;}
-#dp-shelf-lbl{font-size:5px;color:#8bac0f;margin-top:2px;}
+#dp-title{font-size:14px;color:#9bbc0f;font-weight:900;}
+#dp-shelf-lbl{font-size:11px;color:#8bac0f;margin-top:2px;font-weight:700;}
 #dp-back{
-  background:#306230;border:2px solid #8bac0f;color:#9bbc0f;
-  padding:5px 8px;font-family:'Press Start 2P',monospace;font-size:6px;cursor:pointer;
+  position:absolute;top:8px;left:12px;z-index:55;
+  background:#306230;border:3px solid #8bac0f;color:#9bbc0f;
+  padding:10px 16px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:900;cursor:pointer;
+  border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.4);transition:all .08s;
 }
+#dp-back:active{background:#0f380f;transform:scale(.93);}
 #dp-hint{
-  padding:4px 12px;font-size:5px;color:#306230;text-align:center;
-  border-bottom:1px solid #1a4010;flex-shrink:0;
+  padding:6px 12px;font-size:11px;color:#306230;text-align:center;
+  border-bottom:1px solid #1a4010;flex-shrink:0;font-weight:700;
 }
 #dp-canvas-wrap{flex:1;position:relative;overflow:hidden;background:#2a1e12;cursor:grab;min-height:180px;}
 #dp-canvas{position:absolute;top:0;left:0;display:block;touch-action:none;}
 #dp-empty{
   position:absolute;inset:0;display:none;
-  font-family:'Press Start 2P',monospace;font-size:9px;color:#306230;
+  font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:700;color:#306230;
   align-items:center;justify-content:center;text-align:center;padding:20px;
 }
 #dp-empty.show{display:flex;}
@@ -259,22 +275,22 @@ body{display:flex;align-items:center;justify-content:center;}
 #dp-confirm.show{display:block;}
 #dpc-row{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
 #dpc-canvas{border:2px solid #306230;flex-shrink:0;}
-#dpc-code{font-size:14px;color:#9bbc0f;}
-#dpc-type{font-size:6px;color:#8bac0f;margin-top:3px;}
+#dpc-code{font-family:'Press Start 2P',monospace;font-size:16px;color:#9bbc0f;}
+#dpc-type{font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:#8bac0f;margin-top:3px;}
 #dpc-result-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-#dpc-result-icon{font-size:14px;flex-shrink:0;font-family:'Press Start 2P',monospace;color:#fff;}
-#dpc-match{font-size:8px;font-family:'Press Start 2P',monospace;}
+#dpc-result-icon{font-size:18px;flex-shrink:0;font-family:'Press Start 2P',monospace;color:#fff;}
+#dpc-match{font-size:13px;font-family:'Noto Sans JP',sans-serif;font-weight:900;}
 #dpc-match.ok{color:#ffffff;}
 #dpc-match.ng{color:#ff6060;}
 .dpc-btns{display:flex;gap:6px;}
 .dpc-btn{
-  flex:1;padding:9px 4px;border:2px solid #8bac0f;font-family:'Press Start 2P',monospace;
-  font-size:6px;cursor:pointer;transition:all .08s;
+  flex:1;padding:12px 4px;border:2px solid #8bac0f;font-family:'Noto Sans JP',sans-serif;
+  font-size:12px;font-weight:900;cursor:pointer;transition:all .08s;
 }
 .dpc-scan-btn{
-  display:block;width:100%;padding:10px;
-  border:2px solid #9bbc0f;font-family:'Press Start 2P',monospace;
-  font-size:8px;cursor:pointer;transition:all .08s;
+  display:block;width:100%;padding:14px;
+  border:2px solid #9bbc0f;font-family:'Noto Sans JP',sans-serif;
+  font-size:14px;font-weight:900;cursor:pointer;transition:all .08s;
   background:#1a3e0a;color:#9bbc0f;
 }
 .dpc-scan-btn:active{background:#0f380f;transform:scale(.97);}
@@ -288,34 +304,34 @@ body{display:flex;align-items:center;justify-content:center;}
   background:#0a2808;border-top:3px solid #306230;
   padding:8px 12px;flex-shrink:0;
   display:flex;align-items:center;gap:12px;
-  font-family:'Press Start 2P',monospace;
+  font-family:'Noto Sans JP',sans-serif;
 }
 #dsb-info{flex:1;min-width:0;}
-#dsb-box{font-size:11px;color:#9bbc0f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-#dsb-box-lbl{font-size:7px;color:#306230;margin-bottom:3px;}
-#dsb-code{font-size:8px;color:#8bac0f;margin-top:4px;}
-#dsb-prog{font-size:7px;color:#306230;margin-top:3px;}
+#dsb-box{font-size:14px;font-weight:900;color:#9bbc0f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#dsb-box-lbl{font-size:10px;font-weight:700;color:#306230;margin-bottom:3px;}
+#dsb-code{font-family:'Press Start 2P',monospace;font-size:10px;color:#8bac0f;margin-top:4px;}
+#dsb-prog{font-size:11px;font-weight:700;color:#306230;margin-top:3px;}
 .wf-overlay{
   position:absolute;inset:0;z-index:60;
   background:rgba(10,28,5,.95);
   display:none;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;padding:20px;
-  font-family:'Press Start 2P',monospace;
+  font-family:'Noto Sans JP',sans-serif;
 }
 .wf-overlay.show{display:flex;}
 .wf-icon{font-size:48px;margin-bottom:14px;}
-.wf-title{font-size:11px;color:#9bbc0f;margin-bottom:8px;letter-spacing:.05em;}
-.wf-sub{font-size:7px;color:#8bac0f;line-height:1.9;margin-bottom:20px;}
+.wf-title{font-size:16px;font-weight:900;color:#9bbc0f;margin-bottom:8px;letter-spacing:.03em;}
+.wf-sub{font-size:13px;font-weight:700;color:#8bac0f;line-height:1.8;margin-bottom:20px;}
 .wf-btn{
   background:#306230;border:3px solid #8bac0f;color:#9bbc0f;
-  padding:12px 24px;font-family:'Press Start 2P',monospace;font-size:9px;
-  cursor:pointer;transition:all .08s;letter-spacing:.05em;
+  padding:14px 28px;font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:900;
+  cursor:pointer;transition:all .08s;letter-spacing:.03em;
 }
 .wf-btn:active{background:#0f380f;}
 .wf-scan-target{
   border:3px solid #8bac0f;background:#0f380f;
-  padding:12px 20px;margin:12px 0 16px;
-  font-size:7px;color:#9bbc0f;line-height:2;
+  padding:14px 20px;margin:12px 0 16px;
+  font-size:13px;font-weight:700;color:#9bbc0f;line-height:1.8;
 }
 .wf-progress{
   width:200px;height:8px;background:#0f380f;border:2px solid #306230;
@@ -327,18 +343,18 @@ body{display:flex;align-items:center;justify-content:center;}
 #toast{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   background:#0f380f;border:3px solid #8bac0f;
-  padding:12px 20px;font-family:'Press Start 2P',monospace;font-size:14px;
+  padding:14px 24px;font-family:'Noto Sans JP',sans-serif;font-size:18px;font-weight:900;
   z-index:70;display:none;text-align:center;pointer-events:none;
 }
 #toast.ok{color:#ffffff;border-color:#9bbc0f;background:#0f380f;}
 #toast.ng{color:#ff6060;border-color:#ff6060;background:#0f380f;}
-#toast-sub{font-size:7px;margin-top:5px;color:#8bac0f;}
+#toast-sub{font-size:11px;font-weight:700;margin-top:5px;color:#8bac0f;}
 
 /* ── Bot bubble ── */
 #bbub{
   position:absolute;bottom:82px;right:14px;
   background:#9bbc0f;color:#0f380f;padding:5px 10px;
-  font-family:'Press Start 2P',monospace;font-size:6px;
+  font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;
   border:2px solid #306230;z-index:32;display:none;
 }
 #bbub::after{content:'';position:absolute;bottom:-8px;right:12px;
@@ -350,21 +366,21 @@ body{display:flex;align-items:center;justify-content:center;}
   background:#0f380f;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;padding:20px;overflow-y:auto;
-  font-family:'Press Start 2P',monospace;
+  font-family:'Noto Sans JP',sans-serif;
 }
-.intro-title{font-size:18px;color:#9bbc0f;margin-bottom:8px;letter-spacing:.06em;}
+.intro-title{font-family:'Press Start 2P',monospace;font-size:18px;color:#9bbc0f;margin-bottom:8px;letter-spacing:.06em;}
 .intro-title span{color:#8bac0f;}
-.intro-sub{font-size:9px;color:#306230;margin-bottom:20px;letter-spacing:.1em;}
+.intro-sub{font-size:12px;font-weight:700;color:#306230;margin-bottom:20px;letter-spacing:.1em;}
 .intro-rules{
   background:#0a2808;border:2px solid #306230;padding:14px 18px;
   text-align:left;max-width:380px;width:100%;margin-bottom:20px;
-  font-size:9px;color:#8bac0f;line-height:2.6;
+  font-size:13px;font-weight:700;color:#8bac0f;line-height:2.2;
 }
 .intro-rules li{list-style:none;padding-left:14px;position:relative;}
 .intro-rules li::before{content:'>';position:absolute;left:0;color:#9bbc0f;}
 #intro-go{
   background:#9bbc0f;color:#0f380f;border:3px solid #306230;
-  padding:14px 32px;font-family:'Press Start 2P',monospace;font-size:11px;
+  padding:14px 32px;font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:900;
   cursor:pointer;letter-spacing:.06em;
   box-shadow:4px 4px 0 #306230;transition:all .08s;
 }
@@ -375,30 +391,30 @@ body{display:flex;align-items:center;justify-content:center;}
   position:absolute;top:0;left:0;right:0;z-index:35;
   background:rgba(10,40,10,.94);border-bottom:3px solid #9bbc0f;
   padding:10px 14px;
-  font-family:'Press Start 2P',monospace;font-size:7px;
-  color:#9bbc0f;line-height:2;text-align:center;
+  font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;
+  color:#9bbc0f;line-height:1.7;text-align:center;
   display:none;pointer-events:none;
 }
 #tut-hint.show{display:block;}
-#tut-step{font-size:5px;color:#306230;margin-bottom:4px;}
+#tut-step{font-family:'Press Start 2P',monospace;font-size:7px;color:#306230;margin-bottom:4px;}
 #tut-arrow{font-size:22px;display:block;animation:tutPulse .7s ease-in-out infinite alternate;}
 @keyframes tutPulse{from{opacity:.4;transform:scale(.85);}to{opacity:1;transform:scale(1.1);}}
 
 /* Tutorial path overlay on canvas - drawn via JS */
 
-#tut-choice{margin-top:14px;display:flex;align-items:center;gap:10px;font-family:'Press Start 2P',monospace;font-size:7px;color:#8bac0f;}
+#tut-choice{margin-top:14px;display:flex;align-items:center;gap:10px;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;color:#8bac0f;}
 #tut-chk-wrap{display:flex;align-items:center;gap:8px;cursor:pointer;}
 
 /* ── Today's Stats Dashboard ── */
 #today-stats{
   width:100%;max-width:380px;margin-top:18px;
-  font-family:'Press Start 2P',monospace;
+  font-family:'Noto Sans JP',sans-serif;
 }
 .stats-header{
-  font-size:7px;color:#9bbc0f;margin-bottom:10px;text-align:left;
+  font-size:11px;font-weight:900;color:#9bbc0f;margin-bottom:10px;text-align:left;
   display:flex;align-items:center;gap:6px;
 }
-.stats-date{font-size:5px;color:#306230;margin-left:auto;}
+.stats-date{font-size:9px;color:#306230;margin-left:auto;}
 .stats-grid{
   display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;
 }
@@ -406,15 +422,15 @@ body{display:flex;align-items:center;justify-content:center;}
   background:#0a2808;border:2px solid #1a3e0a;padding:8px;
 }
 .stat-card.accent{border-color:#306230;}
-.stat-lbl{font-size:5px;color:#306230;margin-bottom:4px;letter-spacing:.03em;}
-.stat-val{font-size:16px;color:#9bbc0f;letter-spacing:.02em;}
+.stat-lbl{font-size:9px;font-weight:700;color:#306230;margin-bottom:4px;letter-spacing:.03em;}
+.stat-val{font-family:'Press Start 2P',monospace;font-size:16px;color:#9bbc0f;letter-spacing:.02em;}
 .stat-val.dim{color:#8bac0f;font-size:13px;}
-.stat-unit{font-size:5px;color:#306230;margin-left:2px;}
+.stat-unit{font-size:9px;color:#306230;margin-left:2px;}
 /* progress bar */
 .stats-prog-wrap{margin-bottom:6px;}
 .stats-prog-lbl{
   display:flex;justify-content:space-between;
-  font-size:5px;color:#306230;margin-bottom:4px;
+  font-size:9px;font-weight:700;color:#306230;margin-bottom:4px;
 }
 .stats-prog-lbl span{color:#8bac0f;}
 .stats-prog-bar-bg{
@@ -433,16 +449,16 @@ body{display:flex;align-items:center;justify-content:center;}
   background:#0a2808;border:2px solid #1a3e0a;padding:6px 8px;
   display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;
 }
-.stat-row-lbl{font-size:5px;color:#306230;}
-.stat-row-val{font-size:9px;color:#8bac0f;}
+.stat-row-lbl{font-size:9px;font-weight:700;color:#306230;}
+.stat-row-val{font-size:12px;font-weight:900;color:#8bac0f;}
 /* Ranking table (in-game overlay only) */
 .rank-name{ max-width:70px;overflow:hidden;text-overflow:ellipsis; }
 #lang-switch{
   display:flex;gap:8px;margin-bottom:16px;
 }
 .lang-btn{
-  font-family:'Press Start 2P',monospace;font-size:8px;
-  padding:8px 14px;border:2px solid #306230;
+  font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:900;
+  padding:10px 16px;border:2px solid #306230;
   background:#0a2808;color:#8bac0f;
   cursor:pointer;transition:all .1s;letter-spacing:.04em;
 }
@@ -504,10 +520,12 @@ body{display:flex;align-items:center;justify-content:center;}
         <div id="sp-hdr-title">棚 ------</div>
         <div id="sp-hdr-sub">-- 個の引き出し</div>
       </div>
-      <button id="sp-hdr-back">◀ もどる</button>
     </div>
     <div id="sp-scan-hold-hint">スキャナー長押し → 指示確認 / ターゲット表示</div>
     <div id="shelf-grid-wrap"><div id="shelf-grid"></div></div>
+    <div id="sp-footer-bar">
+      <button id="sp-hdr-back">◀ もどる</button>
+    </div>
   </div>
 
   <!-- Drawer panel -->
@@ -552,8 +570,8 @@ body{display:flex;align-items:center;justify-content:center;}
         <div id="dpc-match">--</div>
       </div>
       <div class="dpc-btns">
-        <button class="dpc-btn dpc-ok" id="dpc-ok" style="font-size:11px;padding:14px 4px;">📦 コンテナへ入れる</button>
-        <button class="dpc-btn dpc-no" id="dpc-no" style="font-size:10px;padding:14px 4px;">↩ 引き出しに戻す</button>
+        <button class="dpc-btn dpc-ok" id="dpc-ok" style="font-size:14px;padding:16px 4px;">📦 コンテナへ入れる</button>
+        <button class="dpc-btn dpc-no" id="dpc-no" style="font-size:13px;padding:16px 4px;">↩ 引き出しに戻す</button>
       </div>
     </div>
   </div>
@@ -580,21 +598,21 @@ body{display:flex;align-items:center;justify-content:center;}
     <div class="wf-title" id="wf-empty-title">空コンテナゾーン</div>
     <div class="wf-scan-target" id="wf-empty-scan-target">スキャナーを長押しして<br>空コンテナをセット</div>
     <div class="wf-progress" id="wf-prog"><div class="wf-progress-bar" id="wf-bar"></div></div>
-    <div style="font-family:'Press Start 2P';font-size:6px;color:#306230;margin-top:4px;" id="wf-scan-msg">スキャナーボタンを長押し…</div>
+    <div style="font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:#306230;margin-top:4px;" id="wf-scan-msg">スキャナーボタンを長押し…</div>
   </div>
 
   <!-- Ranking overlay (in-game) -->
   <div class="wf-overlay" id="wf-ranking" style="padding:16px 12px;">
     <div style="width:100%;max-width:360px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:#5ab4ff;">🏆 RANKING</div>
+        <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:#5ab4ff;">🏆 RANKING</div>
         <button id="rank-close-btn" onclick="hide('wf-ranking');zoneCooldown=120;"
-          style="font-family:'Press Start 2P',monospace;font-size:6px;
+          style="font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:900;
                  background:#1a3e6a;border:2px solid #5ab4ff;color:#5ab4ff;
-                 padding:6px 10px;cursor:pointer;">✕ CLOSE</button>
+                 padding:8px 14px;cursor:pointer;">✕ CLOSE</button>
       </div>
       <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-family:'Press Start 2P',monospace;font-size:6px;">
+        <table style="width:100%;border-collapse:collapse;font-family:'Press Start 2P',monospace;font-size:8px;">
           <thead>
             <tr style="color:#306230;border-bottom:2px solid #1a3e6a;">
               <th style="padding:4px 3px;">#</th>
@@ -611,7 +629,7 @@ body{display:flex;align-items:center;justify-content:center;}
           </tbody>
         </table>
       </div>
-      <div style="font-family:'Press Start 2P',monospace;font-size:5px;color:#1a3e6a;margin-top:8px;text-align:center;">
+      <div style="font-family:'Noto Sans JP',sans-serif;font-size:9px;font-weight:700;color:#1a3e6a;margin-top:8px;text-align:center;">
         💀=HARD MODE  🟢=NORMAL
       </div>
     </div>
@@ -629,10 +647,10 @@ body{display:flex;align-items:center;justify-content:center;}
 
   <div class="wf-overlay" id="wf-end">
     <div class="wf-icon">⭐</div>
-    <div class="wf-title" id="wf-end-title" style="font-size:13px;letter-spacing:.03em;">本日の勤務終了</div>
-    <div id="wf-end-stats" style="font-family:'Press Start 2P',monospace;font-size:10px;color:#8bac0f;line-height:2.6;text-align:left;margin:18px 0 6px;width:100%;max-width:280px;"></div>
-    <div class="wf-title" id="wf-end-thanks" style="font-size:13px;color:#9bbc0f;margin-top:8px;">お疲れ様でした</div>
-    <button class="wf-btn" id="wf-end-restart" style="margin-top:20px;font-size:9px;">もう一度プレイ</button>
+    <div class="wf-title" id="wf-end-title" style="font-size:18px;letter-spacing:.03em;">本日の勤務終了</div>
+    <div id="wf-end-stats" style="font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:700;color:#8bac0f;line-height:2.2;text-align:left;margin:18px 0 6px;width:100%;max-width:300px;"></div>
+    <div class="wf-title" id="wf-end-thanks" style="font-size:18px;color:#9bbc0f;margin-top:8px;">お疲れ様でした</div>
+    <button class="wf-btn" id="wf-end-restart" style="margin-top:20px;font-size:13px;">もう一度プレイ</button>
   </div>
 
   <!-- Start hint overlay (non-tutorial mode only) -->
@@ -664,23 +682,23 @@ body{display:flex;align-items:center;justify-content:center;}
     <div class="intro-sub" id="intro-sub">〜 安全第一 〜</div>
 
     <!-- Mode checkboxes (上に移動) -->
-    <div style="margin-top:14px;display:flex;align-items:center;gap:10px;font-family:'Press Start 2P',monospace;font-size:7px;color:#8bac0f;">
+    <div style="margin-top:14px;display:flex;align-items:center;gap:10px;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;color:#8bac0f;">
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
         <input type="checkbox" id="hard-mode-chk" style="width:16px;height:16px;cursor:pointer;accent-color:#9bbc0f;">
         <span id="hard-mode-lbl">HARD MODE</span>
       </label>
     </div>
     <div id="tut-choice" style="margin-top:8px;">
-      <label id="tut-chk-wrap" style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Press Start 2P',monospace;font-size:7px;color:#9bbc0f;">
+      <label id="tut-chk-wrap" style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;color:#9bbc0f;">
         <input type="checkbox" id="tutorial-chk" checked style="width:16px;height:16px;cursor:pointer;accent-color:#9bbc0f;">
         <span id="tut-chk-lbl">チュートリアルあり</span>
       </label>
     </div>
-    <div id="hard-desc" style="font-family:'Press Start 2P',monospace;font-size:7px;color:#306230;margin-top:4px;margin-bottom:14px;text-align:center;line-height:2;">ハイライトなし</div>
+    <div id="hard-desc" style="font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:#306230;margin-top:4px;margin-bottom:14px;text-align:center;line-height:2;">ハイライトなし</div>
 
     <!-- Player name input -->
     <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:14px;width:100%;max-width:300px;">
-      <label style="font-family:'Press Start 2P',monospace;font-size:6px;color:#8bac0f;" id="name-lbl">Your Name</label>
+      <label style="font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:#8bac0f;" id="name-lbl">Your Name</label>
       <input id="player-name" type="text" maxlength="12" placeholder="NAME"
         style="width:100%;background:#0a2808;border:2px solid #306230;color:#9bbc0f;
                font-family:'Press Start 2P',monospace;font-size:11px;padding:8px 10px;
@@ -779,7 +797,6 @@ window._fbOnDisconnect = onDisconnect;
 
 // ── 今日の出荷状況をイントロ画面に表示 ──
 function loadTodayStats(){
-  // 今日のJST開始タイムスタンプ（UTC+9）
   const now = new Date();
   const jstOffset = 9 * 60 * 60 * 1000;
   const jstNow = new Date(now.getTime() + jstOffset);
@@ -787,20 +804,17 @@ function loadTodayStats(){
     jstNow.getUTCFullYear(), jstNow.getUTCMonth(), jstNow.getUTCDate()
   )).getTime() - jstOffset;
 
-  // 日付ラベル更新
   const dl = document.getElementById('stats-date-lbl');
   if(dl) dl.textContent = `${jstNow.getUTCFullYear()}/${String(jstNow.getUTCMonth()+1).padStart(2,'0')}/${String(jstNow.getUTCDate()).padStart(2,'0')}`;
 
-  // 入荷数：日付シードベースでそれっぽい数をでっち上げ
   const seed = jstNow.getUTCFullYear()*10000 + (jstNow.getUTCMonth()+1)*100 + jstNow.getUTCDate();
-  const fakeArrival = 480 + (seed % 7) * 30 + (seed % 13) * 5; // 480〜720くらい
+  const fakeArrival = 480 + (seed % 7) * 30 + (seed % 13) * 5;
   const target = 500;
 
   const arrivalEl = document.getElementById('stats-arrival-val');
   if(arrivalEl) arrivalEl.textContent = fakeArrival;
 
   if(!window._fbOnValue || !window._fbRef || !window._fbDb) {
-    // Firebase未接続時はダミー表示
     updateStatsUI(0, target, fakeArrival);
     return;
   }
@@ -815,7 +829,6 @@ function loadTodayStats(){
     const workerSet = new Set();
     snap.forEach(child => {
       const r = child.val();
-      // 今日JST分のみ集計
       if(r.ts && r.ts >= jstMidnight) {
         totalShipped += (r.picks || 0);
         if(r.name) workerSet.add(r.name);
@@ -854,10 +867,10 @@ document.addEventListener('DOMContentLoaded', loadTodayStats);
 'use strict';
 // ── ALL STATE VARIABLES DECLARED FIRST (prevent TDZ errors) ──
 let hardMode=false;
-let lang='ja'; // 'ja' or 'en'
+let lang='ja';
 let tutorialMode=false, tutStep=0;
 let gameState, batch, bidx, bnum, container, t0, moveCount;
-let totalPicks=0, totalMisses=0, totalLost=0, startTime=0;  // 勤務統計
+let totalPicks=0, totalMisses=0, totalLost=0, startTime=0;
 let exitTimer=0;
 let selItemData=null;
 let panelOpen=false, drawerOpen=false;
@@ -875,22 +888,45 @@ let emptyScanAnimId=null, emptyScanProgress=0;
 let toastT=null;
 let bgmAudio=null, bgmOn=false;
 
-// ── マルチプレイヤー ──
+// ── コンベア演出（L字カーブ）──
+let conveyorBoxes=[]; // {d, speed, alpha} — d=パス上の距離
+let conveyorTick=0;
+let botConveyorTimer=0;
+// コンベアパス定数
+const CONV_Y=17*52+52*0.45;      // 水平部分のY（row17 = 回収ゾーンの下）
+const CONV_TURN_X=2.2*52;        // カーブ開始X
+const CONV_R=52*1.4;             // カーブ半径（少しコンパクトに）
+const CONV_BW=26;                // ベルト幅
+const CONV_H_LEN=CONV_TURN_X;   // 水平部分の長さ
+const CONV_ARC_LEN=CONV_R*Math.PI/2; // カーブ部分の長さ
+// パス上の座標を取得
+function conveyorPos(d){
+  if(d<=CONV_H_LEN){
+    return{x:d,y:CONV_Y,angle:0}; // 水平（右向き）
+  }else if(d<=CONV_H_LEN+CONV_ARC_LEN){
+    const theta=-Math.PI/2+(d-CONV_H_LEN)/CONV_R;
+    return{
+      x:CONV_TURN_X+CONV_R*Math.cos(theta),
+      y:CONV_Y+CONV_R+CONV_R*Math.sin(theta),
+      angle:theta+Math.PI/2 // パス接線方向
+    };
+  }else{
+    return{
+      x:CONV_TURN_X+CONV_R,
+      y:CONV_Y+CONV_R+(d-CONV_H_LEN-CONV_ARC_LEN),
+      angle:Math.PI/2 // 下向き
+    };
+  }
+}
+
 let myPlayerId=null;
-let otherPlayers={};  // { id: {x,y,face,hasCart,name,hardMode} }
-let _lastPosSend=0;   // throttle送信用
+let otherPlayers={};
+let _lastPosSend=0;
 
-// ══════════════════════════════════════════════════════════════
-//  PALETTE + FONT
-// ══════════════════════════════════════════════════════════════
 const GB0='#0f380f', GB1='#306230', GB2='#8bac0f', GB3='#9bbc0f', GBbg='#9bbc0f';
-const PX='Press Start 2P'; // pixel font
+const PX='Press Start 2P';
 
-// ══════════════════════════════════════════════════════════════
-//  ITEM DATABASE
-// ══════════════════════════════════════════════════════════════
 const TYPE_SHAPES={
-  // ── 貴金属・アクセサリー ──
   'ピアス':         {w:30,h:24,r:.45},
   '指輪':           {w:28,h:22,r:.5},
   'ネックレス':     {w:52,h:18,r:.15},
@@ -907,297 +943,148 @@ const TYPE_SHAPES={
   'カフス':         {w:30,h:22,r:.2},
   'ペンダント':     {w:38,h:22,r:.35},
   'ストラップ':     {w:48,h:14,r:.15},
-  // ── 化粧品 ──
-  '口紅':           {w:44,h:14,r:.45},  // 横向きチューブ
-  'マニキュア':     {w:42,h:16,r:.3},   // 横向きボトル
-  'アイシャドウ':   {w:36,h:16,r:.25},  // 横長パレット
-  'マスカラ':       {w:48,h:13,r:.4},   // 横向き細チューブ
-  'ファンデーション':{w:40,h:12,r:.4},  // 薄い丸型コンパクト
-  'リップグロス':   {w:42,h:13,r:.5},   // 横向きスリム管
-  'アイライナー':   {w:50,h:10,r:.4},   // 横向き極細ペンシル
-  // ── 電化製品 ──
-  'モバイルバッテリー':{w:50,h:26,r:.12}, // 厚い横長ブロック
-  'USBケーブル':    {w:54,h:10,r:.45},  // 横長で極薄
-  'イヤホン':       {w:24,h:24,r:.5},   // 小さな正円
-  'SDカード':       {w:28,h:20,r:.08},  // 横向き小カード
-  'USBメモリ':      {w:32,h:14,r:.3},   // 小さいスティック
-  'スマホケース':   {w:54,h:28,r:.2},   // 横向きスマホ型
-  'ワイヤレス充電器':{w:44,h:44,r:.5},  // 円形パッド
-  // ── 文房具 ──
-  '万年筆':         {w:54,h:12,r:.45},  // 長い細ペン
-  '付箋':           {w:32,h:32,r:.04},  // 正方形
-  'ボールペン':     {w:52,h:10,r:.45},  // 細長ペン
-  '消しゴム':       {w:38,h:18,r:.08},  // 横長消しゴム
-  'シャープペン':   {w:50,h:9,r:.45},   // 超細長
-  'メモ帳':         {w:44,h:34,r:.06},  // 横向きノート
-  'クリップ':       {w:36,h:12,r:.2},   // 横向き細型
-  'テープ':         {w:36,h:36,r:.5},   // 円形テープ芯
-  // ── 食品・お菓子 ──
-  'チョコ':         {w:30,h:26,r:.06},  // チョコバー
-  'グミ':           {w:28,h:22,r:.4},   // 小さい横丸
-  'キャンディ':     {w:22,h:22,r:.5},   // 小さい丸
-  'クッキー':       {w:32,h:28,r:.3},   // 丸めの小さい塊
-  // ── おもちゃ ──
-  'サイコロ':       {w:28,h:28,r:.1},   // 正方形サイコロ
-  'ミニカー':       {w:40,h:22,r:.2},   // 横長ミニカー
-  'フィギュア':     {w:44,h:24,r:.2},   // 横向きフィギュア箱
-  // ── 日用品 ──
-  'リップクリーム': {w:40,h:13,r:.5},   // 横向き細管
-  'ハンドクリーム': {w:38,h:16,r:.3},   // 横向きチューブ
-  'コンタクトレンズ':{w:30,h:30,r:.5},  // 丸型ケース
+  '口紅':           {w:44,h:14,r:.45},
+  'マニキュア':     {w:42,h:16,r:.3},
+  'アイシャドウ':   {w:36,h:16,r:.25},
+  'マスカラ':       {w:48,h:13,r:.4},
+  'ファンデーション':{w:40,h:12,r:.4},
+  'リップグロス':   {w:42,h:13,r:.5},
+  'アイライナー':   {w:50,h:10,r:.4},
+  'モバイルバッテリー':{w:50,h:26,r:.12},
+  'USBケーブル':    {w:54,h:10,r:.45},
+  'イヤホン':       {w:24,h:24,r:.5},
+  'SDカード':       {w:28,h:20,r:.08},
+  'USBメモリ':      {w:32,h:14,r:.3},
+  'スマホケース':   {w:54,h:28,r:.2},
+  'ワイヤレス充電器':{w:44,h:44,r:.5},
+  '万年筆':         {w:54,h:12,r:.45},
+  '付箋':           {w:32,h:32,r:.04},
+  'ボールペン':     {w:52,h:10,r:.45},
+  '消しゴム':       {w:38,h:18,r:.08},
+  'シャープペン':   {w:50,h:9,r:.45},
+  'メモ帳':         {w:44,h:34,r:.06},
+  'クリップ':       {w:36,h:12,r:.2},
+  'テープ':         {w:36,h:36,r:.5},
+  'チョコ':         {w:30,h:26,r:.06},
+  'グミ':           {w:28,h:22,r:.4},
+  'キャンディ':     {w:22,h:22,r:.5},
+  'クッキー':       {w:32,h:28,r:.3},
+  'サイコロ':       {w:28,h:28,r:.1},
+  'ミニカー':       {w:40,h:22,r:.2},
+  'フィギュア':     {w:44,h:24,r:.2},
+  'リップクリーム': {w:40,h:13,r:.5},
+  'ハンドクリーム': {w:38,h:16,r:.3},
+  'コンタクトレンズ':{w:30,h:30,r:.5},
 };
 const TYPES_NORMAL=[
-  // 貴金属・アクセサリー
-  {p:'A',type:'ピアス',            n:150},
-  {p:'B',type:'指輪',              n:150},
-  {p:'C',type:'ネックレス',        n:100},
-  {p:'D',type:'時計',              n:100},
-  {p:'E',type:'ブレスレット',      n:100},
-  {p:'F',type:'イヤリング',        n:100},
-  {p:'G',type:'リング',            n:100},
-  {p:'H',type:'チャーム',          n:100},
-  {p:'I',type:'バングル',          n:80},
-  {p:'J',type:'アンクレット',      n:80},
-  {p:'K',type:'ヘアピン',          n:80},
-  {p:'L',type:'ブローチ',          n:80},
-  {p:'M',type:'ティアラ',          n:60},
-  {p:'N',type:'カフス',            n:60},
-  {p:'O',type:'ペンダント',        n:60},
-  {p:'P',type:'ストラップ',        n:60},
-  // 化粧品
-  {p:'Q',type:'口紅',              n:120},
-  {p:'R',type:'マニキュア',        n:120},
-  {p:'S',type:'アイシャドウ',      n:100},
-  {p:'T',type:'マスカラ',          n:100},
-  {p:'U',type:'ファンデーション',  n:80},
-  {p:'V',type:'リップグロス',      n:80},
-  {p:'W',type:'アイライナー',      n:80},
-  // 電化製品
-  {p:'X',type:'モバイルバッテリー',n:100},
-  {p:'Y',type:'USBケーブル',       n:120},
-  {p:'Z',type:'イヤホン',          n:100},
-  {p:'AA',type:'SDカード',         n:80},
-  {p:'BB',type:'USBメモリ',        n:80},
-  {p:'CC',type:'スマホケース',     n:80},
-  {p:'DD',type:'ワイヤレス充電器', n:60},
-  // 文房具
-  {p:'EE',type:'万年筆',           n:80},
-  {p:'FF',type:'付箋',             n:120},
-  {p:'GG',type:'ボールペン',       n:120},
-  {p:'HH',type:'消しゴム',         n:100},
-  {p:'II',type:'シャープペン',     n:100},
-  {p:'JJ',type:'メモ帳',           n:80},
-  {p:'KK',type:'クリップ',         n:80},
-  {p:'LL',type:'テープ',           n:80},
-  // 食品・お菓子
-  {p:'MM',type:'チョコ',           n:100},
-  {p:'NN',type:'グミ',             n:100},
-  {p:'OO',type:'キャンディ',       n:80},
-  {p:'PP',type:'クッキー',         n:80},
-  // おもちゃ
-  {p:'QQ',type:'サイコロ',         n:80},
-  {p:'RR',type:'ミニカー',         n:80},
-  {p:'SS',type:'フィギュア',       n:60},
-  // 日用品
-  {p:'TT',type:'リップクリーム',   n:100},
-  {p:'UU',type:'ハンドクリーム',   n:80},
-  {p:'VV',type:'コンタクトレンズ', n:80},
+  {p:'A',type:'ピアス',n:150},{p:'B',type:'指輪',n:150},{p:'C',type:'ネックレス',n:100},{p:'D',type:'時計',n:100},
+  {p:'E',type:'ブレスレット',n:100},{p:'F',type:'イヤリング',n:100},{p:'G',type:'リング',n:100},{p:'H',type:'チャーム',n:100},
+  {p:'I',type:'バングル',n:80},{p:'J',type:'アンクレット',n:80},{p:'K',type:'ヘアピン',n:80},{p:'L',type:'ブローチ',n:80},
+  {p:'M',type:'ティアラ',n:60},{p:'N',type:'カフス',n:60},{p:'O',type:'ペンダント',n:60},{p:'P',type:'ストラップ',n:60},
+  {p:'Q',type:'口紅',n:120},{p:'R',type:'マニキュア',n:120},{p:'S',type:'アイシャドウ',n:100},{p:'T',type:'マスカラ',n:100},
+  {p:'U',type:'ファンデーション',n:80},{p:'V',type:'リップグロス',n:80},{p:'W',type:'アイライナー',n:80},
+  {p:'X',type:'モバイルバッテリー',n:100},{p:'Y',type:'USBケーブル',n:120},{p:'Z',type:'イヤホン',n:100},
+  {p:'AA',type:'SDカード',n:80},{p:'BB',type:'USBメモリ',n:80},{p:'CC',type:'スマホケース',n:80},{p:'DD',type:'ワイヤレス充電器',n:60},
+  {p:'EE',type:'万年筆',n:80},{p:'FF',type:'付箋',n:120},{p:'GG',type:'ボールペン',n:120},{p:'HH',type:'消しゴム',n:100},
+  {p:'II',type:'シャープペン',n:100},{p:'JJ',type:'メモ帳',n:80},{p:'KK',type:'クリップ',n:80},{p:'LL',type:'テープ',n:80},
+  {p:'MM',type:'チョコ',n:100},{p:'NN',type:'グミ',n:100},{p:'OO',type:'キャンディ',n:80},{p:'PP',type:'クッキー',n:80},
+  {p:'QQ',type:'サイコロ',n:80},{p:'RR',type:'ミニカー',n:80},{p:'SS',type:'フィギュア',n:60},
+  {p:'TT',type:'リップクリーム',n:100},{p:'UU',type:'ハンドクリーム',n:80},{p:'VV',type:'コンタクトレンズ',n:80},
 ];
 const TYPES_HARD=[
-  // 貴金属・アクセサリー
-  {p:'A',type:'ピアス',            n:300},
-  {p:'B',type:'指輪',              n:300},
-  {p:'C',type:'ネックレス',        n:200},
-  {p:'D',type:'時計',              n:200},
-  {p:'E',type:'ブレスレット',      n:200},
-  {p:'F',type:'イヤリング',        n:200},
-  {p:'G',type:'リング',            n:200},
-  {p:'H',type:'チャーム',          n:200},
-  {p:'I',type:'バングル',          n:160},
-  {p:'J',type:'アンクレット',      n:160},
-  {p:'K',type:'ヘアピン',          n:160},
-  {p:'L',type:'ブローチ',          n:160},
-  {p:'M',type:'ティアラ',          n:120},
-  {p:'N',type:'カフス',            n:120},
-  {p:'O',type:'ペンダント',        n:120},
-  {p:'P',type:'ストラップ',        n:120},
-  // 化粧品
-  {p:'Q',type:'口紅',              n:240},
-  {p:'R',type:'マニキュア',        n:240},
-  {p:'S',type:'アイシャドウ',      n:200},
-  {p:'T',type:'マスカラ',          n:200},
-  {p:'U',type:'ファンデーション',  n:160},
-  {p:'V',type:'リップグロス',      n:160},
-  {p:'W',type:'アイライナー',      n:160},
-  // 電化製品
-  {p:'X',type:'モバイルバッテリー',n:200},
-  {p:'Y',type:'USBケーブル',       n:240},
-  {p:'Z',type:'イヤホン',          n:200},
-  {p:'AA',type:'SDカード',         n:160},
-  {p:'BB',type:'USBメモリ',        n:160},
-  {p:'CC',type:'スマホケース',     n:160},
-  {p:'DD',type:'ワイヤレス充電器', n:120},
-  // 文房具
-  {p:'EE',type:'万年筆',           n:160},
-  {p:'FF',type:'付箋',             n:240},
-  {p:'GG',type:'ボールペン',       n:240},
-  {p:'HH',type:'消しゴム',         n:200},
-  {p:'II',type:'シャープペン',     n:200},
-  {p:'JJ',type:'メモ帳',           n:160},
-  {p:'KK',type:'クリップ',         n:160},
-  {p:'LL',type:'テープ',           n:160},
-  // 食品・お菓子
-  {p:'MM',type:'チョコ',           n:200},
-  {p:'NN',type:'グミ',             n:200},
-  {p:'OO',type:'キャンディ',       n:160},
-  {p:'PP',type:'クッキー',         n:160},
-  // おもちゃ
-  {p:'QQ',type:'サイコロ',         n:160},
-  {p:'RR',type:'ミニカー',         n:160},
-  {p:'SS',type:'フィギュア',       n:120},
-  // 日用品
-  {p:'TT',type:'リップクリーム',   n:200},
-  {p:'UU',type:'ハンドクリーム',   n:160},
-  {p:'VV',type:'コンタクトレンズ', n:160},
+  {p:'A',type:'ピアス',n:300},{p:'B',type:'指輪',n:300},{p:'C',type:'ネックレス',n:200},{p:'D',type:'時計',n:200},
+  {p:'E',type:'ブレスレット',n:200},{p:'F',type:'イヤリング',n:200},{p:'G',type:'リング',n:200},{p:'H',type:'チャーム',n:200},
+  {p:'I',type:'バングル',n:160},{p:'J',type:'アンクレット',n:160},{p:'K',type:'ヘアピン',n:160},{p:'L',type:'ブローチ',n:160},
+  {p:'M',type:'ティアラ',n:120},{p:'N',type:'カフス',n:120},{p:'O',type:'ペンダント',n:120},{p:'P',type:'ストラップ',n:120},
+  {p:'Q',type:'口紅',n:240},{p:'R',type:'マニキュア',n:240},{p:'S',type:'アイシャドウ',n:200},{p:'T',type:'マスカラ',n:200},
+  {p:'U',type:'ファンデーション',n:160},{p:'V',type:'リップグロス',n:160},{p:'W',type:'アイライナー',n:160},
+  {p:'X',type:'モバイルバッテリー',n:200},{p:'Y',type:'USBケーブル',n:240},{p:'Z',type:'イヤホン',n:200},
+  {p:'AA',type:'SDカード',n:160},{p:'BB',type:'USBメモリ',n:160},{p:'CC',type:'スマホケース',n:160},{p:'DD',type:'ワイヤレス充電器',n:120},
+  {p:'EE',type:'万年筆',n:160},{p:'FF',type:'付箋',n:240},{p:'GG',type:'ボールペン',n:240},{p:'HH',type:'消しゴム',n:200},
+  {p:'II',type:'シャープペン',n:200},{p:'JJ',type:'メモ帳',n:160},{p:'KK',type:'クリップ',n:160},{p:'LL',type:'テープ',n:160},
+  {p:'MM',type:'チョコ',n:200},{p:'NN',type:'グミ',n:200},{p:'OO',type:'キャンディ',n:160},{p:'PP',type:'クッキー',n:160},
+  {p:'QQ',type:'サイコロ',n:160},{p:'RR',type:'ミニカー',n:160},{p:'SS',type:'フィギュア',n:120},
+  {p:'TT',type:'リップクリーム',n:200},{p:'UU',type:'ハンドクリーム',n:160},{p:'VV',type:'コンタクトレンズ',n:160},
 ];
 const DB={}, ALL_CODES=[];
 function hashStr(s){let h=2166136261;for(let i=0;i<s.length;i++)h=Math.imul(h^s.charCodeAt(i),16777619)>>>0;return h;}
-function itemColor(code){
-  const h=hashStr(code);
-  const hue=h%360;
-  const sat=55+(h>>8)%30;
-  const lit=38+(h>>16)%24;
-  return`hsl(${hue},${sat}%,${lit}%)`;
-}
-function itemTextColor(code){
-  const h=hashStr(code);
-  const lit=38+(h>>16)%24;
-  return lit>50?'rgba(0,0,0,0.8)':'rgba(255,255,255,0.85)';
-}
+function itemColor(code){const h=hashStr(code);return`hsl(${h%360},${55+(h>>8)%30}%,${38+(h>>16)%24}%)`;}
+function itemTextColor(code){const h=hashStr(code);return(38+(h>>16)%24)>50?'rgba(0,0,0,0.8)':'rgba(255,255,255,0.85)';}
 function buildDB(types){
-  for(const k in DB)delete DB[k];
-  ALL_CODES.length=0;
-  for(const {p,type,n} of types){
-    for(let i=0;i<n;i++){
-      const code=p+String(i).padStart(3,'0');
-      DB[code]={code,type,shape:TYPE_SHAPES[type],color:itemColor(code),textCol:itemTextColor(code)};
-      ALL_CODES.push(code);
-    }
-  }
+  for(const k in DB)delete DB[k];ALL_CODES.length=0;
+  for(const {p,type,n} of types){for(let i=0;i<n;i++){
+    const code=p+String(i).padStart(3,'0');
+    DB[code]={code,type,shape:TYPE_SHAPES[type],color:itemColor(code),textCol:itemTextColor(code)};
+    ALL_CODES.push(code);
+  }}
 }
-buildDB(TYPES_NORMAL); // default; rebuilt on game start
+buildDB(TYPES_NORMAL);
 
-// ══════════════════════════════════════════════════════════════
-//  MAP SETUP
-// ══════════════════════════════════════════════════════════════
-// Layout: rows = shelf letter pairs (A/B, C/D, E/F, I/J), cols = 1000-1800
-// Between each pair: 2-tile aisle
-// Row 0: top entrance aisle
-// Row 17: special zones (return, entrance, empty container)
-
-const T=52; // tile px
+const T=52;
 const MCOLS=11, MROWS=18;
 const FLOOR=0, SHELF=2, RETURN_ZONE=3, EMPTY_ZONE=4, ENTRANCE=5, EXIT_ZONE=6, RANKING_ZONE=7;
-
-// shelf letter → map row
-const ROW_CFG=[
-  [1,'A'],[2,'B'],
-  [5,'C'],[6,'D'],
-  [9,'E'],[10,'F'],
-  [13,'I'],[14,'J'],
-];
-// shelf col idx (1-9) → col number
+const ROW_CFG=[[1,'A'],[2,'B'],[5,'C'],[6,'D'],[9,'E'],[10,'F'],[13,'I'],[14,'J']];
 const COL_NUMS=[1000,1100,1200,1300,1400,1500,1600,1700,1800];
-const ROW_LTR={}; // mapRow -> letter
-const ROW_LTR_SET=new Set();
+const ROW_LTR={}, ROW_LTR_SET=new Set();
 for(const [r,l] of ROW_CFG){ROW_LTR[r]=l;ROW_LTR_SET.add(r);}
 
 const map=Array.from({length:MROWS},()=>new Uint8Array(MCOLS));
-// Place shelves
 for(const [r] of ROW_CFG) for(let c=1;c<=9;c++) map[r][c]=SHELF;
-// Special zone row (row 16-17)
 for(let c=1;c<=3;c++) map[16][c]=RETURN_ZONE;
 for(let c=4;c<=6;c++) map[16][c]=ENTRANCE;
 for(let c=7;c<=9;c++) map[16][c]=EMPTY_ZONE;
-// row17 col4-6に業務終了ゾーン（出入口の真下）
 for(let col=4;col<=6;col++) map[17][col]=EXIT_ZONE;
-// row17 col1-3にランキングゾーン（回収ゾーンの真下）
-for(let col=1;col<=3;col++) map[17][col]=RANKING_ZONE;
+for(let col=7;col<=9;col++) map[17][col]=RANKING_ZONE;
 
-const SMAP={};
-const ITEM_IDX={};
-const ALL_SHELVES=[];
-
+const SMAP={}, ITEM_IDX={}, ALL_SHELVES=[];
 function rri(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
 function rrc(a){return a[Math.floor(Math.random()*a.length)];}
 
 function mkDrawers(shelfId){
-  const prefix = shelfId.match(/^[A-Z]+/)[0];
-  const baseNum = parseInt(shelfId.match(/\d+/)[0]);
-  const fillMax = hardMode ? 4.0 : 2.0;  // ハード200-400%、ノーマル0-200%
-  const fillMin = hardMode ? 2.0 : 0.0;
-  // 新フォーマット: A10-01 (prefix + col2桁 + "-" + 引き出し2桁)
-  const colCode = String(Math.floor(baseNum/100)).padStart(2,'0');
+  const prefix=shelfId.match(/^[A-Z]+/)[0];
+  const baseNum=parseInt(shelfId.match(/\d+/)[0]);
+  const fillMax=hardMode?4.0:2.0, fillMin=hardMode?2.0:0.0;
+  const colCode=String(Math.floor(baseNum/100)).padStart(2,'0');
   return Array.from({length:40},(_,i)=>{
     const fill=fillMin+Math.random()*(fillMax-fillMin);
     const cnt=Math.min(36,Math.floor(fill*18));
     const items=[];
     if(cnt>0){const dom=rrc(ALL_CODES);for(let j=0;j<cnt;j++)items.push(Math.random()<.62?dom:rrc(ALL_CODES));}
-    const label = `${prefix}${colCode}-${String(i+1).padStart(2,'0')}`;
-    return{id:i, label, items:[...items]};
+    return{id:i, label:`${prefix}${colCode}-${String(i+1).padStart(2,'0')}`, items:[...items]};
   });
 }
 
 function reinitShelves(){
-  // Clear previous data
-  for(const k in SMAP)delete SMAP[k];
-  for(const k in ITEM_IDX)delete ITEM_IDX[k];
-  ALL_SHELVES.length=0;
-  for(const [r,ltr] of ROW_CFG){
-    for(let c=1;c<=9;c++){
-      const colNum=COL_NUMS[c-1];
-      const id=`${ltr}${colNum}`;
-      const drawers=mkDrawers(id);
-      const shelf={id,row:r,col:c,ltr,colNum,drawers};
-      SMAP[`${r},${c}`]=shelf;
-      ALL_SHELVES.push(shelf);
-      for(const dr of drawers)for(const code of dr.items){
-        if(!ITEM_IDX[code])ITEM_IDX[code]=[];
-        ITEM_IDX[code].push({shelf,drawerId:dr.id});
-      }
+  for(const k in SMAP)delete SMAP[k];for(const k in ITEM_IDX)delete ITEM_IDX[k];ALL_SHELVES.length=0;
+  for(const [r,ltr] of ROW_CFG){for(let c=1;c<=9;c++){
+    const colNum=COL_NUMS[c-1],id=`${ltr}${colNum}`;
+    const drawers=mkDrawers(id);
+    const shelf={id,row:r,col:c,ltr,colNum,drawers};
+    SMAP[`${r},${c}`]=shelf;ALL_SHELVES.push(shelf);
+    for(const dr of drawers)for(const code of dr.items){
+      if(!ITEM_IDX[code])ITEM_IDX[code]=[];
+      ITEM_IDX[code].push({shelf,drawerId:dr.id});
     }
-  }
-  _floorTiles=null; // reset cache
+  }}
+  _floorTiles=null;
 }
-reinitShelves(); // initial build
+reinitShelves();
 
-// Access row: which row to walk to to access a shelf
 function accessRow(r){
   const idx=ROW_CFG.findIndex(([mr])=>mr===r);
-  // even index = north shelf (access from r-1), odd = south (access from r+1)
-  return idx%2===0 ? r-1 : r+1;
+  return idx%2===0?r-1:r+1;
 }
 
-// ══════════════════════════════════════════════════════════════
-//  GAME STATE
-// ══════════════════════════════════════════════════════════════
 const GS={PICKING:'p',BATCH_DONE:'bd',RETURNING:'ret',DEPOSITED:'dep',GETTING_EMPTY:'ge',SCANNING_EMPTY:'se',EXIT_WAIT:'ew'};
 gameState=GS.PICKING;
-// hardMode declared at top of script
 batch=[],bidx=0,bnum=1,container=[],t0=0,moveCount=0;
-selItemData=null;
-panelOpen=false, drawerOpen=false;
-pendingShelf=null, pendingOpenShelf=null;
-scanHoldActive=false, scanHoldTimer=null, scanProgress=0;
+selItemData=null;panelOpen=false;drawerOpen=false;
+pendingShelf=null;pendingOpenShelf=null;
+scanHoldActive=false;scanHoldTimer=null;scanProgress=0;
 
-// Shelf letter order for batch progression (A→J loop)
 const SHELF_ORDER=['A','B','C','D','E','F','I','J'];
 
-// ── バッチ生成：倉庫をA→J順にウロウロ ──
-// 1バッチ = 2〜4棚にまたがる。棚ごとに3〜5個ピック。列も分散。
-// バッチアイテム: {code, shelf, drawerId} — スキャナーが正確な棚と引き出しを指示できる
 function mkBatch(){
-  // チュートリアルモードは1個だけ、A棚は字幕と重なるので除外
   if(tutorialMode){
     const nonAShelves=ALL_SHELVES.filter(s=>s.ltr!=='A');
     for(let attempt=0;attempt<50;attempt++){
@@ -1207,34 +1094,21 @@ function mkBatch(){
     }
   }
   const items=[];
-  // 1バッチ = 4〜6棚（A→D→I→B→E みたいに倉庫中をウロウロ）
   const shelvesPerBatch=rri(4,6);
   for(let s=0;s<shelvesPerBatch;s++){
-    // 棚文字を1〜3文字ランダムにジャンプ
     batchShelfCursor=(batchShelfCursor+rri(1,3))%SHELF_ORDER.length;
     const ltr=SHELF_ORDER[batchShelfCursor];
     const col=rri(1,9);
     const shelf=ALL_SHELVES.find(sh=>sh.ltr===ltr&&sh.col===col);
-    if(!shelf) continue;
-    // この棚から2〜3個ピック、引き出し番号もランダムに分散
+    if(!shelf)continue;
     const pickCount=rri(2,3);
-    let drCursor=rri(0,39);
-    let picked=0;
+    let drCursor=rri(0,39),picked=0;
     for(let attempt=0;attempt<80&&picked<pickCount;attempt++){
-      const drIdx=drCursor%40;
-      const dr=shelf.drawers[drIdx];
-      if(dr&&dr.items.length>0){
-        const code=rrc(dr.items);
-        // ★ codeだけでなく、どの棚・引き出しかも記録する
-        items.push({code, shelf, drawerId:drIdx});
-        picked++;
-        drCursor+=rri(2,8);
-      } else {
-        drCursor++;
-      }
+      const drIdx=drCursor%40,dr=shelf.drawers[drIdx];
+      if(dr&&dr.items.length>0){items.push({code:rrc(dr.items),shelf,drawerId:drIdx});picked++;drCursor+=rri(2,8);}
+      else drCursor++;
     }
   }
-  // 不足分はランダムな棚から補充
   while(items.length<8){
     const shelf=rrc(ALL_SHELVES);
     const dr=rrc(shelf.drawers.filter(d=>d.items.length>0));
@@ -1244,14 +1118,10 @@ function mkBatch(){
   return items.slice(0,rri(10,16));
 }
 
-function advanceBatchCursors(){
-  batchShelfCursor=(batchShelfCursor+rri(2,4))%SHELF_ORDER.length;
-}
+function advanceBatchCursors(){batchShelfCursor=(batchShelfCursor+rri(2,4))%SHELF_ORDER.length;}
 
-// ── Player ──
 const P={x:4.5*T,y:15.5*T,tx:null,ty:null,spd:8.0,face:1,hasCart:true};
 
-// ── Bots ──
 const bots=[];
 function floorTiles(){
   const tiles=[];
@@ -1260,88 +1130,49 @@ function floorTiles(){
 }
 _floorTiles=null;
 function initBots(){
-  _floorTiles=floorTiles();
-  bots.length=0;
+  _floorTiles=floorTiles();bots.length=0;
   const specs=hardMode
-    ? [{e:1,spd:7.0,cart:true,n:5},{e:2,spd:9.0,cart:false,n:4}]
-    : [{e:1,spd:7.0,cart:true,n:3},{e:2,spd:9.0,cart:false,n:2}];
-  for(const {e,spd,cart,n} of specs) for(let i=0;i<n;i++){
+    ?[{e:1,spd:7.0,cart:true,n:5},{e:2,spd:9.0,cart:false,n:4}]
+    :[{e:1,spd:7.0,cart:true,n:3},{e:2,spd:9.0,cart:false,n:2}];
+  for(const{e,spd,cart,n}of specs)for(let i=0;i<n;i++){
     const t=rrc(_floorTiles);
     bots.push({e,spd,cart,x:t.c*T+T/2,y:t.r*T+T/2,tx:null,ty:null,timer:rri(30,90),face:1});
   }
 }
+function botPickTarget(b){const t=rrc(_floorTiles||floorTiles());b.tx=t.c*T+T/2;b.ty=t.r*T+T/2;b.timer=rri(40,110);}
 
-// Bots move tile-to-tile like player (#9)
-function botPickTarget(b){
-  const t=rrc(_floorTiles||floorTiles());
-  b.tx=t.c*T+T/2; b.ty=t.r*T+T/2;
-  b.timer=rri(40,110);
-}
-
-// ══════════════════════════════════════════════════════════════
-//  MULTIPLAYER — 位置同期
-// ══════════════════════════════════════════════════════════════
 function mpJoin(){
-  if(!window._fbSet) return;
-  // ユニークIDを生成（タブごとに1つ）
-  myPlayerId = 'p_' + Math.random().toString(36).slice(2,10);
-  const playerName = (document.getElementById('player-name').value.trim()||t('defaultName')).slice(0,12);
-  const myRef = window._fbRef(window._fbDb, `players/${myPlayerId}`);
-  // 切断時に自動削除
+  if(!window._fbSet)return;
+  myPlayerId='p_'+Math.random().toString(36).slice(2,10);
+  const playerName=(document.getElementById('player-name').value.trim()||t('defaultName')).slice(0,12);
+  const myRef=window._fbRef(window._fbDb,`players/${myPlayerId}`);
   window._fbOnDisconnect(myRef).remove();
-  // 初回書き込み
-  window._fbSet(myRef, {
-    name: playerName,
-    x: Math.round(P.x), y: Math.round(P.y),
-    face: P.face, hasCart: P.hasCart,
-    hardMode: hardMode,
-    ts: Date.now()
-  });
-  // 他プレイヤーをリアルタイム受信
-  window._fbOnValue(window._fbRef(window._fbDb,'players'), snap => {
-    otherPlayers = {};
-    snap.forEach(child => {
-      if(child.key !== myPlayerId){
-        otherPlayers[child.key] = child.val();
-      }
-    });
+  window._fbSet(myRef,{name:playerName,x:Math.round(P.x),y:Math.round(P.y),face:P.face,hasCart:P.hasCart,hardMode:hardMode,ts:Date.now()});
+  window._fbOnValue(window._fbRef(window._fbDb,'players'),snap=>{
+    otherPlayers={};snap.forEach(child=>{if(child.key!==myPlayerId)otherPlayers[child.key]=child.val();});
   });
 }
-
 function mpLeave(){
-  if(!myPlayerId || !window._fbRemove) return;
-  window._fbRemove(window._fbRef(window._fbDb, `players/${myPlayerId}`));
-  myPlayerId = null;
-  otherPlayers = {};
+  if(!myPlayerId||!window._fbRemove)return;
+  window._fbRemove(window._fbRef(window._fbDb,`players/${myPlayerId}`));myPlayerId=null;otherPlayers={};
 }
-
 function mpSendPos(now){
-  if(!myPlayerId || !window._fbSet) return;
-  if(now - _lastPosSend < 100) return; // 10fps制限
-  _lastPosSend = now;
-  window._fbSet(window._fbRef(window._fbDb, `players/${myPlayerId}`), {
-    name: (document.getElementById('player-name').value.trim()||t('defaultName')).slice(0,12),
-    x: Math.round(P.x), y: Math.round(P.y),
-    face: P.face, hasCart: P.hasCart,
-    hardMode: hardMode,
-    ts: Date.now()
+  if(!myPlayerId||!window._fbSet)return;
+  if(now-_lastPosSend<100)return;_lastPosSend=now;
+  window._fbSet(window._fbRef(window._fbDb,`players/${myPlayerId}`),{
+    name:(document.getElementById('player-name').value.trim()||t('defaultName')).slice(0,12),
+    x:Math.round(P.x),y:Math.round(P.y),face:P.face,hasCart:P.hasCart,hardMode:hardMode,ts:Date.now()
   });
 }
-// ══════════════════════════════════════════════════════════════
-const CR=T*.3;
-const BOT_COLL_R=T*.38; // bot collision radius
+
+const CR=T*.3, BOT_COLL_R=T*.38;
 function blocked(x,y,checkBots=false){
   const r2=CR*.8;
-  for(const[dx,dy] of[[-r2,-r2],[-r2,r2],[r2,-r2],[r2,r2],[0,-r2],[0,r2],[-r2,0],[r2,0]]){
+  for(const[dx,dy]of[[-r2,-r2],[-r2,r2],[r2,-r2],[r2,r2],[0,-r2],[0,r2],[-r2,0],[r2,0]]){
     const tc=Math.floor((x+dx)/T),tr=Math.floor((y+dy)/T);
     if(tc<0||tc>=MCOLS||tr<0||tr>=MROWS||map[tr][tc]===SHELF)return true;
   }
-  // Bot collision — only for player movement
-  if(checkBots){
-    for(const b of bots){
-      if(Math.hypot(x-b.x,y-b.y)<BOT_COLL_R) return true;
-    }
-  }
+  if(checkBots){for(const b of bots){if(Math.hypot(x-b.x,y-b.y)<BOT_COLL_R)return true;}}
   return false;
 }
 function moveEnt(e,isBotMoving=false){
@@ -1350,7 +1181,7 @@ function moveEnt(e,isBotMoving=false){
   if(d<=e.spd){e.x=e.tx;e.y=e.ty;e.tx=null;e.ty=null;return true;}
   if(dx!==0)e.face=dx>0?1:-1;
   const nx=e.x+dx/d*e.spd,ny=e.y+dy/d*e.spd;
-  const chkBots=!isBotMoving; // player checks bots, bots don't check bots
+  const chkBots=!isBotMoving;
   if(!blocked(nx,ny,chkBots)){e.x=nx;e.y=ny;}
   else if(!blocked(nx,e.y,chkBots))e.x=nx;
   else if(!blocked(e.x,ny,chkBots))e.y=ny;
@@ -1358,509 +1189,365 @@ function moveEnt(e,isBotMoving=false){
   return false;
 }
 
-// ══════════════════════════════════════════════════════════════
-//  PIXEL ART SPRITES — Enhanced Chibi Style
-// ══════════════════════════════════════════════════════════════
 const PX_SIZE=3;
-
-// ── Player: 更に丸みと「うるうる目」を追加した作業員 ──
 const SPR_PLAYER=[
-  [0,0,0,1,1,1,1,1,1,1,1,0,0], // 0 帽子てっぺん
-  [0,0,1,2,2,2,2,2,2,2,1,1,0], // 1 帽子
-  [0,1,1,1,1,1,1,1,1,1,1,1,0], // 2 つば（少し強調）
-  [0,1,4,4,4,4,4,4,4,4,4,1,0], // 3 顔（上）
-  [0,1,4,1,4,4,4,1,4,4,4,1,0], // 4 目（4のハイライトを入れてうるうるに）
-  [0,1,4,1,1,4,4,1,1,4,4,1,0], // 5 瞳の下
-  [0,1,4,4,4,4,4,4,4,4,4,1,0], // 6 ほっぺ
-  [0,1,4,3,4,3,4,3,4,3,4,1,0], // 7 チーク（赤らみ）
-  [0,0,1,4,4,4,4,4,4,4,1,0,0], // 8 あご
-  [0,0,0,1,2,2,2,2,2,1,0,0,0], // 9 体
-  [0,1,1,2,2,2,2,2,2,1,1,0,0], // 10 腕の付け根
-  [0,1,4,1,2,2,2,2,1,4,1,0,0], // 11 手（少し白くしてグローブっぽく）
-  [0,0,1,2,2,2,2,2,2,1,0,0,0], // 12
-  [0,0,1,1,1,1,1,1,1,1,0,0,0], // 13 腰
-  [0,0,1,2,1,0,0,1,2,1,0,0,0], // 14 足（短くしてさらにチビに）
-  [0,1,1,1,0,0,0,1,1,1,0,0,0], // 15 靴
+  [0,0,0,1,1,1,1,1,1,1,1,0,0],
+  [0,0,1,2,2,2,2,2,2,2,1,1,0],
+  [0,1,1,1,1,1,1,1,1,1,1,1,0],
+  [0,1,4,4,4,4,4,4,4,4,4,1,0],
+  [0,1,4,1,4,4,4,1,4,4,4,1,0],
+  [0,1,4,1,1,4,4,1,1,4,4,1,0],
+  [0,1,4,4,4,4,4,4,4,4,4,1,0],
+  [0,1,4,3,4,3,4,3,4,3,4,1,0],
+  [0,0,1,4,4,4,4,4,4,4,1,0,0],
+  [0,0,0,1,2,2,2,2,2,1,0,0,0],
+  [0,1,1,2,2,2,2,2,2,1,1,0,0],
+  [0,1,4,1,2,2,2,2,1,4,1,0,0],
+  [0,0,1,2,2,2,2,2,2,1,0,0,0],
+  [0,0,1,1,1,1,1,1,1,1,0,0,0],
+  [0,0,1,2,1,0,0,1,2,1,0,0,0],
+  [0,1,1,1,0,0,0,1,1,1,0,0,0],
 ];
-
-// ── Cart: 少し小さく、丸みのあるワゴンに ──
 const SPR_CART=[
-  [0,1,1,1,1,1,1,1,1,1,0], 
-  [1,4,4,4,4,4,4,4,4,4,1], 
-  [1,4,3,3,3,3,3,3,3,4,1], // 中身の陰影
-  [1,4,4,4,4,4,4,4,4,4,1], 
-  [0,1,2,2,2,2,2,2,2,1,0], // 底を少し丸く
-  [0,1,1,1,1,1,1,1,1,1,0], 
-  [0,1,1,0,0,0,0,0,1,1,0], // 車輪を強調
+  [0,1,1,1,1,1,1,1,1,1,0],
+  [1,4,4,4,4,4,4,4,4,4,1],
+  [1,4,3,3,3,3,3,3,3,4,1],
+  [1,4,4,4,4,4,4,4,4,4,1],
+  [0,1,2,2,2,2,2,2,2,1,0],
+  [0,1,1,1,1,1,1,1,1,1,0],
+  [0,1,1,0,0,0,0,0,1,1,0],
 ];
-
-// ── Restock bot: ぽっちゃり丸い「頼れる」ロボ ──
 const SPR_BOT1=[
   [0,0,0,0,1,1,1,1,0,0,0,0],
   [0,0,1,1,2,2,2,2,1,1,0,0],
   [0,1,2,2,2,2,2,2,2,2,1,0],
-  [1,2,2,1,1,1,1,1,1,2,2,1], // バイザー（大きな目っぽく）
-  [1,2,1,4,4,1,1,4,4,1,2,1], // バイザー内の光
   [1,2,2,1,1,1,1,1,1,2,2,1],
-  [0,1,2,2,2,3,3,2,2,2,1,0], // 口元のメカディテール
+  [1,2,1,4,4,1,1,4,4,1,2,1],
+  [1,2,2,1,1,1,1,1,1,2,2,1],
+  [0,1,2,2,2,3,3,2,2,2,1,0],
   [0,0,1,1,2,2,2,2,1,1,0,0],
-  [0,1,2,2,2,2,2,2,2,2,1,0], // 胴体
-  [1,2,2,3,3,2,2,3,3,2,2,1], // お腹のボタン
+  [0,1,2,2,2,2,2,2,2,2,1,0],
+  [1,2,2,3,3,2,2,3,3,2,2,1],
   [1,2,2,2,2,2,2,2,2,2,2,1],
   [0,1,2,2,2,2,2,2,2,2,1,0],
   [0,0,1,1,1,1,1,1,1,1,0,0],
   [0,0,1,2,1,0,0,1,2,1,0,0],
-  [0,1,1,1,0,0,0,1,1,1,0,0], // キャスター脚
+  [0,1,1,1,0,0,0,1,1,1,0,0],
 ];
-
-// ── Picker bot: ちょこちょこ動く「小動物系」ロボ ──
 const SPR_BOT2=[
   [0,0,1,1,1,1,1,1,0,0],
-  [0,1,4,4,4,4,4,4,1,0], // 頭にハイライト
-  [1,4,4,1,4,4,1,4,4,1], // くりくりの目
+  [0,1,4,4,4,4,4,4,1,0],
+  [1,4,4,1,4,4,1,4,4,1],
   [1,4,4,1,4,4,1,4,4,1],
   [1,2,2,2,2,2,2,2,2,1],
-  [0,1,1,3,3,3,3,1,1,0], // あごのライン
+  [0,1,1,3,3,3,3,1,1,0],
   [0,0,1,2,2,2,2,1,0,0],
-  [0,1,2,2,3,3,2,2,1,0], // 小さな手
+  [0,1,2,2,3,3,2,2,1,0],
   [0,1,2,2,2,2,2,2,1,0],
   [0,0,1,1,1,1,1,1,0,0],
-  [0,0,1,2,0,0,2,1,0,0], // ちょこんとした足
+  [0,0,1,2,0,0,2,1,0,0],
   [0,1,1,0,0,0,0,1,1,0],
 ];
 const GB_PAL=[GB0,GB1,GB2,GB3];
 function drawSprite(ctx,spr,x,y,flipH=false){
   const cols=spr[0].length,rows=spr.length;
-  for(let r=0;r<rows;r++){
-    for(let c=0;c<cols;c++){
-      const v=spr[r][flipH?cols-1-c:c];
-      if(v===0)continue;
-      ctx.fillStyle=GB_PAL[v-1];
-      ctx.fillRect(x+c*PX_SIZE,y+r*PX_SIZE,PX_SIZE,PX_SIZE);
-    }
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+    const v=spr[r][flipH?cols-1-c:c];if(v===0)continue;
+    ctx.fillStyle=GB_PAL[v-1];ctx.fillRect(x+c*PX_SIZE,y+r*PX_SIZE,PX_SIZE,PX_SIZE);
   }
 }
 
-// ══════════════════════════════════════════════════════════════
-//  DRAW ITEM SHAPE — full color, crisp (no blur)
-// ══════════════════════════════════════════════════════════════
-// size = the actual canvas pixel size (cv.width = cv.height = size for square canvases)
 function drawItemShape(cv,code,size){
-  // Always set intrinsic canvas size = display size to avoid scaling blur
-  const s=size||cv.width;
-  cv.width=s; cv.height=s;
-  const c2=cv.getContext('2d');
-  c2.clearRect(0,0,s,s);
+  const s=size||cv.width;cv.width=s;cv.height=s;
+  const c2=cv.getContext('2d');c2.clearRect(0,0,s,s);
   if(!code||!DB[code])return;
-  const item=DB[code];
-  const sh=item.shape;
-  // Scale shape proportionally to fit canvas with padding
-  const pad=s*.1;
-  const maxW=s-pad*2, maxH=s-pad*2;
-  // base dims
-  const bw=sh.w, bh=sh.h;
-  const scale=Math.min(maxW/bw, maxH/bh);
-  const w=bw*scale, h=bh*scale;
-  const x=(s-w)/2, y=(s-h)/2;
-  const r=sh.r*Math.min(w,h);
-  // Shadow
-  c2.fillStyle='rgba(0,0,0,0.25)';
-  c2.beginPath();c2.roundRect(x+2,y+2,w,h,r);c2.fill();
-  // Body with full color
-  c2.fillStyle=item.color;
-  c2.beginPath();c2.roundRect(x,y,w,h,r);c2.fill();
-  // Highlight stripe
-  c2.fillStyle='rgba(255,255,255,0.22)';
-  c2.beginPath();c2.roundRect(x+2,y+2,w-4,h*.35,r*.6);c2.fill();
-  // Border
-  c2.strokeStyle='rgba(255,255,255,0.35)';c2.lineWidth=1.5;
-  c2.beginPath();c2.roundRect(x,y,w,h,r);c2.stroke();
-  // Code text
+  const item=DB[code],sh=item.shape;
+  const pad=s*.1,maxW=s-pad*2,maxH=s-pad*2;
+  const scale=Math.min(maxW/sh.w,maxH/sh.h);
+  const w=sh.w*scale,h=sh.h*scale,x=(s-w)/2,y=(s-h)/2,r=sh.r*Math.min(w,h);
+  c2.fillStyle='rgba(0,0,0,0.25)';c2.beginPath();c2.roundRect(x+2,y+2,w,h,r);c2.fill();
+  c2.fillStyle=item.color;c2.beginPath();c2.roundRect(x,y,w,h,r);c2.fill();
+  c2.fillStyle='rgba(255,255,255,0.22)';c2.beginPath();c2.roundRect(x+2,y+2,w-4,h*.35,r*.6);c2.fill();
+  c2.strokeStyle='rgba(255,255,255,0.35)';c2.lineWidth=1.5;c2.beginPath();c2.roundRect(x,y,w,h,r);c2.stroke();
   const fs=Math.max(6,Math.floor(s*.13));
-  c2.fillStyle=item.textCol;
-  c2.font=`bold ${fs}px '${PX}',monospace`;
-  c2.textAlign='center';c2.textBaseline='middle';
-  c2.fillText(code,s/2,s/2);
+  c2.fillStyle=item.textCol;c2.font=`bold ${fs}px '${PX}',monospace`;
+  c2.textAlign='center';c2.textBaseline='middle';c2.fillText(code,s/2,s/2);
 }
 
-// ══════════════════════════════════════════════════════════════
-//  STATIC MAP CACHE — drawn once, blitted each frame
-// ══════════════════════════════════════════════════════════════
 let floorCacheCanvas=null, floorCacheDirty=true;
-
 function buildFloorCache(){
-  const CW=MCOLS*T, CH=MROWS*T;
-  if(!floorCacheCanvas) floorCacheCanvas=document.createElement('canvas');
-  floorCacheCanvas.width=CW; floorCacheCanvas.height=CH;
-  const fc=floorCacheCanvas.getContext('2d');
-  fc.imageSmoothingEnabled=false;
-
-  // Floor tiles
-  for(let r=0;r<MROWS;r++){
-    for(let c=0;c<MCOLS;c++){
-      const x=c*T,y=r*T,t=map[r][c];
-      if(t===SHELF) continue;
-      let col=GBbg;
-      if(t===RETURN_ZONE) col='#7a9c08';
-      else if(t===EMPTY_ZONE) col='#6e8c07';
-      else if(t===ENTRANCE) col='#8bac0f';
-      else if(t===EXIT_ZONE) col='#4a7a04';
-      else if(t===RANKING_ZONE) col='#1a3e6a';
-      fc.fillStyle=col; fc.fillRect(x,y,T,T);
-      fc.fillStyle='rgba(15,56,15,.12)';
-      for(let dy=8;dy<T;dy+=16) for(let dx=8;dx<T;dx+=16) fc.fillRect(x+dx,y+dy,2,2);
-      if(c===0&&ROW_LTR[r]){
-        fc.fillStyle=GB1; fc.font=`700 ${T*.22|0}px '${PX}'`;
-        fc.textAlign='center'; fc.textBaseline='middle';
-        fc.fillText(ROW_LTR[r],x+T/2,y+T/2);
-      }
-      if(r===0&&c>=1&&c<=9){
-        fc.fillStyle=GB1; fc.font=`${T*.15|0}px '${PX}'`;
-        fc.textAlign='center'; fc.textBaseline='middle';
-        fc.fillText(COL_NUMS[c-1],x+T/2,y+T/2);
-      }
-    }
-  }
-  // Shelf tiles (static — no pulse)
-  for(const [r] of ROW_CFG){
-    for(let c=1;c<=9;c++){
-      const x=c*T,y=r*T;
-      const shelf=SMAP[`${r},${c}`];
-      fc.fillStyle=GB1; fc.fillRect(x,y,T,T);
-      fc.fillStyle=GB0;
-      fc.fillRect(x,y,T,2);
-      for(let i=1;i<4;i++){fc.fillStyle=GB0;fc.fillRect(x,y+i*(T/4),T,2);}
-      fc.fillRect(x,y+T-2,T,2);
-      fc.fillRect(x,y,2,T); fc.fillRect(x+T-2,y,2,T);
-      fc.fillStyle=GB2; fc.fillRect(x+2,y+2,T-4,2);
-      if(shelf){
-        fc.fillStyle=GB3;
-        fc.font=`900 ${T*.42|0}px '${PX}'`;
-        fc.textAlign='center'; fc.textBaseline='middle';
-        fc.fillText(shelf.ltr,x+T/2,y+T*.33);
-        fc.fillStyle=GB2;
-        fc.font=`${T*.18|0}px '${PX}'`;
-        fc.fillText(String(shelf.colNum/100|0).padStart(2,'0'),x+T/2,y+T*.72);
-      }
-    }
-  }
-  // Zone labels
-  fc.save(); fc.textAlign='center'; fc.textBaseline='middle';
+  const CW=MCOLS*T,CH=MROWS*T;
+  if(!floorCacheCanvas)floorCacheCanvas=document.createElement('canvas');
+  floorCacheCanvas.width=CW;floorCacheCanvas.height=CH;
+  const fc=floorCacheCanvas.getContext('2d');fc.imageSmoothingEnabled=false;
+  for(let r=0;r<MROWS;r++){for(let c=0;c<MCOLS;c++){
+    const x=c*T,y=r*T,t=map[r][c];if(t===SHELF)continue;
+    let col=GBbg;
+    if(t===RETURN_ZONE)col='#7a9c08';else if(t===EMPTY_ZONE)col='#6e8c07';
+    else if(t===ENTRANCE)col='#8bac0f';else if(t===EXIT_ZONE)col='#4a7a04';
+    else if(t===RANKING_ZONE)col='#1a3e6a';
+    fc.fillStyle=col;fc.fillRect(x,y,T,T);
+    fc.fillStyle='rgba(15,56,15,.12)';
+    for(let dy=8;dy<T;dy+=16)for(let dx=8;dx<T;dx+=16)fc.fillRect(x+dx,y+dy,2,2);
+    if(c===0&&ROW_LTR[r]){fc.fillStyle=GB1;fc.font=`700 ${T*.22|0}px '${PX}'`;fc.textAlign='center';fc.textBaseline='middle';fc.fillText(ROW_LTR[r],x+T/2,y+T/2);}
+    if(r===0&&c>=1&&c<=9){fc.fillStyle=GB1;fc.font=`${T*.15|0}px '${PX}'`;fc.textAlign='center';fc.textBaseline='middle';fc.fillText(COL_NUMS[c-1],x+T/2,y+T/2);}
+  }}
+  for(const[r]of ROW_CFG){for(let c=1;c<=9;c++){
+    const x=c*T,y=r*T,shelf=SMAP[`${r},${c}`];
+    fc.fillStyle=GB1;fc.fillRect(x,y,T,T);fc.fillStyle=GB0;
+    fc.fillRect(x,y,T,2);for(let i=1;i<4;i++){fc.fillStyle=GB0;fc.fillRect(x,y+i*(T/4),T,2);}
+    fc.fillRect(x,y+T-2,T,2);fc.fillRect(x,y,2,T);fc.fillRect(x+T-2,y,2,T);
+    fc.fillStyle=GB2;fc.fillRect(x+2,y+2,T-4,2);
+    if(shelf){fc.fillStyle=GB3;fc.font=`900 ${T*.42|0}px '${PX}'`;fc.textAlign='center';fc.textBaseline='middle';
+    fc.fillText(shelf.ltr,x+T/2,y+T*.33);fc.fillStyle=GB2;fc.font=`${T*.18|0}px '${PX}'`;fc.fillText(String(shelf.colNum/100|0).padStart(2,'0'),x+T/2,y+T*.72);}
+  }}
+  fc.save();fc.textAlign='center';fc.textBaseline='middle';
   const zr16=16*T;
-  {const zx=1*T,zw=3*T;
-   fc.fillStyle=GB0; fc.font=`bold ${T*.38|0}px '${PX}'`;
-   fc.fillText(t('mapReturn'),zx+zw/2,zr16+T*.32);
-   fc.font=`bold ${T*.2|0}px '${PX}'`;
-   fc.fillText(t('mapReturnSub'),zx+zw/2,zr16+T*.72);}
-  {const zx=4*T,zw=3*T;
-   fc.fillStyle=GB0; fc.font=`bold ${T*.38|0}px '${PX}'`;
-   fc.fillText(t('mapExit'),zx+zw/2,zr16+T*.32);
-   fc.font=`bold ${T*.2|0}px '${PX}'`;
-   fc.fillText(t('mapExitSub'),zx+zw/2,zr16+T*.72);}
-  {const zx=7*T,zw=3*T;
-   fc.fillStyle=GB0; fc.font=`bold ${T*.28|0}px '${PX}'`;
-   fc.fillText(t('mapEmpty'),zx+zw/2,zr16+T*.32);
-   fc.font=`bold ${T*.2|0}px '${PX}'`;
-   fc.fillText(t('mapEmptySub'),zx+zw/2,zr16+T*.72);}
-  {const zx=4*T,zw=3*T,zy=17*T;
-   fc.fillStyle=GB0; fc.font=`bold ${T*.22|0}px '${PX}'`;
-   fc.fillText(t('mapEnd'),zx+zw/2,zy+T*.35);
-   fc.font=`bold ${T*.16|0}px '${PX}'`;
-   fc.fillText(t('mapEndSub'),zx+zw/2,zy+T*.72);}
-  // ランキングゾーンラベル (col1-3, row17 = 回収ゾーンの真下)
-  {const zx=1*T,zw=3*T,zy=17*T;
-   fc.fillStyle='#5ab4ff';
-   fc.font=`bold ${T*.26|0}px '${PX}'`;
-   fc.fillText('🏆 RANKING',zx+zw/2,zy+T*.38);
-   fc.font=`bold ${T*.14|0}px '${PX}'`;
-   fc.fillText(t('mapRankingSub'),zx+zw/2,zy+T*.72);
-   fc.fillStyle='rgba(90,180,255,0.18)';
-   fc.fillRect(zx+2,zy+2,zw-4,T-4);}
+  // ── コンベアベルト静的背景（L字カーブ）──
+  // ベルト本体（太いパスで描画）
+  fc.save();
+  fc.strokeStyle='#4a4a3a';fc.lineWidth=CONV_BW;fc.lineCap='butt';
+  fc.beginPath();
+  fc.moveTo(0,CONV_Y);
+  fc.lineTo(CONV_TURN_X,CONV_Y);
+  fc.arc(CONV_TURN_X,CONV_Y+CONV_R,CONV_R,-Math.PI/2,0,false);
+  fc.lineTo(CONV_TURN_X+CONV_R,MROWS*T+T);
+  fc.stroke();
+  // レール（縁）— 外側
+  fc.strokeStyle='#333328';fc.lineWidth=3;
+  fc.beginPath();
+  fc.moveTo(0,CONV_Y-CONV_BW/2);fc.lineTo(CONV_TURN_X,CONV_Y-CONV_BW/2);
+  fc.arc(CONV_TURN_X,CONV_Y+CONV_R,CONV_R+CONV_BW/2,-Math.PI/2,0,false);
+  fc.lineTo(CONV_TURN_X+CONV_R+CONV_BW/2,MROWS*T+T);
+  fc.stroke();
+  // レール — 内側
+  fc.beginPath();
+  fc.moveTo(0,CONV_Y+CONV_BW/2);fc.lineTo(CONV_TURN_X,CONV_Y+CONV_BW/2);
+  fc.arc(CONV_TURN_X,CONV_Y+CONV_R,CONV_R-CONV_BW/2,-Math.PI/2,0,false);
+  fc.lineTo(CONV_TURN_X+CONV_R-CONV_BW/2,MROWS*T+T);
+  fc.stroke();
+  fc.restore();
+  // 回収ゾーンラベル（row16 タイルの上に表示）
+  {const zx=1*T,zw=3*T;fc.fillStyle=GB0;fc.font=`bold ${T*.36|0}px '${PX}'`;fc.fillText(t('mapReturn'),zx+zw/2,zr16+T*.35);fc.font=`bold ${T*.18|0}px '${PX}'`;fc.fillText(t('mapReturnSub'),zx+zw/2,zr16+T*.72);}
+  // 出入口
+  {const zx=4*T,zw=3*T;fc.fillStyle=GB0;fc.font=`bold ${T*.38|0}px '${PX}'`;fc.fillText(t('mapExit'),zx+zw/2,zr16+T*.32);fc.font=`bold ${T*.2|0}px '${PX}'`;fc.fillText(t('mapExitSub'),zx+zw/2,zr16+T*.72);}
+  // 空コンテナ
+  {const zx=7*T,zw=3*T;fc.fillStyle=GB0;fc.font=`bold ${T*.28|0}px '${PX}'`;fc.fillText(t('mapEmpty'),zx+zw/2,zr16+T*.32);fc.font=`bold ${T*.2|0}px '${PX}'`;fc.fillText(t('mapEmptySub'),zx+zw/2,zr16+T*.72);}
+  // 業務終了ゾーン
+  {const zx=4*T,zw=3*T,zy=17*T;fc.fillStyle=GB0;fc.font=`bold ${T*.22|0}px '${PX}'`;fc.fillText(t('mapEnd'),zx+zw/2,zy+T*.35);fc.font=`bold ${T*.16|0}px '${PX}'`;fc.fillText(t('mapEndSub'),zx+zw/2,zy+T*.72);}
+  // ランキングゾーン（空コンテナの下 col7-9 row17）
+  {const zx=7*T,zw=3*T,zy=17*T;fc.fillStyle='#5ab4ff';fc.font=`bold ${T*.26|0}px '${PX}'`;fc.fillText('🏆 RANKING',zx+zw/2,zy+T*.38);fc.font=`bold ${T*.14|0}px '${PX}'`;fc.fillText(t('mapRankingSub'),zx+zw/2,zy+T*.72);fc.fillStyle='rgba(90,180,255,0.18)';fc.fillRect(zx+2,zy+2,zw-4,T-4);}
   fc.restore();
   floorCacheDirty=false;
 }
-// Rebuild cache after Google Font loads
 document.fonts.ready.then(()=>{floorCacheDirty=true;});
 
-
-
-// ══════════════════════════════════════════════════════════════
-//  MAP RENDERING
-// ══════════════════════════════════════════════════════════════
 const cv=document.getElementById('c');
-const ctx=cv.getContext('2d');
-ctx.imageSmoothingEnabled=false;
+const ctx=cv.getContext('2d');ctx.imageSmoothingEnabled=false;
 function renderMap(){
-  if(floorCacheDirty) buildFloorCache();
-
-  // Only pulse when there's a target and not in hard mode
+  if(floorCacheDirty)buildFloorCache();
   const tc=bidx<batch.length?batch[bidx].code:null;
-  if(tc&&!hardMode) pulseTick+=0.05;
-  else if(tutorialMode) pulseTick+=0.05;
-
+  if(tc&&!hardMode)pulseTick+=0.05;else if(tutorialMode)pulseTick+=0.05;
   const W=cv.width,H=cv.height;
   const hudH=document.getElementById('hud').offsetHeight||68;
   const viewH=H-hudH;
-
-  // Smooth camera follow
   const tcx=P.x-W/2,tcy=P.y-viewH/2;
   camX+=(tcx-camX)*.12;camY+=(tcy-camY)*.12;
-  camX=Math.max(0,Math.min(MCOLS*T-W,camX));
-  camY=Math.max(0,Math.min(MROWS*T-viewH,camY));
-
-  ctx.clearRect(0,0,W,H);
-  ctx.fillStyle=GBbg;ctx.fillRect(0,0,W,viewH);
-
+  camX=Math.max(0,Math.min(MCOLS*T-W,camX));camY=Math.max(0,Math.min(MROWS*T-viewH,camY));
+  ctx.clearRect(0,0,W,H);ctx.fillStyle=GBbg;ctx.fillRect(0,0,W,viewH);
   ctx.save();ctx.translate(-camX|0,-camY|0);
-
-  // Blit static map cache
   ctx.drawImage(floorCacheCanvas,0,0);
 
-  // Pulse overlay on target shelf only
+  // ── コンベア ローラーアニメーション（L字カーブ）──
+  conveyorTick+=0.18;
+  const totalPathLen=CONV_H_LEN+CONV_ARC_LEN+T*4; // 描画範囲
+  const tickSpacing=14;
+  const tickOffset=(conveyorTick*60)%tickSpacing;
+  ctx.save();
+  ctx.strokeStyle='rgba(180,175,140,0.4)';ctx.lineWidth=1.5;
+  for(let d=tickOffset;d<totalPathLen;d+=tickSpacing){
+    const p=conveyorPos(d);
+    // パスに垂直な方向（法線）
+    const nx=-Math.sin(p.angle),ny=Math.cos(p.angle);
+    const hw=CONV_BW/2-4;
+    ctx.beginPath();
+    ctx.moveTo(p.x+nx*hw,p.y+ny*hw);
+    ctx.lineTo(p.x-nx*hw,p.y-ny*hw);
+    ctx.stroke();
+  }
+  // カーブ部分に矢印マーク
+  const arrowD=CONV_H_LEN+CONV_ARC_LEN*0.5;
+  const ap=conveyorPos(arrowD);
+  const aa=0.25+0.2*Math.sin(conveyorTick*1.8);
+  ctx.fillStyle=`rgba(155,188,15,${aa})`;
+  ctx.font=`${T*.25|0}px serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.save();ctx.translate(ap.x,ap.y);ctx.rotate(ap.angle);ctx.fillText('▶',0,0);ctx.restore();
+  ctx.restore();
+
+  // ── 流れるコンテナ描画 ──
+  for(let i=conveyorBoxes.length-1;i>=0;i--){
+    const box=conveyorBoxes[i];
+    box.d+=box.speed;
+    // パス終端を超えたらフェードアウト
+    if(box.d>CONV_H_LEN+CONV_ARC_LEN+T*3) box.alpha-=0.04;
+    box.alpha-=0.003;
+    if(box.alpha<=0){conveyorBoxes.splice(i,1);continue;}
+    const p=conveyorPos(box.d);
+    ctx.save();
+    ctx.globalAlpha=Math.min(box.alpha,1);
+    ctx.translate(p.x,p.y);
+    ctx.rotate(p.angle);
+    // コンテナ本体（回転に合わせて描画）
+    const bw=22,bh=16;
+    ctx.fillStyle='#5a4a2a';ctx.fillRect(-bw/2+1,-bh/2+1,bw,bh);
+    ctx.fillStyle='#8a7a50';ctx.fillRect(-bw/2,-bh/2,bw,bh);
+    ctx.fillStyle='rgba(255,255,255,0.18)';ctx.fillRect(-bw/2+2,-bh/2+2,bw-4,bh*.3);
+    ctx.strokeStyle='rgba(0,0,0,0.4)';ctx.lineWidth=1;ctx.strokeRect(-bw/2,-bh/2,bw,bh);
+    // 📦アイコン
+    ctx.rotate(-p.angle); // テキストは正位置で
+    ctx.font='10px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('📦',0,0);
+    ctx.restore();
+  }
   if(tc&&!hardMode){
     const targetBox=getTargetBoxLabel();
-    if(targetBox){
-      for(const [r] of ROW_CFG){
-        for(let c=1;c<=9;c++){
-          const shelf=SMAP[`${r},${c}`];
-          if(shelf&&shelf.drawers.some(dr=>dr.label===targetBox)){
-            const x=c*T,y=r*T;
-            const a=.28+.18*Math.sin(pulseTick*3);
-            ctx.fillStyle=`rgba(155,188,15,${a})`;ctx.fillRect(x,y,T,T);
-            ctx.strokeStyle=GB3;ctx.lineWidth=3;
-            ctx.strokeRect(x+2,y+2,T-4,T-4);
-            ctx.fillStyle=GB3;
-            ctx.font=`${T*.22|0}px serif`;
-            ctx.textAlign='center';ctx.textBaseline='top';
-            ctx.fillText('▼',x+T/2,y+2);
-          }
-        }
+    if(targetBox){for(const[r]of ROW_CFG){for(let c=1;c<=9;c++){
+      const shelf=SMAP[`${r},${c}`];
+      if(shelf&&shelf.drawers.some(dr=>dr.label===targetBox)){
+        const x=c*T,y=r*T,a=.28+.18*Math.sin(pulseTick*3);
+        ctx.fillStyle=`rgba(155,188,15,${a})`;ctx.fillRect(x,y,T,T);
+        ctx.strokeStyle=GB3;ctx.lineWidth=3;ctx.strokeRect(x+2,y+2,T-4,T-4);
+        ctx.fillStyle=GB3;ctx.font=`${T*.22|0}px serif`;ctx.textAlign='center';ctx.textBaseline='top';ctx.fillText('▼',x+T/2,y+2);
       }
-    }
+    }}}
   }
-
-  // Bots
   for(const b of bots){
-    const spr=b.e===1?SPR_BOT1:SPR_BOT2;
-    const sw=spr[0].length*PX_SIZE, sh=spr.length*PX_SIZE;
-    const bx=b.x-sw/2, by=b.y-sh;
-    drawSprite(ctx,spr,bx,by,b.face<0);
-    if(b.cart){
-      const cw=SPR_CART[0].length*PX_SIZE, ch=SPR_CART.length*PX_SIZE;
-      const cartX=b.face>0 ? b.x+sw/2-2 : b.x-sw/2-cw+2;
-      drawSprite(ctx,SPR_CART,cartX,b.y-ch,false);
-    }
+    const spr=b.e===1?SPR_BOT1:SPR_BOT2;const sw=spr[0].length*PX_SIZE,sh=spr.length*PX_SIZE;
+    drawSprite(ctx,spr,b.x-sw/2,b.y-sh,b.face<0);
+    if(b.cart){const cw=SPR_CART[0].length*PX_SIZE,ch=SPR_CART.length*PX_SIZE;
+    drawSprite(ctx,SPR_CART,b.face>0?b.x+sw/2-2:b.x-sw/2-cw+2,b.y-ch,false);}
   }
-
-  // ── 他プレイヤー描画 ──
   for(const op of Object.values(otherPlayers)){
-    // 古いデータ（10秒以上前）は表示しない
-    if(Date.now()-op.ts > 10000) continue;
-    const ox=op.x, oy=op.y;
-    const pw=SPR_PLAYER[0].length*PX_SIZE, ph=SPR_PLAYER.length*PX_SIZE;
-    // 半透明でスプライト描画
-    ctx.save();
-    ctx.globalAlpha=0.82;
-    // ハードモードプレイヤーは赤みがかったカラーで差別化
-    if(op.hardMode){
-      ctx.filter='hue-rotate(100deg) saturate(1.5)';
-    } else {
-      ctx.filter='hue-rotate(200deg) brightness(1.1)';
-    }
-    drawSprite(ctx,SPR_PLAYER,ox-pw/2,oy-ph,op.face<0);
-    if(op.hasCart){
-      const cw=SPR_CART[0].length*PX_SIZE,ch=SPR_CART.length*PX_SIZE;
-      const cartX=op.face>0 ? ox+pw/2-2 : ox-pw/2-cw+2;
-      drawSprite(ctx,SPR_CART,cartX,oy-ch,false);
-    }
+    if(Date.now()-op.ts>10000)continue;
+    const pw=SPR_PLAYER[0].length*PX_SIZE,ph=SPR_PLAYER.length*PX_SIZE;
+    ctx.save();ctx.globalAlpha=0.82;
+    ctx.filter=op.hardMode?'hue-rotate(100deg) saturate(1.5)':'hue-rotate(200deg) brightness(1.1)';
+    drawSprite(ctx,SPR_PLAYER,op.x-pw/2,op.y-ph,op.face<0);
+    if(op.hasCart){const cw=SPR_CART[0].length*PX_SIZE,ch=SPR_CART.length*PX_SIZE;
+    drawSprite(ctx,SPR_CART,op.face>0?op.x+pw/2-2:op.x-pw/2-cw+2,op.y-ch,false);}
     ctx.restore();
-    // 名前タグ
-    ctx.save();
-    const nameY=oy-ph-10;
-    const name=op.name||'???';
-    ctx.font=`bold 8px '${PX}',monospace`;
-    ctx.textAlign='center';ctx.textBaseline='bottom';
-    // 背景
+    ctx.save();const nameY=op.y-ph-10;const name=op.name||'???';
+    ctx.font=`bold 8px '${PX}',monospace`;ctx.textAlign='center';ctx.textBaseline='bottom';
     const tw=ctx.measureText(name).width+8;
-    ctx.fillStyle='rgba(10,28,5,0.78)';
-    ctx.fillRect(ox-tw/2,nameY-10,tw,11);
-    // テキスト
-    ctx.fillStyle= op.hardMode ? '#ff8888' : '#88ddff';
-    ctx.fillText(name,ox,nameY);
-    ctx.restore();
+    ctx.fillStyle='rgba(10,28,5,0.78)';ctx.fillRect(op.x-tw/2,nameY-10,tw,11);
+    ctx.fillStyle=op.hardMode?'#ff8888':'#88ddff';ctx.fillText(name,op.x,nameY);ctx.restore();
   }
-
-  // Player move indicator
-  if(P.tx!==null){
-    ctx.strokeStyle=GB1;ctx.lineWidth=1;ctx.setLineDash([4,4]);
-    ctx.beginPath();ctx.moveTo(P.x,P.y);ctx.lineTo(P.tx,P.ty);ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle=GB1;
-    ctx.beginPath();ctx.arc(P.tx,P.ty,5,0,Math.PI*2);ctx.fill();
-  }
-
-  // Player shadow
-  ctx.fillStyle='rgba(15,56,15,.25)';
-  for(let i=-10;i<=10;i+=4)ctx.fillRect(P.x+i-2,P.y+2,4,3);
-
-  // Player sprite + cart
-  const pw=SPR_PLAYER[0].length*PX_SIZE, ph=SPR_PLAYER.length*PX_SIZE;
-  const px=P.x-pw/2, py=P.y-ph;
-  drawSprite(ctx,SPR_PLAYER,px,py,P.face<0);
-  if(P.hasCart){
-    const cw=SPR_CART[0].length*PX_SIZE, ch=SPR_CART.length*PX_SIZE;
-    const cartX=P.face>0 ? P.x+pw/2-2 : P.x-pw/2-cw+2;
-    drawSprite(ctx,SPR_CART,cartX,P.y-ch,false);
-  }
-
-  // Tutorial path overlay
+  if(P.tx!==null){ctx.strokeStyle=GB1;ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(P.x,P.y);ctx.lineTo(P.tx,P.ty);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=GB1;ctx.beginPath();ctx.arc(P.tx,P.ty,5,0,Math.PI*2);ctx.fill();}
+  ctx.fillStyle='rgba(15,56,15,.25)';for(let i=-10;i<=10;i+=4)ctx.fillRect(P.x+i-2,P.y+2,4,3);
+  const pw=SPR_PLAYER[0].length*PX_SIZE,ph=SPR_PLAYER.length*PX_SIZE;
+  drawSprite(ctx,SPR_PLAYER,P.x-pw/2,P.y-ph,P.face<0);
+  if(P.hasCart){const cw=SPR_CART[0].length*PX_SIZE,ch=SPR_CART.length*PX_SIZE;
+  drawSprite(ctx,SPR_CART,P.face>0?P.x+pw/2-2:P.x-pw/2-cw+2,P.y-ch,false);}
   drawTutPath(ctx);
-
   ctx.restore();
 }
 
-// Scanlines canvas (static, drawn once)
 function initScanlines(){
-  const sc=document.getElementById('scanlines');
-  sc.width=window.innerWidth; sc.height=window.innerHeight;
+  const sc=document.getElementById('scanlines');sc.width=window.innerWidth;sc.height=window.innerHeight;
   const c2=sc.getContext('2d');
-  for(let y=0;y<sc.height;y+=3){
-    c2.fillStyle='rgba(15,56,15,.07)';c2.fillRect(0,y,sc.width,1);
-  }
+  for(let y=0;y<sc.height;y+=3){c2.fillStyle='rgba(15,56,15,.07)';c2.fillRect(0,y,sc.width,1);}
 }
 
-// ══════════════════════════════════════════════════════════════
-//  GAME LOOP — 30fps cap for battery
-// ══════════════════════════════════════════════════════════════
-running=false;
-let _lastRaf=0;
-let drawerPhysicsActive=true;
+running=false;let _lastRaf=0;let drawerPhysicsActive=true;
 function loop(now){
-  if(!running)return;
-  requestAnimationFrame(loop);
-  if(now-_lastRaf<31)return; // ~30fps cap
-  _lastRaf=now;
-  // 位置をFirebaseに送信（10fps）
+  if(!running)return;requestAnimationFrame(loop);
+  if(now-_lastRaf<31)return;_lastRaf=now;
   mpSendPos(now);
-  // Move player
   const arr=moveEnt(P);
   if(arr&&pendingShelf){
     const ar=accessRow(pendingShelf.row);
-    const atx=pendingShelf.col*T+T/2, aty=ar*T+T/2;
-    if(Math.hypot(P.x-atx,P.y-aty)<T*0.55){openShelfPanel(pendingShelf);}
+    const atx=pendingShelf.col*T+T/2,aty=ar*T+T/2;
+    if(Math.hypot(P.x-atx,P.y-aty)<T*0.55)openShelfPanel(pendingShelf);
     pendingShelf=null;
   }
-  // Check zone triggers
   if(!panelOpen&&!drawerOpen)checkZoneTrigger();
-  // Bots
-  for(const b of bots){
-    b.timer--;
-    const ba=moveEnt(b,true);
-    if(ba||b.timer<=0||!b.tx) botPickTarget(b);
+  for(const b of bots){b.timer--;const ba=moveEnt(b,true);if(ba||b.timer<=0||!b.tx)botPickTarget(b);}
+  // ── BOTがたまにコンベアにコンテナを流す ──
+  botConveyorTimer--;
+  if(botConveyorTimer<=0){
+    botConveyorTimer=rri(90,240); // 3〜8秒おき
+    // カート持ちBOTが回収ゾーン付近にいたらコンテナを流す
+    for(const b of bots){
+      if(b.cart&&Math.floor(b.y/T)>=15&&Math.floor(b.y/T)<=17&&Math.floor(b.x/T)>=0&&Math.floor(b.x/T)<=3){
+        spawnConveyorBox();break;
+      }
+    }
+    // 近くにBOTがいなくても15%の確率で流す（画面外のBOTが流した演出）
+    if(conveyorBoxes.length<3&&Math.random()<0.15) spawnConveyorBox();
   }
   if(!panelOpen&&!drawerOpen)renderMap();
   if(drawerOpen&&(drawerPhysicsActive||dragIdx>=0))renderDrawerCanvas();
 }
 
-// ══════════════════════════════════════════════════════════════
-//  ZONE TRIGGER
-// ══════════════════════════════════════════════════════════════
 zoneCooldown=0;
 function checkZoneTrigger(){
   if(zoneCooldown>0){zoneCooldown--;return;}
   const tr=Math.floor(P.y/T),tc=Math.floor(P.x/T);
-  if(tr<0||tr>=MROWS||tc<0||tc>=MCOLS){return;}  // マップ外は無視
+  if(tr<0||tr>=MROWS||tc<0||tc>=MCOLS)return;
   exitTimer=0;
   const t=map[tr][tc];
-  if(t===RETURN_ZONE&&(gameState===GS.RETURNING||gameState===GS.PICKING||gameState===GS.BATCH_DONE)&&P.hasCart&&container.length>0){
-    depositContainer();
-    zoneCooldown=60;
-    if(tutorialMode&&tutStep>=7) advanceTut(99);
-  }
-  if(t===EMPTY_ZONE&&gameState===GS.DEPOSITED){
-    gameState=GS.GETTING_EMPTY;zoneCooldown=60;
-    show('wf-empty');
-  }
-  if(t===ENTRANCE){
-    exitTimer++;
-    if(exitTimer===90) showExitConfirm(); // 出入口に3秒で確認
-  }
-  if(t===EXIT_ZONE){
-    // 業務終了ゾーンに踏み込んだら即座に確認
-    if(exitTimer===0) showExitConfirm();
-    exitTimer++;
-  }
-  if(t===RANKING_ZONE){
-    if(!document.getElementById('wf-ranking').classList.contains('show')){
-      showRankingOverlay();
-    }
-  }
+  if(t===RETURN_ZONE&&(gameState===GS.RETURNING||gameState===GS.PICKING||gameState===GS.BATCH_DONE)&&P.hasCart&&container.length>0){depositContainer();zoneCooldown=60;if(tutorialMode&&tutStep>=7)advanceTut(99);}
+  if(t===EMPTY_ZONE&&gameState===GS.DEPOSITED){gameState=GS.GETTING_EMPTY;zoneCooldown=60;show('wf-empty');}
+  if(t===ENTRANCE){exitTimer++;if(exitTimer===90)showExitConfirm();}
+  if(t===EXIT_ZONE){if(exitTimer===0)showExitConfirm();exitTimer++;}
+  if(t===RANKING_ZONE){if(!document.getElementById('wf-ranking').classList.contains('show'))showRankingOverlay();}
+}
+
+// ── コンベアにコンテナを流す ──
+function spawnConveyorBox(){
+  conveyorBoxes.push({
+    d: -10,  // ベルト左端の少し手前からスタート
+    alpha: 1.3,
+    speed: 2.0+Math.random()*0.8
+  });
 }
 
 function depositContainer(){
-  gameState=GS.DEPOSITED;
-  P.hasCart=false;
-  show('wf-return');
-  // ── 回収時点でFirebaseにスコア送信 ──
+  gameState=GS.DEPOSITED;P.hasCart=false;show('wf-return');
+  // コンベアにコンテナを流す演出
+  spawnConveyorBox();
   try{
     const elapsed=Date.now()-startTime;
     const hh=Math.floor(elapsed/3600000).toString().padStart(2,'0');
     const mm=Math.floor((elapsed%3600000)/60000).toString().padStart(2,'0');
     const ss=Math.floor((elapsed%60000)/1000).toString().padStart(2,'0');
     const accuracy=totalPicks>0?Math.round((totalPicks/(totalPicks+totalMisses))*100):0;
-    const hrs=elapsed/3600000||1/60;
-    const productivity=Math.round(totalPicks/hrs);
+    const hrs=elapsed/3600000||1/60;const productivity=Math.round(totalPicks/hrs);
     const playerName=(document.getElementById('player-name').value.trim()||t('defaultName')).slice(0,12);
-    if(window._fbPush && totalPicks>0){
-      window._fbPush(window._fbRef(window._fbDb,'scores'),{
-        name: playerName,
-        picks: totalPicks,
-        accuracy: accuracy,
-        productivity: productivity,
-        shiftTime: `${hh}:${mm}:${ss}`,
-        hardMode: hardMode,
-        ts: Date.now()
-      });
+    if(window._fbPush&&totalPicks>0){
+      window._fbPush(window._fbRef(window._fbDb,'scores'),{name:playerName,picks:totalPicks,accuracy:accuracy,productivity:productivity,shiftTime:`${hh}:${mm}:${ss}`,hardMode:hardMode,ts:Date.now()});
     }
-  }catch(e){ console.warn('Firebase deposit score failed',e); }
+  }catch(e){console.warn('Firebase deposit score failed',e);}
 }
 
 function showExitConfirm(){
-  if(document.getElementById('wf-exit-confirm').classList.contains('show')) return;
-  running=false;
-  show('wf-exit-confirm');
+  if(document.getElementById('wf-exit-confirm').classList.contains('show'))return;
+  running=false;show('wf-exit-confirm');
 }
 
 function showRankingOverlay(){
   show('wf-ranking');
-  // Firebaseからリアルタイムで読み込み
-  const tbody = document.getElementById('wf-ranking-tbody');
-  if(!tbody) return;
+  const tbody=document.getElementById('wf-ranking-tbody');if(!tbody)return;
   tbody.innerHTML='<tr><td colspan="7" style="color:#5ab4ff;text-align:center;padding:10px;">'+(window._t?window._t('rankLoading'):'Loading...')+'</td></tr>';
   try{
-    if(!window._fbOnValue) return;
-    const q = window._fbQuery(
-      window._fbRef(window._fbDb,'scores'),
-      window._fbOrderBy('picks'),
-      window._fbLimitToLast(20)
-    );
-    window._fbOnValue(q, snap => {
-      const rows=[];
-      snap.forEach(child=>rows.push(child.val()));
-      rows.sort((a,b)=>b.picks-a.picks);
+    if(!window._fbOnValue)return;
+    const q=window._fbQuery(window._fbRef(window._fbDb,'scores'),window._fbOrderBy('picks'),window._fbLimitToLast(20));
+    window._fbOnValue(q,snap=>{
+      const rows=[];snap.forEach(child=>rows.push(child.val()));rows.sort((a,b)=>b.picks-a.picks);
       const escH=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-      tbody.innerHTML = rows.map((r,i)=>{
-        const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1);
-        const mode=r.hardMode?'💀':'🟢';
-        return`<tr style="color:${i<3?'#5ab4ff':'#8bac0f'};border-bottom:1px solid #1a3e0a;">
-          <td style="padding:4px 3px;text-align:center;">${medal}</td>
-          <td style="padding:4px 6px;max-width:60px;overflow:hidden;text-overflow:ellipsis;">${escH(r.name||'???')}</td>
-          <td style="padding:4px 3px;text-align:right;">${r.picks}</td>
-          <td style="padding:4px 3px;text-align:right;">${r.accuracy!=null?r.accuracy+'%':'--'}</td>
-          <td style="padding:4px 3px;text-align:right;">${r.productivity||'--'}</td>
-          <td style="padding:4px 3px;text-align:center;">${r.shiftTime||'--'}</td>
-          <td style="padding:4px 3px;text-align:center;">${mode}</td>
-        </tr>`;
+      tbody.innerHTML=rows.map((r,i)=>{
+        const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1);const mode=r.hardMode?'💀':'🟢';
+        return`<tr style="color:${i<3?'#5ab4ff':'#8bac0f'};border-bottom:1px solid #1a3e0a;"><td style="padding:4px 3px;text-align:center;">${medal}</td><td style="padding:4px 6px;max-width:60px;overflow:hidden;text-overflow:ellipsis;">${escH(r.name||'???')}</td><td style="padding:4px 3px;text-align:right;">${r.picks}</td><td style="padding:4px 3px;text-align:right;">${r.accuracy!=null?r.accuracy+'%':'--'}</td><td style="padding:4px 3px;text-align:right;">${r.productivity||'--'}</td><td style="padding:4px 3px;text-align:center;">${r.shiftTime||'--'}</td><td style="padding:4px 3px;text-align:center;">${mode}</td></tr>`;
       }).join('')||'<tr><td colspan="7" style="color:#306230;text-align:center;padding:12px;">'+(window._t?window._t('rankEmpty'):'No records yet')+'</td></tr>';
     },{onlyOnce:true});
   }catch(e){console.warn('ranking load failed',e);}
@@ -1872,75 +1559,37 @@ function showEndStats(){
   const mm=Math.floor((elapsed%3600000)/60000).toString().padStart(2,'0');
   const ss=Math.floor((elapsed%60000)/1000).toString().padStart(2,'0');
   const accuracy=totalPicks>0?Math.round((totalPicks/(totalPicks+totalMisses))*100):0;
-  const hrs=elapsed/3600000||1/60;
-  const productivity=Math.round(totalPicks/hrs);
+  const hrs=elapsed/3600000||1/60;const productivity=Math.round(totalPicks/hrs);
   document.getElementById('wf-end-stats').innerHTML=t('endStatsFmt',hh,mm,ss,totalPicks,totalMisses,accuracy,productivity);
-  hide('wf-exit-confirm');
-  show('wf-end');
-  // 最後の回収後にプレイした分を送信（コンテナに何か入っていれば）
+  hide('wf-exit-confirm');show('wf-end');
   try{
     const playerName=(document.getElementById('player-name').value.trim()||t('defaultName')).slice(0,12);
-    if(window._fbPush && totalPicks>0 && container.length>0){
-      window._fbPush(window._fbRef(window._fbDb,'scores'),{
-        name: playerName,
-        picks: totalPicks,
-        accuracy: accuracy,
-        productivity: productivity,
-        shiftTime: `${hh}:${mm}:${ss}`,
-        hardMode: hardMode,
-        ts: Date.now()
-      });
+    if(window._fbPush&&totalPicks>0&&container.length>0){
+      window._fbPush(window._fbRef(window._fbDb,'scores'),{name:playerName,picks:totalPicks,accuracy:accuracy,productivity:productivity,shiftTime:`${hh}:${mm}:${ss}`,hardMode:hardMode,ts:Date.now()});
     }
-  }catch(e){ console.warn('Firebase send failed',e); }
+  }catch(e){console.warn('Firebase send failed',e);}
 }
 
 document.getElementById('wf-exit-yes').onclick=showEndStats;
 document.getElementById('wf-exit-no').onclick=()=>{
-  hide('wf-exit-confirm');
-  // プレイヤーを業務終了ゾーンの1つ上（出入口row16の中央）へ押し戻す
-  P.x=5*T+T/2; P.y=16*T+T/2;
-  P.tx=null; P.ty=null;
-  exitTimer=0;
-  zoneCooldown=90; // 3秒間ゾーントリガー無効
-  running=true;
-  _lastRaf=0;
-  requestAnimationFrame(loop);
+  hide('wf-exit-confirm');P.x=5*T+T/2;P.y=16*T+T/2;P.tx=null;P.ty=null;exitTimer=0;zoneCooldown=90;
+  running=true;_lastRaf=0;requestAnimationFrame(loop);
 };
-document.getElementById('wf-end-restart').onclick=()=>{
-  mpLeave();
-  hide('wf-end');
-  document.getElementById('intro').style.display='flex';
-  applyLang();
-};
+document.getElementById('wf-end-restart').onclick=()=>{mpLeave();hide('wf-end');document.getElementById('intro').style.display='flex';applyLang();};
 
-// ══════════════════════════════════════════════════════════════
-//  INPUT — MAP CANVAS
-// ══════════════════════════════════════════════════════════════
-function worldPos(cx,cy){
-  const rc=cv.getBoundingClientRect();
-  return{wx:(cx-rc.left)*(cv.width/rc.width)+camX,wy:(cy-rc.top)*(cv.height/rc.height)+camY};
-}
-// touchstartから発火した合成clickか判別するフラグ
+function worldPos(cx,cy){const rc=cv.getBoundingClientRect();return{wx:(cx-rc.left)*(cv.width/rc.width)+camX,wy:(cy-rc.top)*(cv.height/rc.height)+camY};}
 let _fromTouch=false;
 cv.addEventListener('click',e=>{
   if(panelOpen||drawerOpen)return;
-  // マウスクリック（touch由来でない）時のみここでダブルタップ判定
-  if(!_fromTouch){
-    if(checkDoubleTap(e.clientX,e.clientY)){
-      triggerBotDodge();
-      return;
-    }
-  }
+  if(!_fromTouch){if(checkDoubleTap(e.clientX,e.clientY)){triggerBotDodge();return;}}
   _fromTouch=false;
   const{wx,wy}=worldPos(e.clientX,e.clientY);
   const tc=Math.floor(wx/T),tr=Math.floor(wy/T);
   if(tr<0||tr>=MROWS||tc<0||tc>=MCOLS)return;
   if(map[tr][tc]===SHELF){
     const shelf=SMAP[`${tr},${tc}`];if(!shelf)return;
-    const ar=accessRow(tr);
-    const atx=tc*T+T/2, aty=ar*T+T/2;
-    const dist=Math.hypot(P.x-atx, P.y-aty);
-    if(dist<T*0.55){openShelfPanel(shelf);}
+    const ar=accessRow(tr),atx=tc*T+T/2,aty=ar*T+T/2;
+    if(Math.hypot(P.x-atx,P.y-aty)<T*0.55)openShelfPanel(shelf);
     else if(!blocked(atx,aty,false)){P.tx=atx;P.ty=aty;pendingShelf=shelf;moveCount++;}
     return;
   }
@@ -1948,76 +1597,43 @@ cv.addEventListener('click',e=>{
   if(!blocked(tx,ty,false)){P.tx=tx;P.ty=ty;pendingShelf=null;moveCount++;}
 });
 cv.addEventListener('touchstart',e=>{
-  e.preventDefault();
-  const touch=e.touches[0];
-  // ダブルタップ判定はtouchstartでのみ行う
-  if(checkDoubleTap(touch.clientX,touch.clientY)){
-    triggerBotDodge();
-    return;
-  }
-  // 通常タップ → 合成clickとして処理（clickハンドラで二重判定しないようフラグ）
-  _fromTouch=true;
-  cv.dispatchEvent(new MouseEvent('click',{clientX:touch.clientX,clientY:touch.clientY}));
+  e.preventDefault();const touch=e.touches[0];
+  if(checkDoubleTap(touch.clientX,touch.clientY)){triggerBotDodge();return;}
+  _fromTouch=true;cv.dispatchEvent(new MouseEvent('click',{clientX:touch.clientX,clientY:touch.clientY}));
 },{passive:false});
 
-// ══════════════════════════════════════════════════════════════
-//  SCANNER HOLD BUTTON
-// ══════════════════════════════════════════════════════════════
 const scanBtn=document.getElementById('scan-btn');
 const spEl=document.getElementById('sp');
 
 function startScan(){
-  scanHoldActive=true;
-  scanBtn.classList.add('held');
-  if(tutorialMode&&tutStep===1) advanceTut(2); // スキャナー確認 → 棚へ移動
+  scanHoldActive=true;scanBtn.classList.add('held');
+  if(tutorialMode&&tutStep===1)advanceTut(2);
   if(gameState===GS.GETTING_EMPTY){startEmptyContainerScan();return;}
   refreshScannerPanel();
   if(!drawerOpen){
-    // #7: in shelf panel, position scanner above or below based on target drawer visibility
     if(panelOpen){
       const targetBox=getTargetBoxLabel();
-      const targetBtn=targetBox?document.querySelector(`#shelf-grid .dr-btn[data-did]`):null;
-      // Check if target is in lower or upper half of grid
       const gridWrap=document.getElementById('shelf-grid-wrap');
       const gridRect=gridWrap.getBoundingClientRect();
       const screenMid=gridRect.top+gridRect.height/2;
-      // Find target btn position
       let targetInBottom=true;
       if(targetBox){
-        const allBtns=document.querySelectorAll('#shelf-grid .dr-btn');
-        allBtns.forEach(btn=>{
+        document.querySelectorAll('#shelf-grid .dr-btn').forEach(btn=>{
           const dr=currentShelf&&currentShelf.drawers[parseInt(btn.dataset.did)];
-          if(dr&&dr.label===targetBox){
-            const rect=btn.getBoundingClientRect();
-            targetInBottom=(rect.top+rect.height/2)>screenMid;
-          }
+          if(dr&&dr.label===targetBox){targetInBottom=(btn.getBoundingClientRect().top+btn.getBoundingClientRect().height/2)>screenMid;}
         });
       }
-      // Place scanner at top if target is in bottom half
-      if(targetInBottom){
-        spEl.style.bottom='auto';
-        spEl.style.top='80px';
-      }else{
-        spEl.style.bottom=`calc(88px + env(safe-area-inset-bottom))`;
-        spEl.style.top='auto';
-      }
-    }else{
-      spEl.style.bottom=`calc(88px + env(safe-area-inset-bottom))`;
-      spEl.style.top='auto';
-    }
+      if(targetInBottom){spEl.style.bottom='auto';spEl.style.top='80px';}
+      else{spEl.style.bottom=`calc(88px + env(safe-area-inset-bottom))`;spEl.style.top='auto';}
+    }else{spEl.style.bottom=`calc(88px + env(safe-area-inset-bottom))`;spEl.style.top='auto';}
     spEl.classList.add('show');
   }
-  if(panelOpen&&!hardMode) refreshShelfPanelHighlights(true);
+  if(panelOpen&&!hardMode)refreshShelfPanelHighlights(true);
 }
 function endScan(){
-  scanHoldActive=false;
-  scanBtn.classList.remove('held');
-  spEl.classList.remove('show');
-  if(panelOpen) refreshShelfPanelHighlights(false);
-  if(gameState===GS.SCANNING_EMPTY){
-    gameState=GS.GETTING_EMPTY;
-    cancelEmptyContainerScan();
-  }
+  scanHoldActive=false;scanBtn.classList.remove('held');spEl.classList.remove('show');
+  if(panelOpen)refreshShelfPanelHighlights(false);
+  if(gameState===GS.SCANNING_EMPTY){gameState=GS.GETTING_EMPTY;cancelEmptyContainerScan();}
 }
 scanBtn.addEventListener('mousedown',startScan);
 scanBtn.addEventListener('mouseup',endScan);
@@ -2030,22 +1646,16 @@ function refreshScannerPanel(){
     document.getElementById('sp-shelf-id').textContent=t('scanReturnZone');
     document.getElementById('sp-code').textContent=t('scanContainerTxt');
     document.getElementById('sp-type').textContent=t('scanDeliverMsg');
-    document.getElementById('sp-rem').textContent='--';document.getElementById('sp-pg').textContent='--/--';
-    return;
+    document.getElementById('sp-rem').textContent='--';document.getElementById('sp-pg').textContent='--/--';return;
   }
   if(gameState===GS.GETTING_EMPTY||gameState===GS.SCANNING_EMPTY){
     document.getElementById('sp-shelf-id').textContent=t('scanEmptyZone');
     document.getElementById('sp-code').textContent=t('scanEmptyBox');
     document.getElementById('sp-type').textContent=t('scanHoldMsg');
-    document.getElementById('sp-rem').textContent='--';document.getElementById('sp-pg').textContent='--/--';
-    return;
+    document.getElementById('sp-rem').textContent='--';document.getElementById('sp-pg').textContent='--/--';return;
   }
-  if(bidx>=batch.length){
-    document.getElementById('sp-shelf-id').textContent=t('scanBoxDone');
-    return;
-  }
-  const entry=batch[bidx];
-  const code=entry.code, item=DB[code];
+  if(bidx>=batch.length){document.getElementById('sp-shelf-id').textContent=t('scanBoxDone');return;}
+  const entry=batch[bidx],code=entry.code,item=DB[code];
   const drawer=entry.shelf.drawers[entry.drawerId];
   const boxLabel=drawer?drawer.label:entry.shelf.id;
   document.getElementById('sp-shelf-id').textContent=t('scanBoxFmt',boxLabel);
@@ -2056,86 +1666,61 @@ function refreshScannerPanel(){
   drawItemShape(document.getElementById('sp-cnv'),code,56);
 }
 
-// Get the exact drawer label — uses the stored shelf/drawer from mkBatch
 function getTargetBoxLabel(){
-  if(bidx>=batch.length) return null;
-  const entry=batch[bidx];
-  const drawer=entry.shelf.drawers[entry.drawerId];
+  if(bidx>=batch.length)return null;
+  const entry=batch[bidx],drawer=entry.shelf.drawers[entry.drawerId];
   return drawer?drawer.label:null;
 }
 
-// ══════════════════════════════════════════════════════════════
-//  SHELF PANEL
-// ══════════════════════════════════════════════════════════════
 currentShelf=null;
 function openShelfPanel(shelf){
   panelOpen=true;currentShelf=shelf;
   const shelfLabel=shelf.ltr+String(shelf.colNum/100|0).padStart(2,'0');
   document.getElementById('sp-hdr-title').textContent=(lang==='ja'?'棚 ':'Shelf ')+shelfLabel;
   document.getElementById('sp-hdr-sub').textContent='';
-  document.getElementById('bgm-wrap').style.display='none'; // #6
-  buildShelfGrid(shelf);
-  show('shelf-panel');
-  if(tutorialMode&&tutStep===2) advanceTut(3); // 棚パネル → 引き出しタップ
+  document.getElementById('bgm-wrap').style.display='none';
+  buildShelfGrid(shelf);show('shelf-panel');
+  if(tutorialMode&&tutStep===2)advanceTut(3);
 }
 function buildShelfGrid(shelf){
   const targetBox=getTargetBoxLabel();
-  const grid=document.getElementById('shelf-grid');
-  grid.innerHTML='';
+  const grid=document.getElementById('shelf-grid');grid.innerHTML='';
   for(const dr of shelf.drawers){
     const isExactTarget=(dr.label===targetBox);
-    const btn=document.createElement('div');
-    btn.className='dr-btn';
-    btn.dataset.did=dr.id;
-    if(isExactTarget&&(scanHoldActive||tutorialMode)&&!hardMode) btn.classList.add('target-glow');
-    // #8: small count on top, big label on bottom
-    btn.innerHTML=`
-      <div class="dr-count-bar">${t('drCountFmt',dr.items.length)}</div>
-      <div class="dr-label-bar">${dr.label}</div>`;
+    const btn=document.createElement('div');btn.className='dr-btn';btn.dataset.did=dr.id;
+    if(isExactTarget&&(scanHoldActive||tutorialMode)&&!hardMode)btn.classList.add('target-glow');
+    btn.innerHTML=`<div class="dr-count-bar">${t('drCountFmt',dr.items.length)}</div><div class="dr-label-bar">${dr.label}</div>`;
     btn.addEventListener('click',()=>openDrawerPanel(dr,shelf));
     grid.appendChild(btn);
   }
 }
 function refreshShelfPanelHighlights(glow){
-  if(!currentShelf) return;
-  if(hardMode){return;} // #4: no highlight in hard mode
+  if(!currentShelf||hardMode)return;
   const targetBox=getTargetBoxLabel();
   document.querySelectorAll('#shelf-grid .dr-btn').forEach(btn=>{
-    const did=parseInt(btn.dataset.did);
-    const dr=currentShelf.drawers[did];
-    const isExact=(dr&&dr.label===targetBox);
-    if((glow||tutorialMode)&&isExact) btn.classList.add('target-glow');
+    const did=parseInt(btn.dataset.did),dr=currentShelf.drawers[did];
+    if((glow||tutorialMode)&&dr&&dr.label===targetBox)btn.classList.add('target-glow');
     else btn.classList.remove('target-glow');
   });
 }
 document.getElementById('sp-hdr-back').onclick=()=>{
   hide('shelf-panel');panelOpen=false;currentShelf=null;pendingShelf=null;
-  document.getElementById('bgm-wrap').style.display=''; // #6: restore
+  document.getElementById('bgm-wrap').style.display='';
 };
 
-// ══════════════════════════════════════════════════════════════
-//  DRAWER PANEL — PHYSICS CANVAS
-// ══════════════════════════════════════════════════════════════
 const dpCv=document.getElementById('dp-canvas');
-const dpCtx=dpCv.getContext('2d');
-dpCtx.imageSmoothingEnabled=false;
-physItems=[],dragIdx=-1,dragOffX=0,dragOffY=0;
-pointerStartX=0,pointerStartY=0,isDrag=false;
-currentDrawer=null,currentDrawerShelf=null;
-
-const ITEM_W=40,ITEM_H=40; // base size for physics items
+const dpCtx=dpCv.getContext('2d');dpCtx.imageSmoothingEnabled=false;
+physItems=[];dragIdx=-1;dragOffX=0;dragOffY=0;
+pointerStartX=0;pointerStartY=0;isDrag=false;
+currentDrawer=null;currentDrawerShelf=null;
+const ITEM_W=40,ITEM_H=40;
 
 function updateDrawerScannerBar(){
   const code=bidx<batch.length?batch[bidx].code:null;
   const boxLabel=getTargetBoxLabel()||'------';
   document.getElementById('dsb-box').textContent=t('dsbBoxFmt',boxLabel);
-  if(code&&DB[code]){
-    const item=DB[code];
-    document.getElementById('dsb-code').textContent=`${code} ／ ${item.type}`;
-    drawItemShape(document.getElementById('dsb-canvas'),code,64);
-  }else{
-    document.getElementById('dsb-code').textContent=t('dsbCodeDefault');
-  }
+  if(code&&DB[code]){const item=DB[code];document.getElementById('dsb-code').textContent=`${code} ／ ${item.type}`;drawItemShape(document.getElementById('dsb-canvas'),code,64);}
+  else document.getElementById('dsb-code').textContent=t('dsbCodeDefault');
   document.getElementById('dsb-prog').textContent=t('dsbProgFmt',bidx+1,batch.length,batch.length-bidx);
 }
 
@@ -2148,50 +1733,27 @@ function openDrawerPanel(dr,shelf){
   hide('shelf-panel');panelOpen=false;
   document.getElementById('scan-btn').style.display='none';
   document.getElementById('bgm-wrap').style.display='none';
-  updateDrawerScannerBar();
-  show('drawer-panel');
-  // offsetWidth/Height available synchronously after show()
+  updateDrawerScannerBar();show('drawer-panel');
   const wrap=document.getElementById('dp-canvas-wrap');
-  const wW=wrap.offsetWidth||window.innerWidth;
-  const wH=Math.max(wrap.offsetHeight,200);
-  dpCv.width=wW;dpCv.height=wH;
-  dpCv.style.width=wW+'px';dpCv.style.height=wH+'px';
-  drawerBgCanvas=null; // invalidate bg cache for new size
-  initPhysItems(dr,wW,wH);
-  drawerPhysicsActive=true;
+  const wW=wrap.offsetWidth||window.innerWidth,wH=Math.max(wrap.offsetHeight,200);
+  dpCv.width=wW;dpCv.height=wH;dpCv.style.width=wW+'px';dpCv.style.height=wH+'px';
+  drawerBgCanvas=null;
+  initPhysItems(dr,wW,wH);drawerPhysicsActive=true;
   if(dr.items.length===0)show('dp-empty');
   renderDrawerCanvas();
-  if(tutorialMode&&tutStep===3) advanceTut(4); // 引き出し開いた → 商材タップへ
+  if(tutorialMode&&tutStep===3)advanceTut(4);
 }
 
 function initPhysItems(dr,W,H){
   physItems=[];
-  const codes=dr.items;
-  for(let i=0;i<codes.length;i++){
-    const code=codes[i];
-    const item=DB[code];
-    if(!item)continue;
-    const sh=item.shape;
-    // Scale shape to be nicely visible in the drawer
-    const baseMax=Math.min(W,H)*.18;
-    const scale=baseMax/Math.max(sh.w,sh.h);
-    const iw=sh.w*scale*1.1, ih=sh.h*scale*1.1;
-    const margin=Math.max(iw,ih)/2+6;
-    physItems.push({
-      code,
-      color:item.color,
-      textCol:item.textCol,
-      shape:sh,
-      x:margin+Math.random()*(W-2*margin),
-      y:margin+Math.random()*(H-2*margin),
-      rot:(Math.random()-.5)*Math.PI*.75,
-      vx:(Math.random()-.5)*2,
-      vy:(Math.random()-.5)*2,
-      vrot:(Math.random()-.5)*.08,
-      z:i,
-      iw, ih,
-      dragging:false,
-    });
+  for(let i=0;i<dr.items.length;i++){
+    const code=dr.items[i],item=DB[code];if(!item)continue;
+    const sh=item.shape,baseMax=Math.min(W,H)*.18,scale=baseMax/Math.max(sh.w,sh.h);
+    const iw=sh.w*scale*1.1,ih=sh.h*scale*1.1,margin=Math.max(iw,ih)/2+6;
+    physItems.push({code,color:item.color,textCol:item.textCol,shape:sh,
+      x:margin+Math.random()*(W-2*margin),y:margin+Math.random()*(H-2*margin),
+      rot:(Math.random()-.5)*Math.PI*.75,vx:(Math.random()-.5)*2,vy:(Math.random()-.5)*2,
+      vrot:(Math.random()-.5)*.08,z:i,iw,ih,dragging:false});
   }
 }
 
@@ -2199,103 +1761,52 @@ let drawerBgCanvas=null,drawerBgW=0,drawerBgH=0;
 function ensureDrawerBg(W,H){
   if(drawerBgCanvas&&drawerBgW===W&&drawerBgH===H)return;
   if(!drawerBgCanvas)drawerBgCanvas=document.createElement('canvas');
-  drawerBgCanvas.width=W;drawerBgCanvas.height=H;
-  drawerBgW=W;drawerBgH=H;
+  drawerBgCanvas.width=W;drawerBgCanvas.height=H;drawerBgW=W;drawerBgH=H;
   const dc=drawerBgCanvas.getContext('2d');
   dc.fillStyle='#2a1e12';dc.fillRect(0,0,W,H);
   dc.strokeStyle='rgba(255,255,255,.04)';dc.lineWidth=1;
-  for(let y=0;y<H;y+=10){
-    dc.beginPath();dc.moveTo(0,y);dc.lineTo(W,y+Math.sin(y*.3)*3);dc.stroke();
-  }
-  dc.fillStyle='rgba(0,0,0,.5)';
-  dc.fillRect(0,0,5,H);dc.fillRect(W-5,0,5,H);
-  dc.fillRect(0,0,W,5);dc.fillRect(0,H-5,W,5);
+  for(let y=0;y<H;y+=10){dc.beginPath();dc.moveTo(0,y);dc.lineTo(W,y+Math.sin(y*.3)*3);dc.stroke();}
+  dc.fillStyle='rgba(0,0,0,.5)';dc.fillRect(0,0,5,H);dc.fillRect(W-5,0,5,H);dc.fillRect(0,0,W,5);dc.fillRect(0,H-5,W,5);
 }
 
 function renderDrawerCanvas(){
-  const W=dpCv.width,H=dpCv.height;
-  dpCtx.clearRect(0,0,W,H);
-  if(W===0||H===0)return;
-
-  // Blit cached drawer background
-  ensureDrawerBg(W,H);
-  dpCtx.drawImage(drawerBgCanvas,0,0);
-
-  // Apply physics (friction) + detect idle
+  const W=dpCv.width,H=dpCv.height;dpCtx.clearRect(0,0,W,H);if(W===0||H===0)return;
+  ensureDrawerBg(W,H);dpCtx.drawImage(drawerBgCanvas,0,0);
   let anyMoving=false;
   for(const item of physItems){
     if(!item.dragging){
       item.x+=item.vx;item.y+=item.vy;item.rot+=item.vrot;
       item.vx*=.85;item.vy*=.85;item.vrot*=.88;
       const hw=item.iw/2+4,hh=item.ih/2+4;
-      item.x=Math.max(hw,Math.min(W-hw,item.x));
-      item.y=Math.max(hh,Math.min(H-hh,item.y));
-      if(Math.abs(item.vx)>.1||Math.abs(item.vy)>.1||Math.abs(item.vrot)>.003) anyMoving=true;
-    } else {
-      anyMoving=true;
-    }
+      item.x=Math.max(hw,Math.min(W-hw,item.x));item.y=Math.max(hh,Math.min(H-hh,item.y));
+      if(Math.abs(item.vx)>.1||Math.abs(item.vy)>.1||Math.abs(item.vrot)>.003)anyMoving=true;
+    }else anyMoving=true;
   }
   drawerPhysicsActive=anyMoving;
-
-  // Draw items sorted by z
   const tc=bidx<batch.length?batch[bidx].code:null;
   const sorted=[...physItems].sort((a,b)=>a.z-b.z);
-  for(const item of sorted) drawPhysItem(item,tc);
+  for(const item of sorted)drawPhysItem(item,tc);
 }
 
 function drawPhysItem(item,tc){
-  const w=item.iw, h=item.ih;
-  const sh=item.shape;
-  const r=sh.r*Math.min(w,h);
-  dpCtx.save();
-  dpCtx.translate(item.x,item.y);
-  dpCtx.rotate(item.rot);
-
-  // Drop shadow — 1px offset
-  dpCtx.fillStyle='rgba(0,0,0,0.4)';
-  dpCtx.beginPath();dpCtx.roundRect(1,1,w,h,r);dpCtx.fill();
-
-  // Body — full color
-  dpCtx.fillStyle=item.color;
-  dpCtx.beginPath();dpCtx.roundRect(-w/2,-h/2,w,h,r);dpCtx.fill();
-
-  // Shiny highlight
-  dpCtx.fillStyle='rgba(255,255,255,0.25)';
-  dpCtx.beginPath();dpCtx.roundRect(-w/2+2,-h/2+2,w-4,h*.32,r*.6);dpCtx.fill();
-
-  // Border
-  dpCtx.strokeStyle='rgba(255,255,255,0.3)';dpCtx.lineWidth=1.5;
-  dpCtx.beginPath();dpCtx.roundRect(-w/2,-h/2,w,h,r);dpCtx.stroke();
-
-  // Target glow ring — hidden in hard mode (#4)
-  if(item.code===tc&&!hardMode){
-    dpCtx.strokeStyle='rgba(255,240,80,0.85)';dpCtx.lineWidth=3;
-    dpCtx.beginPath();dpCtx.roundRect(-w/2-4,-h/2-4,w+8,h+8,r+4);dpCtx.stroke();
-  }
-
-  // Drag highlight
-  if(item.dragging){
-    dpCtx.strokeStyle='rgba(255,255,255,0.9)';dpCtx.lineWidth=2.5;
-    dpCtx.beginPath();dpCtx.roundRect(-w/2-3,-h/2-3,w+6,h+6,r+3);dpCtx.stroke();
-  }
-
-  // Code text
+  const w=item.iw,h=item.ih,sh=item.shape,r=sh.r*Math.min(w,h);
+  dpCtx.save();dpCtx.translate(item.x,item.y);dpCtx.rotate(item.rot);
+  dpCtx.fillStyle='rgba(0,0,0,0.4)';dpCtx.beginPath();dpCtx.roundRect(1,1,w,h,r);dpCtx.fill();
+  dpCtx.fillStyle=item.color;dpCtx.beginPath();dpCtx.roundRect(-w/2,-h/2,w,h,r);dpCtx.fill();
+  dpCtx.fillStyle='rgba(255,255,255,0.25)';dpCtx.beginPath();dpCtx.roundRect(-w/2+2,-h/2+2,w-4,h*.32,r*.6);dpCtx.fill();
+  dpCtx.strokeStyle='rgba(255,255,255,0.3)';dpCtx.lineWidth=1.5;dpCtx.beginPath();dpCtx.roundRect(-w/2,-h/2,w,h,r);dpCtx.stroke();
+  if(item.code===tc&&!hardMode){dpCtx.strokeStyle='rgba(255,240,80,0.85)';dpCtx.lineWidth=3;dpCtx.beginPath();dpCtx.roundRect(-w/2-4,-h/2-4,w+8,h+8,r+4);dpCtx.stroke();}
+  if(item.dragging){dpCtx.strokeStyle='rgba(255,255,255,0.9)';dpCtx.lineWidth=2.5;dpCtx.beginPath();dpCtx.roundRect(-w/2-3,-h/2-3,w+6,h+6,r+3);dpCtx.stroke();}
   const fs=Math.max(7,Math.floor(Math.min(w,h)*.22));
-  dpCtx.fillStyle=item.textCol;
-  dpCtx.font=`bold ${fs}px '${PX}',monospace`;
-  dpCtx.textAlign='center';dpCtx.textBaseline='middle';
-  dpCtx.fillText(item.code,0,0);
-
+  dpCtx.fillStyle=item.textCol;dpCtx.font=`bold ${fs}px '${PX}',monospace`;
+  dpCtx.textAlign='center';dpCtx.textBaseline='middle';dpCtx.fillText(item.code,0,0);
   dpCtx.restore();
 }
 
-// ── Pointer events for drawer ──
 function dpHitTest(px,py){
   const sorted=[...physItems].map((it,idx)=>({it,idx})).sort((a,b)=>b.it.z-a.it.z);
-  for(const {it,idx} of sorted){
-    // Transform to item local space
-    const dx=px-it.x,dy=py-it.y;
-    const cosR=Math.cos(-it.rot),sinR=Math.sin(-it.rot);
+  for(const{it,idx}of sorted){
+    const dx=px-it.x,dy=py-it.y,cosR=Math.cos(-it.rot),sinR=Math.sin(-it.rot);
     const lx=dx*cosR-dy*sinR,ly=dx*sinR+dy*cosR;
     if(Math.abs(lx)<=it.iw/2+4&&Math.abs(ly)<=it.ih/2+4)return idx;
   }
@@ -2303,382 +1814,176 @@ function dpHitTest(px,py){
 }
 
 dpCv.addEventListener('pointerdown',e=>{
-  e.preventDefault();
-  dpCv.setPointerCapture(e.pointerId);
-  const rect=dpCv.getBoundingClientRect();
-  const px=e.clientX-rect.left,py=e.clientY-rect.top;
+  e.preventDefault();dpCv.setPointerCapture(e.pointerId);
+  const rect=dpCv.getBoundingClientRect(),px=e.clientX-rect.left,py=e.clientY-rect.top;
   pointerStartX=px;pointerStartY=py;isDrag=false;
   const hitIdx=dpHitTest(px,py);
-  if(hitIdx>=0){
-    dragIdx=hitIdx;
-    const it=physItems[hitIdx];
-    dragOffX=px-it.x;dragOffY=py-it.y;
-    it.dragging=true;
-    it.z=physItems.reduce((m,i)=>Math.max(m,i.z),0)+1;
-    it.vx=0;it.vy=0;it.vrot=0;
-  }
+  if(hitIdx>=0){dragIdx=hitIdx;const it=physItems[hitIdx];dragOffX=px-it.x;dragOffY=py-it.y;it.dragging=true;it.z=physItems.reduce((m,i)=>Math.max(m,i.z),0)+1;it.vx=0;it.vy=0;it.vrot=0;}
 },{passive:false});
 
 dpCv.addEventListener('pointermove',e=>{
-  e.preventDefault();
-  if(dragIdx<0)return;
-  const rect=dpCv.getBoundingClientRect();
-  const px=e.clientX-rect.left,py=e.clientY-rect.top;
+  e.preventDefault();if(dragIdx<0)return;
+  const rect=dpCv.getBoundingClientRect(),px=e.clientX-rect.left,py=e.clientY-rect.top;
   if(!isDrag&&Math.hypot(px-pointerStartX,py-pointerStartY)>6)isDrag=true;
-  const it=physItems[dragIdx];
-  const prevX=it.x,prevY=it.y;
-  it.x=px-dragOffX;it.y=py-dragOffY;
+  const it=physItems[dragIdx],prevX=it.x,prevY=it.y;it.x=px-dragOffX;it.y=py-dragOffY;
   const velX=it.x-prevX,velY=it.y-prevY;
-  // Nudge nearby items
   for(let i=0;i<physItems.length;i++){
-    if(i===dragIdx)continue;
-    const other=physItems[i];
-    const dx=other.x-it.x,dy=other.y-it.y;
-    const d=Math.hypot(dx,dy);
-    const minD=(it.iw+other.iw)*.55;
-    if(d<minD&&d>0){
-      const push=(minD-d)/minD*.8;
-      other.vx+=(dx/d)*push*3+velX*.15;
-      other.vy+=(dy/d)*push*3+velY*.15;
-      other.vrot+=(Math.random()-.5)*.12;
-    }
+    if(i===dragIdx)continue;const other=physItems[i];
+    const dx=other.x-it.x,dy=other.y-it.y,d=Math.hypot(dx,dy),minD=(it.iw+other.iw)*.55;
+    if(d<minD&&d>0){const push=(minD-d)/minD*.8;other.vx+=(dx/d)*push*3+velX*.15;other.vy+=(dy/d)*push*3+velY*.15;other.vrot+=(Math.random()-.5)*.12;}
   }
 },{passive:false});
 
 dpCv.addEventListener('pointerup',e=>{
-  e.preventDefault();
-  if(dragIdx>=0){
-    const it=physItems[dragIdx];
-    it.dragging=false;
-    if(!isDrag){
-      // It was a tap → select item for scanning
-      selectDrawerItem(dragIdx);
-    }
-    dragIdx=-1;isDrag=false;
-  }
+  e.preventDefault();if(dragIdx>=0){physItems[dragIdx].dragging=false;if(!isDrag)selectDrawerItem(dragIdx);dragIdx=-1;isDrag=false;}
 },{passive:false});
-
-dpCv.addEventListener('pointercancel',e=>{
-  if(dragIdx>=0){physItems[dragIdx].dragging=false;dragIdx=-1;isDrag=false;}
-});
+dpCv.addEventListener('pointercancel',e=>{if(dragIdx>=0){physItems[dragIdx].dragging=false;dragIdx=-1;isDrag=false;}});
 
 function selectDrawerItem(idx){
-  const phys=physItems[idx];
-  const code=phys.code;
-  const drItem=DB[code];if(!drItem)return;
-  // Stage 1: show item + SCAN button
+  const phys=physItems[idx],code=phys.code,drItem=DB[code];if(!drItem)return;
   document.getElementById('dpc-code').textContent=code;
   document.getElementById('dpc-type').textContent=drItem.type;
   drawItemShape(document.getElementById('dpc-canvas'),code,60);
   selItemData={physIdx:idx,code,drawer:currentDrawer,shelf:currentDrawerShelf};
-  hide('dp-confirm');
-  show('dp-pre-scan');
-  if(tutorialMode&&tutStep===4) advanceTut(5); // 商材タップ → スキャンタップへ
+  hide('dp-confirm');show('dp-pre-scan');
+  if(tutorialMode&&tutStep===4)advanceTut(5);
 }
 
 document.getElementById('dpc-scan').onclick=()=>{
   if(!selItemData)return;
-  if(tutorialMode&&tutStep===5) advanceTut(6); // スキャンタップ → コンテナへタップ
-  const{code}=selItemData;
-  const tc=bidx<batch.length?batch[bidx].code:null;
-  const isMatch=code===tc;
-  const matchEl=document.getElementById('dpc-match');
-  const iconEl=document.getElementById('dpc-result-icon');
-  if(isMatch){
-    iconEl.textContent='✓';
-    matchEl.textContent=t('matchOk');
-    matchEl.className='ok';
-    bidx++;updateHUD();
-    updateDrawerScannerBar();
-    totalPicks++;
-    selItemData.scanned=true;
-    showToast(t('toastPickedItem'),t('toastRemFmt',batch.length-bidx),'ok');
-  }else{
-    iconEl.textContent='✗';
-    matchEl.textContent=t('matchNg');
-    matchEl.className='ng';
-  }
-  hide('dp-pre-scan');
-  show('dp-confirm');
+  if(tutorialMode&&tutStep===5)advanceTut(6);
+  const{code}=selItemData;const tc=bidx<batch.length?batch[bidx].code:null;const isMatch=code===tc;
+  const matchEl=document.getElementById('dpc-match'),iconEl=document.getElementById('dpc-result-icon');
+  if(isMatch){iconEl.textContent='✓';matchEl.textContent=t('matchOk');matchEl.className='ok';bidx++;updateHUD();updateDrawerScannerBar();totalPicks++;selItemData.scanned=true;showToast(t('toastPickedItem'),t('toastRemFmt',batch.length-bidx),'ok');}
+  else{iconEl.textContent='✗';matchEl.textContent=t('matchNg');matchEl.className='ng';}
+  hide('dp-pre-scan');show('dp-confirm');
 };
 
 document.getElementById('dpc-ok').onclick=()=>{
-  if(!selItemData)return;
-  const{physIdx,code,drawer}=selItemData;
-  // 違う商材をコンテナに入れた場合はエラー（ミス）
-  if(!selItemData.scanned){
-    totalMisses++;
-    showToast(t('toastWrongItem'),t('toastMissNote'),'ng');
-  }
-  // Remove from drawer items array
-  const drItemIdx=drawer.items.indexOf(code);
-  if(drItemIdx>=0)drawer.items.splice(drItemIdx,1);
-  // Remove from physics
-  physItems.splice(physIdx,1);
-  drawerPhysicsActive=true; // force canvas re-render
-  renderDrawerCanvas();     // immediate redraw so item vanishes instantly
-  container.push(code);
-  hide('dp-confirm');selItemData=null;
-  if(tutorialMode&&tutStep===6) advanceTut(7); // コンテナへ → 回収ゾーンへ
-  // バッチ完了チェック（bidxはスキャン時点で既に進んでいる）
-  if(bidx>=batch.length){
-    setTimeout(()=>{
-      closeDrawerPanel();
-      gameState=GS.BATCH_DONE;
-      showToast(t('batchDoneToast'),t('batchDoneToastSub'),'ok');
-      updateHUDStateMsg(t('hudReturn'));
-      if(tutorialMode) advanceTut(7);
-    },300);
-  }
+  if(!selItemData)return;const{physIdx,code,drawer}=selItemData;
+  if(!selItemData.scanned){totalMisses++;showToast(t('toastWrongItem'),t('toastMissNote'),'ng');}
+  const drItemIdx=drawer.items.indexOf(code);if(drItemIdx>=0)drawer.items.splice(drItemIdx,1);
+  physItems.splice(physIdx,1);drawerPhysicsActive=true;renderDrawerCanvas();
+  container.push(code);hide('dp-confirm');selItemData=null;
+  if(tutorialMode&&tutStep===6)advanceTut(7);
+  if(bidx>=batch.length){setTimeout(()=>{closeDrawerPanel();gameState=GS.BATCH_DONE;showToast(t('batchDoneToast'),t('batchDoneToastSub'),'ok');updateHUDStateMsg(t('hudReturn'));if(tutorialMode)advanceTut(7);},300);}
 };
 document.getElementById('dpc-no').onclick=()=>{
-  if(selItemData && selItemData.scanned){
-    // スキャン済みなのに引き出しに戻す＝ピックショート（プレイヤーは気づかない）
-    totalMisses++;totalLost++;
-  }
+  if(selItemData&&selItemData.scanned){totalMisses++;totalLost++;}
   hide('dp-confirm');hide('dp-pre-scan');selItemData=null;
 };
 
 document.getElementById('dp-back').onclick=closeDrawerPanel;
 function closeDrawerPanel(){
-  // スキャン済みだがコンテナに入れずに離脱 → ピックショートロスト
-  if(selItemData && selItemData.scanned){
-    // スキャン済みのまま離脱＝ピックショート（プレイヤーは気づかない）
-    totalMisses++;totalLost++;
-  }
+  if(selItemData&&selItemData.scanned){totalMisses++;totalLost++;}
   hide('drawer-panel');hide('dp-confirm');hide('dp-pre-scan');drawerOpen=false;
-  selItemData=null;
-  currentDrawer=null;currentDrawerShelf=null;
+  selItemData=null;currentDrawer=null;currentDrawerShelf=null;
   document.getElementById('scan-btn').style.display='';
-  document.getElementById('bgm-wrap').style.display=''; // #6 restore
-  if(currentShelf){openShelfPanel(currentShelf);}
+  document.getElementById('bgm-wrap').style.display='';
+  if(currentShelf)openShelfPanel(currentShelf);
   renderMap();
 }
 
-// ══════════════════════════════════════════════════════════════
-//  CONTAINER WORKFLOW
-// ══════════════════════════════════════════════════════════════
-document.getElementById('wf-sh-go').onclick=()=>{
-  hide('wf-start-hint');
-};
-document.getElementById('wf-batch-go').onclick=()=>{
-  hide('wf-batch');gameState=GS.RETURNING;
-  updateHUDStateMsg(t('hudReturn'));
-};
-document.getElementById('wf-return-go').onclick=()=>{
-  hide('wf-return');gameState=GS.DEPOSITED;
-  P.hasCart=false;
-  updateHUDStateMsg(t('hudGetEmpty'));
-};
+document.getElementById('wf-sh-go').onclick=()=>{hide('wf-start-hint');};
+document.getElementById('wf-batch-go').onclick=()=>{hide('wf-batch');gameState=GS.RETURNING;updateHUDStateMsg(t('hudReturn'));};
+document.getElementById('wf-return-go').onclick=()=>{hide('wf-return');gameState=GS.DEPOSITED;P.hasCart=false;updateHUDStateMsg(t('hudGetEmpty'));};
 
-emptyScanAnimId=null,emptyScanProgress=0;
+emptyScanAnimId=null;emptyScanProgress=0;
 function startEmptyContainerScan(){
   if(gameState!==GS.GETTING_EMPTY&&gameState!==GS.SCANNING_EMPTY)return;
-  gameState=GS.SCANNING_EMPTY;
-  emptyScanProgress=0;
-  const bar=document.getElementById('wf-bar');
-  const msg=document.getElementById('wf-scan-msg');
+  gameState=GS.SCANNING_EMPTY;emptyScanProgress=0;
+  const bar=document.getElementById('wf-bar'),msg=document.getElementById('wf-scan-msg');
   bar.style.width='0%';
   emptyScanAnimId=setInterval(()=>{
     if(!scanHoldActive){cancelEmptyContainerScan();return;}
-    emptyScanProgress+=2;
-    bar.style.width=emptyScanProgress+'%';
+    emptyScanProgress+=2;bar.style.width=emptyScanProgress+'%';
     msg.textContent=t('emptyScanProgress',emptyScanProgress);
-    if(emptyScanProgress>=100){
-      clearInterval(emptyScanAnimId);
-      bar.style.width='100%';
-      msg.textContent=t('emptyScanDone');
-      setTimeout(startNewBatch,400);
-    }
+    if(emptyScanProgress>=100){clearInterval(emptyScanAnimId);bar.style.width='100%';msg.textContent=t('emptyScanDone');setTimeout(startNewBatch,400);}
   },60);
 }
-function cancelEmptyContainerScan(){
-  clearInterval(emptyScanAnimId);
-  emptyScanProgress=0;
-  document.getElementById('wf-bar').style.width='0%';
-  document.getElementById('wf-scan-msg').textContent=t('emptyScanMsg');
-}
+function cancelEmptyContainerScan(){clearInterval(emptyScanAnimId);emptyScanProgress=0;document.getElementById('wf-bar').style.width='0%';document.getElementById('wf-scan-msg').textContent=t('emptyScanMsg');}
 function startNewBatch(){
-  hide('wf-empty');
-  P.hasCart=true;
-  container=[];
-  moveCount=0;t0=Date.now();
-  // バッチが終わっていたら新バッチ、まだ残っていたら続きから
-  if(bidx>=batch.length){
-    advanceBatchCursors();
-    batch=mkBatch();bidx=0;bnum++;
-  }
-  gameState=GS.PICKING;
-  updateHUD();updateHUDStateMsg(t('hudPickOrder'));
-  if(tutorialMode) advanceTut(1);
-  renderMap();
+  hide('wf-empty');P.hasCart=true;container=[];moveCount=0;t0=Date.now();
+  if(bidx>=batch.length){advanceBatchCursors();batch=mkBatch();bidx=0;bnum++;}
+  gameState=GS.PICKING;updateHUD();updateHUDStateMsg(t('hudPickOrder'));
+  if(tutorialMode)advanceTut(1);renderMap();
 }
 
-// ══════════════════════════════════════════════════════════════
-//  HUD
-// ══════════════════════════════════════════════════════════════
 function updateHUD(){
-  document.getElementById('hb-n').textContent=bnum;
-  document.getElementById('hp-n').textContent=bidx;
-  document.getElementById('hp-t').textContent=batch.length;
-  // Update state message with BOX label
+  document.getElementById('hb-n').textContent=bnum;document.getElementById('hp-n').textContent=bidx;document.getElementById('hp-t').textContent=batch.length;
   if(gameState===GS.PICKING&&bidx<batch.length){
-    const entry=batch[bidx];
-    const drawer=entry.shelf.drawers[entry.drawerId];
-    const boxLabel=drawer?drawer.label:'------';
-    updateHUDStateMsg(t('hudBoxFmt',boxLabel));
+    const entry=batch[bidx],drawer=entry.shelf.drawers[entry.drawerId];
+    updateHUDStateMsg(t('hudBoxFmt',drawer?drawer.label:'------'));
   }
 }
-function updateHUDStateMsg(msg){
-  document.getElementById('hud-state-msg').textContent=msg;
-}
+function updateHUDStateMsg(msg){document.getElementById('hud-state-msg').textContent=msg;}
 
-// ══════════════════════════════════════════════════════════════
-//  TOAST
-// ══════════════════════════════════════════════════════════════
 toastT=null;
 function showToast(m,s,type){
-  const el=document.getElementById('toast');
-  document.getElementById('toast-m').textContent=m;
-  document.getElementById('toast-sub').textContent=s;
-  el.className=type;el.style.display='block';
-  if(toastT)clearTimeout(toastT);
-  toastT=setTimeout(()=>el.style.display='none',1300);
+  const el=document.getElementById('toast');document.getElementById('toast-m').textContent=m;document.getElementById('toast-sub').textContent=s;
+  el.className=type;el.style.display='block';if(toastT)clearTimeout(toastT);toastT=setTimeout(()=>el.style.display='none',1300);
 }
 
-// ══════════════════════════════════════════════════════════════
-//  DOUBLE-TAP → BOT AVOIDANCE
-//  マップ上のダブルタップ（300ms以内に2回タップ）でBotが道をあける
-// ══════════════════════════════════════════════════════════════
 function triggerBotDodge(){
-  // 近くのBotを引き離す
   let anyNearby=false;
-  for(const b of bots){
-    const dx=b.x-P.x,dy=b.y-P.y,d=Math.hypot(dx,dy);
-    if(d<T*4&&d>0){
-      b.tx=b.x+dx/d*T*5;b.ty=b.y+dy/d*T*5;
-      anyNearby=true;
-    }
-  }
-  // 近くにBotがいる時だけセリフを出す
+  for(const b of bots){const dx=b.x-P.x,dy=b.y-P.y,d=Math.hypot(dx,dy);
+    if(d<T*4&&d>0){b.tx=b.x+dx/d*T*5;b.ty=b.y+dy/d*T*5;anyNearby=true;}}
   if(anyNearby){
-    const bb=document.getElementById('bbub');
-    bb.textContent=rrc(t('voiceMsgs'));bb.style.display='block';
-    setTimeout(()=>bb.style.display='none',1600);
-    const dh=document.getElementById('doit-hint');
-    dh.style.display='block';
-    setTimeout(()=>dh.style.display='none',900);
+    const bb=document.getElementById('bbub');bb.textContent=rrc(t('voiceMsgs'));bb.style.display='block';setTimeout(()=>bb.style.display='none',1600);
+    const dh=document.getElementById('doit-hint');dh.style.display='block';setTimeout(()=>dh.style.display='none',900);
   }
 }
-
-// ── ダブルタップ検出（タッチ・マウス共通）──
-let _lastTapTime=0, _lastTapX=0, _lastTapY=0;
-const DOUBLE_TAP_MS=320;   // この時間内に2回でダブルタップ
-const DOUBLE_TAP_PX=60;    // このピクセル以内なら同一タップと判定
-
+let _lastTapTime=0,_lastTapX=0,_lastTapY=0;const DOUBLE_TAP_MS=320,DOUBLE_TAP_PX=60;
 function checkDoubleTap(clientX,clientY){
   if(panelOpen||drawerOpen)return false;
-  const now=Date.now();
-  const dist=Math.hypot(clientX-_lastTapX,clientY-_lastTapY);
+  const now=Date.now(),dist=Math.hypot(clientX-_lastTapX,clientY-_lastTapY);
   const isDouble=(now-_lastTapTime<DOUBLE_TAP_MS)&&(dist<DOUBLE_TAP_PX);
-  _lastTapTime=now; _lastTapX=clientX; _lastTapY=clientY;
-  return isDouble;
+  _lastTapTime=now;_lastTapX=clientX;_lastTapY=clientY;return isDouble;
 }
 
-// ══════════════════════════════════════════════════════════════
-//  I18N — LANGUAGE DATA
-// ══════════════════════════════════════════════════════════════
 const LANG={
   ja:{
-    // intro
     introSub:'〜 安全第一 〜',
     introRules:['📱をみて行き先を確認','棚をタップして📱に表示された引き出しをタップ','商材をスキャンしてコンテナにいれる','バッチ終了後は回収ゾーンへ','出入口から出ると業務終了'],
-    hardModeLabel:'HARD MODE',
-    hardDesc:'ハイライトなし',
-    tutLabel:'チュートリアルあり',
-    // HUD
-    picksLabel:'ピック完了',
-    hudDefault:'スキャナー長押しでピック指示確認',
+    hardModeLabel:'HARD MODE',hardDesc:'ハイライトなし',tutLabel:'チュートリアルあり',
+    picksLabel:'ピック完了',hudDefault:'スキャナー長押しでピック指示確認',
     hudNoContainer:'→ 空コンテナゾーンへ移動\nスキャナー長押しでコンテナをセット',
     hudPickOrder:'スキャナー長押しでピック指示確認',
     hudReturn:'回収ゾーンへ移動！コンテナを届けよう',
     hudGetEmpty:'空コンテナゾーンへ！新しいコンテナをセット',
     hudBoxFmt:(l)=>`${l}のBOXをスキャンして下さい`,
-    // buttons
-    voiceLbl:'どいて',
-    backBtn:'◀ もどる',
+    voiceLbl:'どいて',backBtn:'◀ もどる',
     scanHoldHint:'スキャナー長押し → 指示確認 / ターゲット表示',
-    // drawer
-    dpHint:'ドラッグでごそごそ｜タップで商材を選ぶ',
-    dpEmpty:'空の引き出し',
-    dsbLbl:'スキャン指示',
-    dsbBoxFmt:(l)=>`${l}のBOXをスキャン`,
-    dsbCodeDefault:'----',
+    dpHint:'ドラッグでごそごそ｜タップで商材を選ぶ',dpEmpty:'空の引き出し',
+    dsbLbl:'スキャン指示',dsbBoxFmt:(l)=>`${l}のBOXをスキャン`,dsbCodeDefault:'----',
     dsbProgFmt:(c,t,r)=>`${c} / ${t}  残り${r}個`,
-    scanBtn2:'📱 スキャン',
-    containerBtn:'📦 コンテナへ入れる',
-    putBackBtn:'↩ 引き出しに戻す',
-    // scanner panel
-    scanRemFmt:(n)=>`${n}個残り`,
-    scanBoxFmt:(l)=>`${l}のBOXを`,
-    scanBoxDone:'完了！',
-    scanReturnZone:'回収ゾーンへ',
-    scanContainerTxt:'コンテナ',
-    scanDeliverMsg:'持っていって！',
-    scanEmptyZone:'空コンテナゾーン',
-    scanEmptyBox:'空コンテナ',
-    scanHoldMsg:'長押しでスキャン！',
-    // scan result
-    matchOk:'ピックしました！',
-    matchNg:'商材がちがいます',
-    // workflow
-    batchTitle:'バッチ完了！',
-    batchSubFmt:(n)=>`${n}個ピック完了\n\nコンテナがいっぱいになりました\n回収ゾーンへ持っていって下さい`,
-    batchGoBtn:'回収ゾーンへ ▶',
-    returnTitle:'回収ゾーン',
-    returnSub:'コンテナを置きました<br><br>次は空コンテナゾーンへ',
-    returnGoBtn:'空コンテナゾーンへ ▶',
-    emptyTitle:'空コンテナゾーン',
-    emptyScanTarget:'スキャナーを長押しして<br>空コンテナをセット',
-    emptyScanMsg:'スキャナーボタンを長押し…',
-    emptyScanProgress:(p)=>`スキャン中... ${p}%`,
-    emptyScanDone:'スキャン完了！',
-    exitTitle:'本日の業務を<br>終了しますか？',
-    exitYes:'はい',
-    exitNo:'いいえ',
-    endTitle:'本日の勤務終了',
-    endThanks:'お疲れ様でした',
-    endRestart:'もう一度プレイ',
+    scanBtn2:'📱 スキャン',containerBtn:'📦 コンテナへ入れる',putBackBtn:'↩ 引き出しに戻す',
+    scanRemFmt:(n)=>`${n}個残り`,scanBoxFmt:(l)=>`${l}のBOXを`,scanBoxDone:'完了！',
+    scanReturnZone:'回収ゾーンへ',scanContainerTxt:'コンテナ',scanDeliverMsg:'持っていって！',
+    scanEmptyZone:'空コンテナゾーン',scanEmptyBox:'空コンテナ',scanHoldMsg:'長押しでスキャン！',
+    matchOk:'ピックしました！',matchNg:'商材がちがいます',
+    batchTitle:'バッチ完了！',batchSubFmt:(n)=>`${n}個ピック完了\n\nコンテナがいっぱいになりました\n回収ゾーンへ持っていって下さい`,
+    batchGoBtn:'回収ゾーンへ ▶',returnTitle:'回収ゾーン',returnSub:'コンテナを置きました<br><br>次は空コンテナゾーンへ',returnGoBtn:'空コンテナゾーンへ ▶',
+    emptyTitle:'空コンテナゾーン',emptyScanTarget:'スキャナーを長押しして<br>空コンテナをセット',
+    emptyScanMsg:'スキャナーボタンを長押し…',emptyScanProgress:(p)=>`スキャン中... ${p}%`,emptyScanDone:'スキャン完了！',
+    exitTitle:'本日の業務を<br>終了しますか？',exitYes:'はい',exitNo:'いいえ',
+    endTitle:'本日の勤務終了',endThanks:'お疲れ様でした',endRestart:'もう一度プレイ',
     endStatsFmt:(hh,mm,ss,picks,misses,acc,prod)=>`勤務時間　　${hh}:${mm}:${ss}<br>ピック総数　${picks}個<br>ピックミス　${misses}回<br>正確率　　　${acc}%<br>生産性　　　${prod}個/時`,
-    // start hint
     startHintTitle:'まず空コンテナゾーンへ！',
     startHintSub:'画面右下の「空コンテナゾーン」へ移動して\nスキャナーを長押しして\nコンテナをセットしよう',
     startHintBtn:'OK ▶',
-    // toast
-    toastWrongItem:'違う商材です！',
-    toastMissNote:'ミスが記録されました',
-    toastPickedItem:'商材をピックしました',
-    toastRemFmt:(n)=>`残り${n}個`,
-    toastTutDone:'チュートリアル完了！',
-    toastTutNote:'あとは自分でやってみよう',
-    // voice
+    toastWrongItem:'違う商材です！',toastMissNote:'ミスが記録されました',
+    toastPickedItem:'商材をピックしました',toastRemFmt:(n)=>`残り${n}個`,
+    toastTutDone:'チュートリアル完了！',toastTutNote:'あとは自分でやってみよう',
     voiceMsgs:['「すみません！」','「どきます！」','「ちょっと！」','「はい！すぐ！」'],
     doitHint:'📢 どいて！',
-    // map canvas
-    mapReturn:'回収', mapReturnSub:'ゾーン',
-    mapExit:'出入口', mapExitSub:'EXIT',
-    mapEmpty:'空コンテナ', mapEmptySub:'ゾーン',
-    mapEnd:'業務終了', mapEndSub:'ここを通過',
+    mapReturn:'回収',mapReturnSub:'ゾーン',mapExit:'出入口',mapExitSub:'EXIT',
+    mapEmpty:'空コンテナ',mapEmptySub:'ゾーン',mapEnd:'業務終了',mapEndSub:'ここを通過',
     mapRankingSub:'ここに来ると見られる',
-    // misc
-    nameLbl:'あなたの名前',
-    rankName:'名前', rankAcc:'精度', rankPph:'個/時', rankTime:'時間',
-    rankLoading:'読み込み中...', rankEmpty:'まだ記録がありません',
-    rankClose:'✕ とじる',
-    defaultName:'名無し',
-    drCountFmt:(n)=>`${n}こ`,
-    batchDoneToast:'バッチ完了！', batchDoneToastSub:'回収ゾーンへ持っていこう',
-    // tutorial
+    nameLbl:'あなたの名前',rankName:'名前',rankAcc:'精度',rankPph:'個/時',rankTime:'時間',
+    rankLoading:'読み込み中...',rankEmpty:'まだ記録がありません',rankClose:'✕ とじる',
+    defaultName:'名無し',drCountFmt:(n)=>`${n}こ`,
+    batchDoneToast:'バッチ完了！',batchDoneToastSub:'回収ゾーンへ持っていこう',
     tutSteps:[
       {step:'STEP 1/7',arrow:'→',msg:'右の「空コンテナゾーン」へ移動しよう！\nスキャナーボタンを長押しでコンテナをセット'},
       {step:'STEP 2/7',arrow:'📱',msg:'スキャナーボタンを押して\n行き先の棚を確認しよう'},
@@ -2693,81 +1998,43 @@ const LANG={
   en:{
     introSub:'~ SAFETY FIRST ~',
     introRules:['📱 Check scanner for next pick','Tap shelf, then tap the correct drawer','Scan item and put it in the container','After batch: go to Return Zone','Walk through EXIT to end your shift'],
-    hardModeLabel:'HARD MODE',
-    hardDesc:'No highlights',
-    tutLabel:'TUTORIAL ON',
-    picksLabel:'picks done',
-    hudDefault:'Hold SCAN for pick order',
+    hardModeLabel:'HARD MODE',hardDesc:'No highlights',tutLabel:'TUTORIAL ON',
+    picksLabel:'picks done',hudDefault:'Hold SCAN for pick order',
     hudNoContainer:'→ Go to EMPTY BOX ZONE\nHold SCAN to grab a container',
-    hudPickOrder:'Hold SCAN for pick order',
-    hudReturn:'Go to RETURN ZONE! Drop container',
-    hudGetEmpty:'Go to EMPTY BOX! Grab new container',
-    hudBoxFmt:(l)=>`Scan BOX: ${l}`,
-    voiceLbl:'Move!',
-    backBtn:'◀ BACK',
-    scanHoldHint:'Hold SCAN → Show pick target',
-    dpHint:'Drag to search | Tap to pick item',
-    dpEmpty:'Empty drawer',
-    dsbLbl:'SCAN ORDER',
-    dsbBoxFmt:(l)=>`SCAN BOX: ${l}`,
-    dsbCodeDefault:'----',
+    hudPickOrder:'Hold SCAN for pick order',hudReturn:'Go to RETURN ZONE! Drop container',
+    hudGetEmpty:'Go to EMPTY BOX! Grab new container',hudBoxFmt:(l)=>`Scan BOX: ${l}`,
+    voiceLbl:'Move!',backBtn:'◀ BACK',scanHoldHint:'Hold SCAN → Show pick target',
+    dpHint:'Drag to search | Tap to pick item',dpEmpty:'Empty drawer',dsbLbl:'SCAN ORDER',
+    dsbBoxFmt:(l)=>`SCAN BOX: ${l}`,dsbCodeDefault:'----',
     dsbProgFmt:(c,t,r)=>`${c} / ${t}  ${r} remaining`,
-    scanBtn2:'📱 SCAN',
-    containerBtn:'📦 INTO BOX',
-    putBackBtn:'↩ PUT BACK',
-    scanRemFmt:(n)=>`${n} left`,
-    scanBoxFmt:(l)=>`BOX: ${l}`,
-    scanBoxDone:'DONE!',
-    scanReturnZone:'RETURN ZONE',
-    scanContainerTxt:'CONTAINER',
-    scanDeliverMsg:'Deliver it!',
-    scanEmptyZone:'EMPTY BOX ZONE',
-    scanEmptyBox:'EMPTY BOX',
-    scanHoldMsg:'Hold to scan!',
-    matchOk:'Item picked!',
-    matchNg:'Wrong item!',
-    batchTitle:'BATCH DONE!',
-    batchSubFmt:(n)=>`${n} items picked!\n\nContainer full.\nGo to Return Zone.`,
-    batchGoBtn:'RETURN ZONE ▶',
-    returnTitle:'RETURN ZONE',
-    returnSub:'Container dropped.<br><br>Now go to Empty Box Zone.',
-    returnGoBtn:'EMPTY BOX ZONE ▶',
-    emptyTitle:'EMPTY BOX ZONE',
-    emptyScanTarget:'Hold SCAN button<br>to grab an empty box',
-    emptyScanMsg:'Hold SCAN button...',
-    emptyScanProgress:(p)=>`Scanning... ${p}%`,
-    emptyScanDone:'Scan complete!',
-    exitTitle:'End today\'s<br>shift?',
-    exitYes:'YES',
-    exitNo:'NO',
-    endTitle:'SHIFT COMPLETE',
-    endThanks:'Good work today!',
-    endRestart:'PLAY AGAIN',
+    scanBtn2:'📱 SCAN',containerBtn:'📦 INTO BOX',putBackBtn:'↩ PUT BACK',
+    scanRemFmt:(n)=>`${n} left`,scanBoxFmt:(l)=>`BOX: ${l}`,scanBoxDone:'DONE!',
+    scanReturnZone:'RETURN ZONE',scanContainerTxt:'CONTAINER',scanDeliverMsg:'Deliver it!',
+    scanEmptyZone:'EMPTY BOX ZONE',scanEmptyBox:'EMPTY BOX',scanHoldMsg:'Hold to scan!',
+    matchOk:'Item picked!',matchNg:'Wrong item!',
+    batchTitle:'BATCH DONE!',batchSubFmt:(n)=>`${n} items picked!\n\nContainer full.\nGo to Return Zone.`,
+    batchGoBtn:'RETURN ZONE ▶',returnTitle:'RETURN ZONE',
+    returnSub:'Container dropped.<br><br>Now go to Empty Box Zone.',returnGoBtn:'EMPTY BOX ZONE ▶',
+    emptyTitle:'EMPTY BOX ZONE',emptyScanTarget:'Hold SCAN button<br>to grab an empty box',
+    emptyScanMsg:'Hold SCAN button...',emptyScanProgress:(p)=>`Scanning... ${p}%`,emptyScanDone:'Scan complete!',
+    exitTitle:'End today\'s<br>shift?',exitYes:'YES',exitNo:'NO',
+    endTitle:'SHIFT COMPLETE',endThanks:'Good work today!',endRestart:'PLAY AGAIN',
     endStatsFmt:(hh,mm,ss,picks,misses,acc,prod)=>`Shift Time　${hh}:${mm}:${ss}<br>Total Picks　${picks}<br>Mistakes　　${misses}<br>Accuracy　　${acc}%<br>Productivity ${prod}/hr`,
-    // start hint
     startHintTitle:'First: Go to Empty Box Zone!',
     startHintSub:'Move to the EMPTY BOX ZONE\nin the bottom-right of the map,\nthen hold SCAN\nto grab a container.',
     startHintBtn:'OK ▶',
-    toastWrongItem:'Wrong item!',
-    toastMissNote:'Miss recorded',
-    toastPickedItem:'Item picked!',
-    toastRemFmt:(n)=>`${n} left`,
-    toastTutDone:'Tutorial complete!',
-    toastTutNote:'Now try on your own!',
+    toastWrongItem:'Wrong item!',toastMissNote:'Miss recorded',
+    toastPickedItem:'Item picked!',toastRemFmt:(n)=>`${n} left`,
+    toastTutDone:'Tutorial complete!',toastTutNote:'Now try on your own!',
     voiceMsgs:['"Excuse me!"','"Coming thru!"','"Hey!"','"Right away!"'],
     doitHint:'📢 Move!',
-    mapReturn:'RETURN', mapReturnSub:'ZONE',
-    mapExit:'EXIT', mapExitSub:'DOOR',
-    mapEmpty:'EMPTY', mapEmptySub:'BOX',
-    mapEnd:'END', mapEndSub:'WALK THRU',
+    mapReturn:'RETURN',mapReturnSub:'ZONE',mapExit:'EXIT',mapExitSub:'DOOR',
+    mapEmpty:'EMPTY',mapEmptySub:'BOX',mapEnd:'END',mapEndSub:'WALK THRU',
     mapRankingSub:'VIEW HERE',
-    nameLbl:'Your Name',
-    rankName:'NAME', rankAcc:'ACC', rankPph:'/HR', rankTime:'TIME',
-    rankLoading:'Loading...', rankEmpty:'No records yet',
-    rankClose:'✕ CLOSE',
-    defaultName:'Player',
-    drCountFmt:(n)=>`${n}pc`,
-    batchDoneToast:'BATCH DONE!', batchDoneToastSub:'Go to Return Zone!',
+    nameLbl:'Your Name',rankName:'NAME',rankAcc:'ACC',rankPph:'/HR',rankTime:'TIME',
+    rankLoading:'Loading...',rankEmpty:'No records yet',rankClose:'✕ CLOSE',
+    defaultName:'Player',drCountFmt:(n)=>`${n}pc`,
+    batchDoneToast:'BATCH DONE!',batchDoneToastSub:'Go to Return Zone!',
     tutSteps:[
       {step:'STEP 1/7',arrow:'→',msg:'Go to EMPTY BOX ZONE on the right!\nHold SCAN to grab a container'},
       {step:'STEP 2/7',arrow:'📱',msg:'Press the SCAN button\nto check your pick destination'},
@@ -2780,35 +2047,21 @@ const LANG={
     ],
   },
 };
-function t(key,...args){
-  const d=LANG[lang][key];
-  return typeof d==='function'?d(...args):d;
-}
-// Firebase moduleなど別スコープから呼べるようにグローバル公開
+function t(key,...args){const d=LANG[lang][key];return typeof d==='function'?d(...args):d;}
 window._t=t;
 function applyLang(){
   const L=LANG[lang];
-  // Lang buttons
   document.getElementById('lang-ja').classList.toggle('active',lang==='ja');
   document.getElementById('lang-en').classList.toggle('active',lang==='en');
-  // Intro
   document.getElementById('intro-sub').textContent=L.introSub;
-  const rl=document.getElementById('intro-rules-list');
-  if(rl) rl.innerHTML=L.introRules.map(r=>`<li>${r}</li>`).join('');
+  const rl=document.getElementById('intro-rules-list');if(rl)rl.innerHTML=L.introRules.map(r=>`<li>${r}</li>`).join('');
   document.getElementById('hard-mode-lbl').textContent=L.hardModeLabel;
   document.getElementById('hard-desc').textContent=L.hardDesc;
   document.getElementById('tut-chk-lbl').textContent=L.tutLabel;
-  // HUD static
-  const pl=document.getElementById('hud-picks-lbl');
-  if(pl) pl.textContent=L.picksLabel;
+  const pl=document.getElementById('hud-picks-lbl');if(pl)pl.textContent=L.picksLabel;
   document.getElementById('hud-state-msg').textContent=L.hudDefault;
-  // Voice
-  const vl=document.getElementById('voice-lbl');
-  if(vl) vl.textContent=L.voiceLbl;
-  // Back buttons
   document.getElementById('sp-hdr-back').textContent=L.backBtn;
   document.getElementById('dp-back').textContent=L.backBtn;
-  // Shelf / drawer panel
   document.getElementById('sp-scan-hold-hint').textContent=L.scanHoldHint;
   document.getElementById('dp-hint').textContent=L.dpHint;
   document.getElementById('dp-empty').textContent=L.dpEmpty;
@@ -2816,7 +2069,6 @@ function applyLang(){
   document.getElementById('dpc-scan').textContent=L.scanBtn2;
   document.getElementById('dpc-ok').textContent=L.containerBtn;
   document.getElementById('dpc-no').textContent=L.putBackBtn;
-  // Workflow overlays
   document.getElementById('wf-batch-title').textContent=L.batchTitle;
   document.getElementById('wf-batch-sub').innerHTML=L.batchDoneToastSub;
   document.getElementById('wf-batch-go').textContent=L.batchGoBtn;
@@ -2832,286 +2084,126 @@ function applyLang(){
   document.getElementById('wf-end-title').textContent=L.endTitle;
   document.getElementById('wf-end-thanks').textContent=L.endThanks;
   document.getElementById('wf-end-restart').textContent=L.endRestart;
-  // Start hint overlay
   document.getElementById('wf-sh-title').textContent=L.startHintTitle;
   document.getElementById('wf-sh-sub').innerHTML=L.startHintSub.replace(/\n/g,'<br>');
   document.getElementById('wf-sh-go').textContent=L.startHintBtn;
-  // Voice / double-tap hint
-  const dh=document.getElementById('doit-hint');
-  if(dh) dh.textContent=L.doitHint;
-  // Name label
-  const nl=document.getElementById('name-lbl');
-  if(nl) nl.textContent=L.nameLbl;
-  // Ranking close button
-  const rcb=document.getElementById('rank-close-btn');
-  if(rcb) rcb.textContent=L.rankClose;
-  // Intro stats labels (language switch)
-  const statsShipLbl = document.getElementById('stats-ship-lbl');
-  if(statsShipLbl) statsShipLbl.textContent = lang==='ja' ? '📦 出荷数' : '📦 Shipped';
-  const statsTargetLbl = document.getElementById('stats-target-lbl');
-  if(statsTargetLbl) statsTargetLbl.textContent = lang==='ja' ? '🎯 本日目標' : '🎯 Target';
-  const statsProgLeft = document.getElementById('stats-prog-left');
-  if(statsProgLeft) statsProgLeft.textContent = lang==='ja' ? '達成率' : 'Achievement';
-  const statsArrivalLbl = document.getElementById('stats-arrival-lbl');
-  if(statsArrivalLbl) statsArrivalLbl.textContent = lang==='ja' ? '📥 本日入荷' : '📥 Received';
-  const statsStockLbl = document.getElementById('stats-stock-lbl');
-  if(statsStockLbl) statsStockLbl.textContent = lang==='ja' ? '📋 残在庫' : '📋 Remaining';
-  const statsWorkersLbl = document.getElementById('stats-workers-lbl');
-  if(statsWorkersLbl) statsWorkersLbl.textContent = lang==='ja' ? '👤 本日稼働' : '👤 Workers';
-  // In-game ranking table headers
+  const dh=document.getElementById('doit-hint');if(dh)dh.textContent=L.doitHint;
+  const nl=document.getElementById('name-lbl');if(nl)nl.textContent=L.nameLbl;
+  const rcb=document.getElementById('rank-close-btn');if(rcb)rcb.textContent=L.rankClose;
+  const statsShipLbl=document.getElementById('stats-ship-lbl');if(statsShipLbl)statsShipLbl.textContent=lang==='ja'?'📦 出荷数':'📦 Shipped';
+  const statsTargetLbl=document.getElementById('stats-target-lbl');if(statsTargetLbl)statsTargetLbl.textContent=lang==='ja'?'🎯 本日目標':'🎯 Target';
+  const statsProgLeft=document.getElementById('stats-prog-left');if(statsProgLeft)statsProgLeft.textContent=lang==='ja'?'達成率':'Achievement';
+  const statsArrivalLbl=document.getElementById('stats-arrival-lbl');if(statsArrivalLbl)statsArrivalLbl.textContent=lang==='ja'?'📥 本日入荷':'📥 Received';
+  const statsStockLbl=document.getElementById('stats-stock-lbl');if(statsStockLbl)statsStockLbl.textContent=lang==='ja'?'📋 残在庫':'📋 Remaining';
+  const statsWorkersLbl=document.getElementById('stats-workers-lbl');if(statsWorkersLbl)statsWorkersLbl.textContent=lang==='ja'?'👤 本日稼働':'👤 Workers';
   const setTh=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
   setTh('rk-name',L.rankName);setTh('rk-acc',L.rankAcc);setTh('rk-pph',L.rankPph);setTh('rk-time',L.rankTime);
   const rkr=document.getElementById('rk-loading-row');if(rkr)rkr.textContent=L.rankLoading;
-  // Map canvas rebuild
-  floorCacheDirty=true;
-  if(running) renderMap();
+  floorCacheDirty=true;if(running)renderMap();
 }
 
-// ══════════════════════════════════════════════════════════════
-//  HELPERS
-// ══════════════════════════════════════════════════════════════
 function show(id){document.getElementById(id).classList.add('show');}
 function hide(id){document.getElementById(id).classList.remove('show');}
 function hideEl(id){document.getElementById(id).style.display='none';}
 
-// ══════════════════════════════════════════════════════════════
-//  TUTORIAL
-// ══════════════════════════════════════════════════════════════
 function showTutStep(){
-  if(!tutorialMode)return;
-  const steps=t('tutSteps');
+  if(!tutorialMode)return;const steps=t('tutSteps');
   const s=steps[Math.min(tutStep,steps.length-1)];
   document.getElementById('tut-step').textContent=s.step;
   document.getElementById('tut-arrow').textContent=s.arrow;
   document.getElementById('tut-msg').textContent=s.msg;
   document.getElementById('tut-hint').classList.add('show');
 }
-function hideTutHint(){
-  document.getElementById('tut-hint').classList.remove('show');
-}
+function hideTutHint(){document.getElementById('tut-hint').classList.remove('show');}
 function advanceTut(toStep){
-  if(!tutorialMode)return;
-  tutStep=toStep;
-  if(tutStep>=t('tutSteps').length){
-    tutorialMode=false;
-    hideTutHint();
-    showToast(t('toastTutDone'),t('toastTutNote'),'ok');
-    return;
-  }
+  if(!tutorialMode)return;tutStep=toStep;
+  if(tutStep>=t('tutSteps').length){tutorialMode=false;hideTutHint();showToast(t('toastTutDone'),t('toastTutNote'),'ok');return;}
   showTutStep();
 }
 
-// Draw dotted path line from player to target on map canvas
 function drawTutPath(ctx){
-  if(!tutorialMode) return;
-  let tx=null,ty=null;
-  if(tutStep===0){
-    tx=8*T+T/2; ty=16*T+T/2;
-  } else if(tutStep===2&&bidx<batch.length){
-    const entry=batch[bidx];
-    const ar=accessRow(entry.shelf.row);
-    tx=entry.shelf.col*T+T/2; ty=ar*T+T/2;
-  } else if(tutStep===7){
-    tx=2*T+T/2; ty=16*T+T/2;
-  }
-  if(tx===null) return;
-
-  const dx=tx-P.x, dy=ty-P.y;
-  const dist=Math.hypot(dx,dy);
-  if(dist<4) return;
-  const ux=dx/dist, uy=dy/dist;
-
+  if(!tutorialMode)return;let tx=null,ty=null;
+  if(tutStep===0){tx=8*T+T/2;ty=16*T+T/2;}
+  else if(tutStep===2&&bidx<batch.length){const entry=batch[bidx];const ar=accessRow(entry.shelf.row);tx=entry.shelf.col*T+T/2;ty=ar*T+T/2;}
+  else if(tutStep===7){tx=2*T+T/2;ty=16*T+T/2;}
+  if(tx===null)return;
+  const dx=tx-P.x,dy=ty-P.y,dist=Math.hypot(dx,dy);if(dist<4)return;
+  const ux=dx/dist,uy=dy/dist;
   ctx.save();
-
-  // ── 白いアウトライン（視認性UP）──
-  ctx.strokeStyle='rgba(255,255,255,0.7)';
-  ctx.lineWidth=9;
-  ctx.setLineDash([18,12]);
-  ctx.lineDashOffset=-pulseTick*8;
-  ctx.lineCap='round';
-  ctx.beginPath();
-  ctx.moveTo(P.x+ux*20, P.y+uy*20);
-  ctx.lineTo(tx-ux*26,  ty-uy*26);
-  ctx.stroke();
-
-  // ── 明るい黄緑の本線 ──
-  ctx.strokeStyle='#ffff00';
-  ctx.lineWidth=5;
-  ctx.setLineDash([18,12]);
-  ctx.lineDashOffset=-pulseTick*8;
-  ctx.beginPath();
-  ctx.moveTo(P.x+ux*20, P.y+uy*20);
-  ctx.lineTo(tx-ux*26,  ty-uy*26);
-  ctx.stroke();
-  ctx.setLineDash([]);
-
-  // ── 矢印ヘッド ──
-  const ax=tx-ux*10, ay=ty-uy*10;
-  const nx=-uy, ny=ux; // 法線
+  ctx.strokeStyle='rgba(255,255,255,0.7)';ctx.lineWidth=9;ctx.setLineDash([18,12]);ctx.lineDashOffset=-pulseTick*8;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(P.x+ux*20,P.y+uy*20);ctx.lineTo(tx-ux*26,ty-uy*26);ctx.stroke();
+  ctx.strokeStyle='#ffff00';ctx.lineWidth=5;ctx.setLineDash([18,12]);ctx.lineDashOffset=-pulseTick*8;
+  ctx.beginPath();ctx.moveTo(P.x+ux*20,P.y+uy*20);ctx.lineTo(tx-ux*26,ty-uy*26);ctx.stroke();ctx.setLineDash([]);
+  const ax=tx-ux*10,ay=ty-uy*10,nx=-uy,ny=ux;
   const arrowA=0.7+0.3*Math.sin(pulseTick*4);
-  ctx.fillStyle=`rgba(255,255,0,${arrowA})`;
-  ctx.strokeStyle='rgba(255,255,255,0.8)';
-  ctx.lineWidth=2;
-  ctx.beginPath();
-  ctx.moveTo(ax+ux*20,       ay+uy*20);
-  ctx.lineTo(ax+nx*10-ux*4,  ay+ny*10-uy*4);
-  ctx.lineTo(ax-nx*10-ux*4,  ay-ny*10-uy*4);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
-
-  // ── ゴールマーカー（2重リング＋パルス）──
-  const r1=18+6*Math.sin(pulseTick*3);
-  const r2=10;
-  const ga=0.6+0.4*Math.sin(pulseTick*3);
-  // 外リング白
-  ctx.strokeStyle=`rgba(255,255,255,${ga})`;
-  ctx.lineWidth=4;
-  ctx.beginPath(); ctx.arc(tx,ty,r1,0,Math.PI*2); ctx.stroke();
-  // 内リング黄
-  ctx.strokeStyle=`rgba(255,255,0,${ga})`;
-  ctx.lineWidth=3;
-  ctx.beginPath(); ctx.arc(tx,ty,r2,0,Math.PI*2); ctx.stroke();
-  // 中心塗り
-  ctx.fillStyle=`rgba(255,255,0,${ga*0.5})`;
-  ctx.beginPath(); ctx.arc(tx,ty,r2,0,Math.PI*2); ctx.fill();
-
+  ctx.fillStyle=`rgba(255,255,0,${arrowA})`;ctx.strokeStyle='rgba(255,255,255,0.8)';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(ax+ux*20,ay+uy*20);ctx.lineTo(ax+nx*10-ux*4,ay+ny*10-uy*4);ctx.lineTo(ax-nx*10-ux*4,ay-ny*10-uy*4);ctx.closePath();ctx.fill();ctx.stroke();
+  const r1=18+6*Math.sin(pulseTick*3),ga=0.6+0.4*Math.sin(pulseTick*3);
+  ctx.strokeStyle=`rgba(255,255,255,${ga})`;ctx.lineWidth=4;ctx.beginPath();ctx.arc(tx,ty,r1,0,Math.PI*2);ctx.stroke();
+  ctx.strokeStyle=`rgba(255,255,0,${ga})`;ctx.lineWidth=3;ctx.beginPath();ctx.arc(tx,ty,10,0,Math.PI*2);ctx.stroke();
+  ctx.fillStyle=`rgba(255,255,0,${ga*0.5})`;ctx.beginPath();ctx.arc(tx,ty,10,0,Math.PI*2);ctx.fill();
   ctx.restore();
 }
 
-// ══════════════════════════════════════════════════════════════
-//  RESIZE — Visual Viewport API でXのツールバー対応
-// ══════════════════════════════════════════════════════════════
 function applyViewportSize(){
   const s=document.getElementById('screen');
-  // visualViewport があれば実際に見える高さ・幅を使う（Xのバー分を自動除外）
-  const vvw = window.visualViewport ? window.visualViewport.width  : window.innerWidth;
-  const vvh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-  // PCはiPhone枠固定なのでスキップ
-  if(window.innerWidth < 600){
-    s.style.width  = vvw + 'px';
-    s.style.height = vvh + 'px';
-  }
-  cv.width  = s.clientWidth;
-  cv.height = s.clientHeight;
-  initScanlines();
+  const vvw=window.visualViewport?window.visualViewport.width:window.innerWidth;
+  const vvh=window.visualViewport?window.visualViewport.height:window.innerHeight;
+  if(window.innerWidth<600){s.style.width=vvw+'px';s.style.height=vvh+'px';}
+  cv.width=s.clientWidth;cv.height=s.clientHeight;initScanlines();
 }
-function resize(){ applyViewportSize(); }
-
-window.addEventListener('resize', ()=>{ applyViewportSize(); renderMap(); });
+function resize(){applyViewportSize();}
+window.addEventListener('resize',()=>{applyViewportSize();renderMap();});
 if(window.visualViewport){
-  window.visualViewport.addEventListener('resize', ()=>{ applyViewportSize(); if(running) renderMap(); });
-  window.visualViewport.addEventListener('scroll', ()=>{ applyViewportSize(); if(running) renderMap(); });
+  window.visualViewport.addEventListener('resize',()=>{applyViewportSize();if(running)renderMap();});
+  window.visualViewport.addEventListener('scroll',()=>{applyViewportSize();if(running)renderMap();});
 }
 
-// ══════════════════════════════════════════════════════════════
-//  START
-// ══════════════════════════════════════════════════════════════
-// ── BGM — タップでON/OFF、mp3なしでもボタンは動く ──
-try{
-  bgmAudio=new Audio('bgm.mp3');
-  bgmAudio.loop=true;
-  bgmAudio.volume=0.5;
-  bgmAudio.onerror=()=>{bgmAudio=null;};
-}catch(e){bgmAudio=null;}
-
+try{bgmAudio=new Audio('bgm.mp3');bgmAudio.loop=true;bgmAudio.volume=0.5;bgmAudio.onerror=()=>{bgmAudio=null;};}catch(e){bgmAudio=null;}
 function setBgmOn(on){
-  bgmOn=on;
-  const b=document.getElementById('bgm-btn');
-  if(!b)return;
-  if(bgmOn){
-    b.classList.add('on');
-    if(bgmAudio) bgmAudio.play().catch(()=>{});
-  }else{
-    b.classList.remove('on');
-    if(bgmAudio) bgmAudio.pause();
-  }
+  bgmOn=on;const b=document.getElementById('bgm-btn');if(!b)return;
+  if(bgmOn){b.classList.add('on');if(bgmAudio)bgmAudio.play().catch(()=>{});}
+  else{b.classList.remove('on');if(bgmAudio)bgmAudio.pause();}
 }
 
-window.addEventListener('pagehide', mpLeave);
-window.addEventListener('beforeunload', mpLeave);
-// 初回viewport適用
-document.addEventListener('DOMContentLoaded', applyViewportSize);
+window.addEventListener('pagehide',mpLeave);
+window.addEventListener('beforeunload',mpLeave);
+document.addEventListener('DOMContentLoaded',applyViewportSize);
 
-document.getElementById('bgm-btn').addEventListener('click',()=>{
-  setBgmOn(!bgmOn);
-});
+document.getElementById('bgm-btn').addEventListener('click',()=>{setBgmOn(!bgmOn);});
+document.getElementById('lang-ja').addEventListener('click',()=>{if(lang==='ja')return;lang='ja';applyLang();});
+document.getElementById('lang-en').addEventListener('click',()=>{if(lang==='en')return;lang='en';applyLang();});
+applyLang();
 
-// ── Language switcher ──
-document.getElementById('lang-ja').addEventListener('click',()=>{
-  if(lang==='ja')return; lang='ja'; applyLang();
-});
-document.getElementById('lang-en').addEventListener('click',()=>{
-  if(lang==='en')return; lang='en'; applyLang();
-});
-applyLang(); // apply on initial load
-
-// ── 名前をlocalStorageから復元 ──
-try{
-  const saved=localStorage.getItem('ecgame_player_name');
-  if(saved) document.getElementById('player-name').value=saved;
-}catch(e){}
-
-// ── モード設定をlocalStorageから復元 ──
+try{const saved=localStorage.getItem('ecgame_player_name');if(saved)document.getElementById('player-name').value=saved;}catch(e){}
 try{
   const savedHard=localStorage.getItem('ecgame_hard_mode');
   const savedTut=localStorage.getItem('ecgame_tutorial');
-  if(savedHard!==null){
-    const isHard=savedHard==='true';
-    document.getElementById('hard-mode-chk').checked=isHard;
-    document.getElementById('tut-choice').style.display=isHard?'none':'flex';
-  }
-  if(savedTut!==null){
-    document.getElementById('tutorial-chk').checked=savedTut==='true';
-  }
+  if(savedHard!==null){document.getElementById('hard-mode-chk').checked=savedHard==='true';document.getElementById('tut-choice').style.display=savedHard==='true'?'none':'flex';}
+  if(savedTut!==null)document.getElementById('tutorial-chk').checked=savedTut==='true';
 }catch(e){}
-
-// 名前欄を変更したら即保存
-document.getElementById('player-name').addEventListener('input',function(){
-  try{ localStorage.setItem('ecgame_player_name', this.value); }catch(e){}
-});
-
-// モード変更時も即保存
-document.getElementById('tutorial-chk').addEventListener('change',function(){
-  try{ localStorage.setItem('ecgame_tutorial', this.checked); }catch(e){}
-});
-
-// ハードモード選択でチュートリアル選択を非表示 ＋ localStorage保存
+document.getElementById('player-name').addEventListener('input',function(){try{localStorage.setItem('ecgame_player_name',this.value);}catch(e){}});
+document.getElementById('tutorial-chk').addEventListener('change',function(){try{localStorage.setItem('ecgame_tutorial',this.checked);}catch(e){}});
 document.getElementById('hard-mode-chk').addEventListener('change',function(){
   document.getElementById('tut-choice').style.display=this.checked?'none':'flex';
-  try{ localStorage.setItem('ecgame_hard_mode', this.checked); }catch(e){}
+  try{localStorage.setItem('ecgame_hard_mode',this.checked);}catch(e){}
 });
 
 document.getElementById('intro-go').onclick=()=>{
   hardMode=document.getElementById('hard-mode-chk').checked;
-  tutorialMode=!hardMode && document.getElementById('tutorial-chk').checked;
-  buildDB(hardMode?TYPES_HARD:TYPES_NORMAL);
-  reinitShelves(); // rebuild with correct fill rates and item pool
+  tutorialMode=!hardMode&&document.getElementById('tutorial-chk').checked;
+  buildDB(hardMode?TYPES_HARD:TYPES_NORMAL);reinitShelves();
   document.getElementById('intro').style.display='none';
-  // BGM — ゲーム開始時はOFF（ユーザーがボタンで操作）
-  bgmOn=false;
-  initBots();
+  bgmOn=false;initBots();
+  conveyorBoxes=[];botConveyorTimer=rri(60,180);conveyorTick=0;
   batchShelfCursor=0;batchColCursor=0;batchDrawerCursor=0;
   batch=mkBatch();bidx=0;container=[];t0=Date.now();moveCount=0;bnum=1;
   totalPicks=0;totalMisses=0;totalLost=0;startTime=Date.now();
-  // スタート位置: J棚(row14)のアクセス行(row15)、col5(J-14)の前
-  P.x=5.5*T;P.y=15.5*T;P.hasCart=false;
-  updateHUD();
-  // コンテナなし → まず空コンテナゾーンへ
+  P.x=5.5*T;P.y=15.5*T;P.hasCart=false;updateHUD();
   gameState=GS.DEPOSITED;
-  if(tutorialMode){
-    tutStep=0;
-    showTutStep();
-  } else {
-    updateHUDStateMsg(t('hudNoContainer'));
-    show('wf-start-hint');
-  }
-  running=true;
-  resize();
-  _lastRaf=0;
-  renderMap();
-  requestAnimationFrame(loop);
-  // マルチプレイヤー接続
+  if(tutorialMode){tutStep=0;showTutStep();}
+  else{updateHUDStateMsg(t('hudNoContainer'));show('wf-start-hint');}
+  running=true;resize();_lastRaf=0;renderMap();requestAnimationFrame(loop);
   mpJoin();
 };
 </script>
