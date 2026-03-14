@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -12,49 +13,49 @@ body{display:flex;align-items:center;justify-content:center;}
 
 /* ── Game Screen — fills entire display including notch/home bar ── */
 #screen{
-  position:relative;
-  width:100vw;
-  height:100svh; /* JS(visualViewport)で上書きされる。svhはXのバー込み最小高さ */
-  padding-top:env(safe-area-inset-top);
-  padding-bottom:env(safe-area-inset-bottom);
-  padding-left:env(safe-area-inset-left);
-  padding-right:env(safe-area-inset-right);
-  background:#9bbc0f;overflow:hidden;
-  image-rendering:pixelated;
-  -webkit-touch-callout:none;
-  user-select:none;-webkit-user-select:none;
+position:relative;
+width:100vw;
+height:100svh; /* JS(visualViewport)で上書きされる。svhはXのバー込み最小高さ */
+padding-top:env(safe-area-inset-top);
+padding-bottom:env(safe-area-inset-bottom);
+padding-left:env(safe-area-inset-left);
+padding-right:env(safe-area-inset-right);
+background:#9bbc0f;overflow:hidden;
+image-rendering:pixelated;
+-webkit-touch-callout:none;
+user-select:none;-webkit-user-select:none;
 }
 
 /* ── PC: iPhone-like frame ── */
 @media (min-width: 600px) {
-  html, body {
-    background: #1a1a2e;
-  }
-  body {
-    align-items: center;
-    justify-content: center;
-  }
-  #screen {
-    width: 390px;
-    height: 844px;
-    max-height: 95vh;
-    /* アスペクト比を保ちながら縮小 */
-    aspect-ratio: 390 / 844;
-    border-radius: 44px;
-    border: 8px solid #2a2a2a;
-    box-shadow:
-      0 0 0 2px #555,
-      0 30px 80px rgba(0,0,0,.8),
-      inset 0 0 0 1px #333;
-    overflow: hidden;
-  }
-  /* 画面が低い場合は高さに合わせて縮小 */
-  @supports (height: 95dvh) {
-    #screen {
-      max-height: 95dvh;
-      width: auto;
-    }
-  }
+html, body {
+background: #1a1a2e;
+}
+body {
+align-items: center;
+justify-content: center;
+}
+#screen {
+width: 390px;
+height: 844px;
+max-height: 95vh;
+/* アスペクト比を保ちながら縮小 */
+aspect-ratio: 390 / 844;
+border-radius: 44px;
+border: 8px solid #2a2a2a;
+box-shadow:
+0 0 0 2px #555,
+0 30px 80px rgba(0,0,0,.8),
+inset 0 0 0 1px #333;
+overflow: hidden;
+}
+/* 画面が低い場合は高さに合わせて縮小 */
+@supports (height: 95dvh) {
+#screen {
+max-height: 95dvh;
+width: auto;
+}
+}
 }
 
 /* Only the main map canvases fill the screen */
@@ -62,90 +63,89 @@ body{display:flex;align-items:center;justify-content:center;}
 #scanlines{pointer-events:none;z-index:100;opacity:.18;}
 
 /* ── Base Japanese Gothic font ── */
-.jp{font-family:'Noto Sans JP','Hiragino Sans',sans-serif!important;}
+.jp{font-family:‘Noto Sans JP’,‘Hiragino Sans’,sans-serif!important;}
 
 /* ── HUD ── */
 #hud{
-  position:absolute;bottom:0;left:0;right:0;z-index:30;
-  background:#0f380f;border-top:3px solid #306230;
-  padding:8px 12px;
-  padding-bottom:calc(8px + env(safe-area-inset-bottom));
-  display:flex;align-items:center;gap:10px;
-  min-height:calc(76px + env(safe-area-inset-bottom));
+position:absolute;bottom:0;left:0;right:0;z-index:30;
+background:#0f380f;border-top:3px solid #306230;
+padding:8px 12px;
+padding-bottom:calc(8px + env(safe-area-inset-bottom));
+display:flex;align-items:center;gap:10px;
+min-height:calc(76px + env(safe-area-inset-bottom));
 }
 #hud-left{flex:1;display:flex;flex-direction:column;gap:5px;}
-#hud-batch{font-family:'Press Start 2P',monospace;font-size:9px;color:#9bbc0f;}
-#hud-prog{font-family:'Press Start 2P',monospace;font-size:13px;color:#9bbc0f;letter-spacing:.05em;}
-#hud-state-msg{font-family:'Noto Sans JP','Hiragino Sans',sans-serif;font-size:12px;font-weight:700;color:#8bac0f;letter-spacing:.03em;line-height:1.4;}
+#hud-batch{font-family:‘Press Start 2P’,monospace;font-size:9px;color:#9bbc0f;}
+#hud-prog{font-family:‘Press Start 2P’,monospace;font-size:13px;color:#9bbc0f;letter-spacing:.05em;}
+#hud-state-msg{font-family:‘Noto Sans JP’,‘Hiragino Sans’,sans-serif;font-size:12px;font-weight:700;color:#8bac0f;letter-spacing:.03em;line-height:1.4;}
 
 /* Scan button always on top — above all panels */
 #scan-btn{
-  position:absolute;
-  bottom:calc(20px + env(safe-area-inset-bottom));
-  right:14px;
-  width:56px;height:56px;border-radius:50%;
-  background:#9bbc0f;border:3px solid #306230;
-  outline:3px solid #9bbc0f;
-  font-family:'Noto Sans JP',sans-serif;font-size:8px;font-weight:900;
-  color:#0f380f;cursor:pointer;z-index:65;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
-  user-select:none;-webkit-user-select:none;
-  transition:all .08s;flex-shrink:0;
-  box-shadow:inset 0 3px 0 rgba(255,255,255,.25),inset 0 -3px 0 rgba(0,0,0,.35);
+position:absolute;
+bottom:calc(20px + env(safe-area-inset-bottom));
+right:14px;
+width:56px;height:56px;border-radius:50%;
+background:#9bbc0f;border:3px solid #306230;
+outline:3px solid #9bbc0f;
+font-family:‘Noto Sans JP’,sans-serif;font-size:8px;font-weight:900;
+color:#0f380f;cursor:pointer;z-index:65;
+display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+user-select:none;-webkit-user-select:none;
+transition:all .08s;flex-shrink:0;
+box-shadow:inset 0 3px 0 rgba(255,255,255,.25),inset 0 -3px 0 rgba(0,0,0,.35);
 }
 #scan-btn:active,#scan-btn.held{background:#8bac0f;transform:scale(.91);box-shadow:inset 0 -1px 0 rgba(255,255,255,.15),inset 0 2px 0 rgba(0,0,0,.25);}
 #scan-ico{font-size:18px;line-height:1;}
 
 /* ── どいてヒント（ダブルタップ時に一時表示） ── */
 #doit-hint{
-  position:absolute;
-  bottom:calc(82px + env(safe-area-inset-bottom));
-  left:50%;transform:translateX(-50%);
-  background:rgba(155,188,15,.92);color:#0f380f;
-  padding:4px 10px;
-  font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;
-  border:2px solid #306230;z-index:32;
-  display:none;pointer-events:none;white-space:nowrap;
-  border-radius:2px;
+position:absolute;
+bottom:calc(82px + env(safe-area-inset-bottom));
+left:50%;transform:translateX(-50%);
+background:rgba(155,188,15,.92);color:#0f380f;
+padding:4px 10px;
+font-family:‘Noto Sans JP’,sans-serif;font-size:11px;font-weight:700;
+border:2px solid #306230;z-index:32;
+display:none;pointer-events:none;white-space:nowrap;
+border-radius:2px;
 }
-
 
 /* BGM wrap */
 #bgm-wrap{
-  position:absolute;
-  bottom:calc(20px + env(safe-area-inset-bottom));
-  right:calc(14px + 56px + 10px);
-  z-index:65;
-  user-select:none;-webkit-user-select:none;
+position:absolute;
+bottom:calc(20px + env(safe-area-inset-bottom));
+right:calc(14px + 56px + 10px);
+z-index:65;
+user-select:none;-webkit-user-select:none;
 }
-/* BGM button — "BGM" text, dim=off, bright=on */
+/* BGM button — “BGM” text, dim=off, bright=on */
 #bgm-btn{
-  width:44px;height:44px;border-radius:50%;
-  background:#0a2808;border:2px solid #1a3e0a;
-  font-family:'Press Start 2P',monospace;font-size:7px;
-  color:#306230;
-  cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .12s;flex-shrink:0;
-  box-shadow:inset 0 2px 0 rgba(255,255,255,.05),inset 0 -2px 0 rgba(0,0,0,.3);
-  letter-spacing:-.5px;
+width:44px;height:44px;border-radius:50%;
+background:#0a2808;border:2px solid #1a3e0a;
+font-family:‘Press Start 2P’,monospace;font-size:7px;
+color:#306230;
+cursor:pointer;
+display:flex;align-items:center;justify-content:center;
+transition:all .12s;flex-shrink:0;
+box-shadow:inset 0 2px 0 rgba(255,255,255,.05),inset 0 -2px 0 rgba(0,0,0,.3);
+letter-spacing:-.5px;
 }
 #bgm-btn:active{transform:scale(.91);}
 #bgm-btn.on{
-  background:#1a3e0a;border-color:#9bbc0f;
-  color:#9bbc0f;
-  box-shadow:inset 0 2px 0 rgba(255,255,255,.1),inset 0 -2px 0 rgba(0,0,0,.3),0 0 6px rgba(155,188,15,.3);
+background:#1a3e0a;border-color:#9bbc0f;
+color:#9bbc0f;
+box-shadow:inset 0 2px 0 rgba(255,255,255,.1),inset 0 -2px 0 rgba(0,0,0,.3),0 0 6px rgba(155,188,15,.3);
 }
 
 /* Scanner panel also on top */
 #sp{
-  position:absolute;
-  bottom:calc(88px + env(safe-area-inset-bottom));
-  left:8px;right:8px;
-  background:#0f380f;border:3px solid #8bac0f;border-radius:2px;
-  padding:10px 12px;z-index:66;display:none;
-  font-family:'Noto Sans JP',sans-serif;
-  image-rendering:pixelated;
+position:absolute;
+bottom:calc(88px + env(safe-area-inset-bottom));
+left:8px;right:8px;
+background:#0f380f;border:3px solid #8bac0f;border-radius:2px;
+padding:10px 12px;z-index:66;display:none;
+font-family:‘Noto Sans JP’,sans-serif;
+image-rendering:pixelated;
 }
 #sp.show{display:block;}
 .sp-h{font-size:10px;font-weight:700;color:#306230;margin-bottom:8px;border-bottom:1px solid #306230;padding-bottom:5px;}
@@ -155,43 +155,43 @@ body{display:flex;align-items:center;justify-content:center;}
 #sp-info{flex:1;}
 #sp-shelf-lbl{font-size:10px;color:#8bac0f;margin-bottom:4px;font-weight:700;}
 #sp-shelf-id{font-size:15px;color:#9bbc0f;margin-bottom:4px;font-weight:900;}
-#sp-code{font-family:'Press Start 2P',monospace;font-size:12px;color:#9bbc0f;}
+#sp-code{font-family:‘Press Start 2P’,monospace;font-size:12px;color:#9bbc0f;}
 #sp-type{font-size:11px;color:#8bac0f;margin-top:2px;font-weight:700;}
 #sp-footer{display:flex;justify-content:space-between;font-size:10px;color:#306230;border-top:1px solid #306230;padding-top:5px;font-weight:700;}
 
 /* ── Shelf Panel ── */
 #shelf-panel{
-  position:absolute;inset:0;z-index:40;
-  background:#0f380f;display:none;flex-direction:column;
-  font-family:'Noto Sans JP',sans-serif;
+position:absolute;inset:0;z-index:40;
+background:#0f380f;display:none;flex-direction:column;
+font-family:‘Noto Sans JP’,sans-serif;
 }
 #shelf-panel.show{display:flex;}
 #sp-hdr{
-  background:#0a2808;border-bottom:3px solid #306230;
-  padding:10px 12px;display:flex;justify-content:center;align-items:center;
-  flex-shrink:0;
+background:#0a2808;border-bottom:3px solid #306230;
+padding:10px 12px;display:flex;justify-content:center;align-items:center;
+flex-shrink:0;
 }
 #sp-hdr-title{font-size:14px;color:#9bbc0f;font-weight:900;}
 #sp-hdr-sub{display:none;}
 #sp-hdr-back{
-  background:#306230;border:3px solid #8bac0f;
-  color:#9bbc0f;padding:12px 18px;font-family:'Noto Sans JP',sans-serif;
-  font-size:13px;font-weight:900;cursor:pointer;transition:all .08s;
-  border-radius:4px;
+background:#306230;border:3px solid #8bac0f;
+color:#9bbc0f;padding:12px 18px;font-family:‘Noto Sans JP’,sans-serif;
+font-size:13px;font-weight:900;cursor:pointer;transition:all .08s;
+border-radius:4px;
 }
 #sp-hdr-back:active{background:#0f380f;transform:scale(.93);}
 /* Footer bar for back button */
 #sp-footer-bar{
-  flex-shrink:0;
-  background:#0a2808;border-top:3px solid #306230;
-  padding:10px 12px;
-  padding-bottom:calc(10px + env(safe-area-inset-bottom));
-  display:flex;align-items:center;
+flex-shrink:0;
+background:#0a2808;border-top:3px solid #306230;
+padding:10px 12px;
+padding-bottom:calc(10px + env(safe-area-inset-bottom));
+display:flex;align-items:center;
 }
 #sp-scan-hold-hint{
-  padding:8px 12px;font-size:11px;color:#306230;text-align:center;
-  border-bottom:1px solid #1a4010;flex-shrink:0;
-  font-family:'Noto Sans JP',sans-serif;font-weight:700;
+padding:8px 12px;font-size:11px;color:#306230;text-align:center;
+border-bottom:1px solid #1a4010;flex-shrink:0;
+font-family:‘Noto Sans JP’,sans-serif;font-weight:700;
 }
 #sp-scan-hold-hint.revealed{color:#9bbc0f;}
 #shelf-grid-wrap{flex:1;overflow-y:auto;padding:8px;}
@@ -200,29 +200,29 @@ body{display:flex;align-items:center;justify-content:center;}
 #shelf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;}
 
 .dr-btn{
-  background:#1a3e0a;border:2px solid #306230;
-  border-radius:1px;cursor:pointer;padding:0;
-  display:flex;flex-direction:column;
-  transition:border-color .1s;
-  overflow:hidden;user-select:none;
+background:#1a3e0a;border:2px solid #306230;
+border-radius:1px;cursor:pointer;padding:0;
+display:flex;flex-direction:column;
+transition:border-color .1s;
+overflow:hidden;user-select:none;
 }
 .dr-btn:active{background:#0f380f;transform:scale(.97);}
 .dr-btn.target-glow{border-color:#9bbc0f;background:#1d4a0c;
-  box-shadow:0 0 0 2px rgba(155,188,15,.4);}
+box-shadow:0 0 0 2px rgba(155,188,15,.4);}
 /* count bar on top (small) */
 .dr-count-bar{
-  background:#0a2808;padding:2px 2px;
-  font-family:'Noto Sans JP',sans-serif;font-size:7px;font-weight:400;
-  text-align:center;color:#306230;
-  border-bottom:1px solid #1a3e0a;
-  line-height:1.2;
+background:#0a2808;padding:2px 2px;
+font-family:‘Noto Sans JP’,sans-serif;font-size:7px;font-weight:400;
+text-align:center;color:#306230;
+border-bottom:1px solid #1a3e0a;
+line-height:1.2;
 }
 /* label (big) at bottom */
 .dr-label-bar{
-  flex:1;display:flex;align-items:center;justify-content:center;
-  font-family:'Press Start 2P',monospace;font-size:8px;
-  color:#8bac0f;padding:6px 2px;letter-spacing:.02em;
-  text-align:center;line-height:1.3;
+flex:1;display:flex;align-items:center;justify-content:center;
+font-family:‘Press Start 2P’,monospace;font-size:8px;
+color:#8bac0f;padding:6px 2px;letter-spacing:.02em;
+text-align:center;line-height:1.3;
 }
 .dr-btn.target-glow .dr-label-bar{color:#9bbc0f;}
 
@@ -231,67 +231,67 @@ body{display:flex;align-items:center;justify-content:center;}
 
 /* ── Drawer Panel ── */
 #drawer-panel{
-  position:absolute;inset:0;z-index:50;
-  background:#0f380f;display:none;flex-direction:column;
-  font-family:'Noto Sans JP',sans-serif;
+position:absolute;inset:0;z-index:50;
+background:#0f380f;display:none;flex-direction:column;
+font-family:‘Noto Sans JP’,sans-serif;
 }
 #drawer-panel.show{display:flex;animation:drawerOpen .2s ease-out;}
 #dp-hdr{
-  background:#0a2808;border-bottom:3px solid #306230;
-  padding:8px 12px;display:flex;justify-content:center;align-items:center;flex-shrink:0;
+background:#0a2808;border-bottom:3px solid #306230;
+padding:8px 12px;display:flex;justify-content:center;align-items:center;flex-shrink:0;
 }
 #dp-title{font-size:14px;color:#9bbc0f;font-weight:900;}
 #dp-shelf-lbl{font-size:11px;color:#8bac0f;margin-top:2px;font-weight:700;}
 #dp-back{
-  position:absolute;top:8px;left:12px;z-index:55;
-  background:#306230;border:3px solid #8bac0f;color:#9bbc0f;
-  padding:10px 16px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:900;cursor:pointer;
-  border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.4);transition:all .08s;
+position:absolute;top:8px;left:12px;z-index:55;
+background:#306230;border:3px solid #8bac0f;color:#9bbc0f;
+padding:10px 16px;font-family:‘Noto Sans JP’,sans-serif;font-size:13px;font-weight:900;cursor:pointer;
+border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.4);transition:all .08s;
 }
 #dp-back:active{background:#0f380f;transform:scale(.93);}
 #dp-hint{
-  padding:6px 12px;font-size:11px;color:#306230;text-align:center;
-  border-bottom:1px solid #1a4010;flex-shrink:0;font-weight:700;
+padding:6px 12px;font-size:11px;color:#306230;text-align:center;
+border-bottom:1px solid #1a4010;flex-shrink:0;font-weight:700;
 }
 #dp-canvas-wrap{flex:1;position:relative;overflow:hidden;background:#2a1e12;cursor:grab;min-height:180px;}
 #dp-canvas{position:absolute;top:0;left:0;display:block;touch-action:none;}
 #dp-empty{
-  position:absolute;inset:0;display:none;
-  font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:700;color:#306230;
-  align-items:center;justify-content:center;text-align:center;padding:20px;
+position:absolute;inset:0;display:none;
+font-family:‘Noto Sans JP’,sans-serif;font-size:14px;font-weight:700;color:#306230;
+align-items:center;justify-content:center;text-align:center;padding:20px;
 }
 #dp-empty.show{display:flex;}
 
 /* Scan confirm (in drawer) */
 #dp-pre-scan{
-  background:#0a2808;border-top:3px solid #306230;
-  padding:8px 12px;flex-shrink:0;display:none;
+background:#0a2808;border-top:3px solid #306230;
+padding:8px 12px;flex-shrink:0;display:none;
 }
 #dp-pre-scan.show{display:block;}
 #dp-confirm{
-  background:#0a2808;border-top:2px solid #306230;
-  padding:8px 12px;flex-shrink:0;display:none;
+background:#0a2808;border-top:2px solid #306230;
+padding:8px 12px;flex-shrink:0;display:none;
 }
 #dp-confirm.show{display:block;}
 #dpc-row{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
 #dpc-canvas{border:2px solid #306230;flex-shrink:0;}
-#dpc-code{font-family:'Press Start 2P',monospace;font-size:16px;color:#9bbc0f;}
-#dpc-type{font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:#8bac0f;margin-top:3px;}
+#dpc-code{font-family:‘Press Start 2P’,monospace;font-size:16px;color:#9bbc0f;}
+#dpc-type{font-family:‘Noto Sans JP’,sans-serif;font-size:11px;font-weight:700;color:#8bac0f;margin-top:3px;}
 #dpc-result-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-#dpc-result-icon{font-size:18px;flex-shrink:0;font-family:'Press Start 2P',monospace;color:#fff;}
-#dpc-match{font-size:13px;font-family:'Noto Sans JP',sans-serif;font-weight:900;}
+#dpc-result-icon{font-size:18px;flex-shrink:0;font-family:‘Press Start 2P’,monospace;color:#fff;}
+#dpc-match{font-size:13px;font-family:‘Noto Sans JP’,sans-serif;font-weight:900;}
 #dpc-match.ok{color:#ffffff;}
 #dpc-match.ng{color:#ff6060;}
 .dpc-btns{display:flex;gap:6px;}
 .dpc-btn{
-  flex:1;padding:12px 4px;border:2px solid #8bac0f;font-family:'Noto Sans JP',sans-serif;
-  font-size:12px;font-weight:900;cursor:pointer;transition:all .08s;
+flex:1;padding:12px 4px;border:2px solid #8bac0f;font-family:‘Noto Sans JP’,sans-serif;
+font-size:12px;font-weight:900;cursor:pointer;transition:all .08s;
 }
 .dpc-scan-btn{
-  display:block;width:100%;padding:14px;
-  border:2px solid #9bbc0f;font-family:'Noto Sans JP',sans-serif;
-  font-size:14px;font-weight:900;cursor:pointer;transition:all .08s;
-  background:#1a3e0a;color:#9bbc0f;
+display:block;width:100%;padding:14px;
+border:2px solid #9bbc0f;font-family:‘Noto Sans JP’,sans-serif;
+font-size:14px;font-weight:900;cursor:pointer;transition:all .08s;
+background:#1a3e0a;color:#9bbc0f;
 }
 .dpc-scan-btn:active{background:#0f380f;transform:scale(.97);}
 .dpc-ok{background:#306230;color:#9bbc0f;}
@@ -301,50 +301,50 @@ body{display:flex;align-items:center;justify-content:center;}
 
 /* ── Drawer scanner bar (always visible in drawer mode) ── */
 #dp-scanner-bar{
-  background:#0a2808;border-top:3px solid #306230;
-  padding:8px 12px;flex-shrink:0;
-  display:flex;align-items:center;gap:12px;
-  font-family:'Noto Sans JP',sans-serif;
+background:#0a2808;border-top:3px solid #306230;
+padding:8px 12px;flex-shrink:0;
+display:flex;align-items:center;gap:12px;
+font-family:‘Noto Sans JP’,sans-serif;
 }
 #dsb-info{flex:1;min-width:0;}
 #dsb-box{font-size:14px;font-weight:900;color:#9bbc0f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 #dsb-box-lbl{font-size:10px;font-weight:700;color:#306230;margin-bottom:3px;}
-#dsb-code{font-family:'Press Start 2P',monospace;font-size:10px;color:#8bac0f;margin-top:4px;}
+#dsb-code{font-family:‘Press Start 2P’,monospace;font-size:10px;color:#8bac0f;margin-top:4px;}
 #dsb-prog{font-size:11px;font-weight:700;color:#306230;margin-top:3px;}
 .wf-overlay{
-  position:absolute;inset:0;z-index:60;
-  background:rgba(10,28,5,.95);
-  display:none;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:20px;
-  font-family:'Noto Sans JP',sans-serif;
+position:absolute;inset:0;z-index:60;
+background:rgba(10,28,5,.95);
+display:none;flex-direction:column;align-items:center;justify-content:center;
+text-align:center;padding:20px;
+font-family:‘Noto Sans JP’,sans-serif;
 }
 .wf-overlay.show{display:flex;}
 .wf-icon{font-size:48px;margin-bottom:14px;}
 .wf-title{font-size:16px;font-weight:900;color:#9bbc0f;margin-bottom:8px;letter-spacing:.03em;}
 .wf-sub{font-size:13px;font-weight:700;color:#8bac0f;line-height:1.8;margin-bottom:20px;}
 .wf-btn{
-  background:#306230;border:3px solid #8bac0f;color:#9bbc0f;
-  padding:14px 28px;font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:900;
-  cursor:pointer;transition:all .08s;letter-spacing:.03em;
+background:#306230;border:3px solid #8bac0f;color:#9bbc0f;
+padding:14px 28px;font-family:‘Noto Sans JP’,sans-serif;font-size:14px;font-weight:900;
+cursor:pointer;transition:all .08s;letter-spacing:.03em;
 }
 .wf-btn:active{background:#0f380f;}
 .wf-scan-target{
-  border:3px solid #8bac0f;background:#0f380f;
-  padding:14px 20px;margin:12px 0 16px;
-  font-size:13px;font-weight:700;color:#9bbc0f;line-height:1.8;
+border:3px solid #8bac0f;background:#0f380f;
+padding:14px 20px;margin:12px 0 16px;
+font-size:13px;font-weight:700;color:#9bbc0f;line-height:1.8;
 }
 .wf-progress{
-  width:200px;height:8px;background:#0f380f;border:2px solid #306230;
-  margin:10px 0;position:relative;overflow:hidden;
+width:200px;height:8px;background:#0f380f;border:2px solid #306230;
+margin:10px 0;position:relative;overflow:hidden;
 }
 .wf-progress-bar{height:100%;background:#9bbc0f;width:0%;transition:width .05s;}
 
 /* ── Toast ── */
 #toast{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  background:#0f380f;border:3px solid #8bac0f;
-  padding:14px 24px;font-family:'Noto Sans JP',sans-serif;font-size:18px;font-weight:900;
-  z-index:70;display:none;text-align:center;pointer-events:none;
+position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+background:#0f380f;border:3px solid #8bac0f;
+padding:14px 24px;font-family:‘Noto Sans JP’,sans-serif;font-size:18px;font-weight:900;
+z-index:70;display:none;text-align:center;pointer-events:none;
 }
 #toast.ok{color:#ffffff;border-color:#9bbc0f;background:#0f380f;}
 #toast.ng{color:#ff6060;border-color:#ff6060;background:#0f380f;}
@@ -352,123 +352,140 @@ body{display:flex;align-items:center;justify-content:center;}
 
 /* ── Bot bubble ── */
 #bbub{
-  position:absolute;bottom:82px;right:14px;
-  background:#9bbc0f;color:#0f380f;padding:5px 10px;
-  font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;
-  border:2px solid #306230;z-index:32;display:none;
+position:absolute;bottom:82px;right:14px;
+background:#9bbc0f;color:#0f380f;padding:5px 10px;
+font-family:‘Noto Sans JP’,sans-serif;font-size:12px;font-weight:700;
+border:2px solid #306230;z-index:32;display:none;
 }
-#bbub::after{content:'';position:absolute;bottom:-8px;right:12px;
-  border:7px solid transparent;border-top-color:#9bbc0f;border-bottom:none;}
+#bbub::after{content:’’;position:absolute;bottom:-8px;right:12px;
+border:7px solid transparent;border-top-color:#9bbc0f;border-bottom:none;}
 
 /* ── Intro ── */
 #intro{
-  position:absolute;inset:0;z-index:90;
-  background:#0f380f;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:20px;overflow-y:auto;
-  font-family:'Noto Sans JP',sans-serif;
+position:absolute;inset:0;z-index:90;
+background:#0f380f;
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+text-align:center;padding:20px;overflow-y:auto;
+font-family:‘Noto Sans JP’,sans-serif;
 }
-.intro-title{font-family:'Press Start 2P',monospace;font-size:18px;color:#9bbc0f;margin-bottom:8px;letter-spacing:.06em;}
+.intro-title{font-family:‘Press Start 2P’,monospace;font-size:18px;color:#9bbc0f;margin-bottom:8px;letter-spacing:.06em;}
 .intro-title span{color:#8bac0f;}
 .intro-sub{font-size:12px;font-weight:700;color:#306230;margin-bottom:20px;letter-spacing:.1em;}
 .intro-rules{
-  background:#0a2808;border:2px solid #306230;padding:14px 18px;
-  text-align:left;max-width:380px;width:100%;margin-bottom:20px;
-  font-size:13px;font-weight:700;color:#8bac0f;line-height:2.2;
+background:#0a2808;border:2px solid #306230;padding:14px 18px;
+text-align:left;max-width:380px;width:100%;margin-bottom:20px;
+font-size:13px;font-weight:700;color:#8bac0f;line-height:2.2;
 }
 .intro-rules li{list-style:none;padding-left:14px;position:relative;}
-.intro-rules li::before{content:'>';position:absolute;left:0;color:#9bbc0f;}
+.intro-rules li::before{content:’>’;position:absolute;left:0;color:#9bbc0f;}
 #intro-go{
-  background:#9bbc0f;color:#0f380f;border:3px solid #306230;
-  padding:14px 32px;font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:900;
-  cursor:pointer;letter-spacing:.06em;
-  box-shadow:4px 4px 0 #306230;transition:all .08s;
+background:#9bbc0f;color:#0f380f;border:3px solid #306230;
+padding:14px 32px;font-family:‘Noto Sans JP’,sans-serif;font-size:14px;font-weight:900;
+cursor:pointer;letter-spacing:.06em;
+box-shadow:4px 4px 0 #306230;transition:all .08s;
 }
 #intro-go:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #306230;}
 
 /* ── Tutorial ── */
 #tut-hint{
-  position:absolute;top:0;left:0;right:0;z-index:35;
-  background:rgba(10,40,10,.94);border-bottom:3px solid #9bbc0f;
-  padding:10px 14px;
-  font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;
-  color:#9bbc0f;line-height:1.7;text-align:center;
-  display:none;pointer-events:none;
+position:absolute;top:0;left:0;right:0;z-index:35;
+background:rgba(10,40,10,.94);border-bottom:3px solid #9bbc0f;
+padding:10px 14px;
+font-family:‘Noto Sans JP’,sans-serif;font-size:13px;font-weight:700;
+color:#9bbc0f;line-height:1.7;text-align:center;
+display:none;pointer-events:none;
 }
 #tut-hint.show{display:block;}
-#tut-step{font-family:'Press Start 2P',monospace;font-size:7px;color:#306230;margin-bottom:4px;}
+#tut-step{font-family:‘Press Start 2P’,monospace;font-size:7px;color:#306230;margin-bottom:4px;}
 #tut-arrow{font-size:22px;display:block;animation:tutPulse .7s ease-in-out infinite alternate;}
 @keyframes tutPulse{from{opacity:.4;transform:scale(.85);}to{opacity:1;transform:scale(1.1);}}
 
 /* Tutorial path overlay on canvas - drawn via JS */
 
-#tut-choice{margin-top:14px;display:flex;align-items:center;gap:10px;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;color:#8bac0f;}
+#tut-choice{margin-top:14px;display:flex;align-items:center;gap:10px;font-family:‘Noto Sans JP’,sans-serif;font-size:12px;font-weight:700;color:#8bac0f;}
 #tut-chk-wrap{display:flex;align-items:center;gap:8px;cursor:pointer;}
 
-/* ── Today's Stats Dashboard ── */
+/* ── Today’s Stats Dashboard ── */
 #today-stats{
-  width:100%;max-width:380px;margin-top:18px;
-  font-family:'Noto Sans JP',sans-serif;
+width:100%;max-width:380px;margin-top:18px;
+font-family:‘Noto Sans JP’,sans-serif;
 }
 .stats-header{
-  font-size:11px;font-weight:900;color:#9bbc0f;margin-bottom:10px;text-align:left;
-  display:flex;align-items:center;gap:6px;
+font-size:11px;font-weight:900;color:#9bbc0f;margin-bottom:10px;text-align:left;
+display:flex;align-items:center;gap:6px;
 }
 .stats-date{font-size:9px;color:#306230;margin-left:auto;}
 .stats-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;
+display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;
 }
 .stat-card{
-  background:#0a2808;border:2px solid #1a3e0a;padding:8px;
+background:#0a2808;border:2px solid #1a3e0a;padding:8px;
 }
 .stat-card.accent{border-color:#306230;}
 .stat-lbl{font-size:9px;font-weight:700;color:#306230;margin-bottom:4px;letter-spacing:.03em;}
-.stat-val{font-family:'Press Start 2P',monospace;font-size:16px;color:#9bbc0f;letter-spacing:.02em;}
+.stat-val{font-family:‘Press Start 2P’,monospace;font-size:16px;color:#9bbc0f;letter-spacing:.02em;}
 .stat-val.dim{color:#8bac0f;font-size:13px;}
 .stat-unit{font-size:9px;color:#306230;margin-left:2px;}
 /* progress bar */
 .stats-prog-wrap{margin-bottom:6px;}
 .stats-prog-lbl{
-  display:flex;justify-content:space-between;
-  font-size:9px;font-weight:700;color:#306230;margin-bottom:4px;
+display:flex;justify-content:space-between;
+font-size:9px;font-weight:700;color:#306230;margin-bottom:4px;
 }
 .stats-prog-lbl span{color:#8bac0f;}
 .stats-prog-bar-bg{
-  width:100%;height:10px;background:#0a2808;border:2px solid #1a3e0a;position:relative;overflow:hidden;
+width:100%;height:10px;background:#0a2808;border:2px solid #1a3e0a;position:relative;overflow:hidden;
 }
 .stats-prog-bar-fill{
-  height:100%;background:#9bbc0f;transition:width 1s ease-out;
-  position:relative;
+height:100%;background:#9bbc0f;transition:width 1s ease-out;
+position:relative;
 }
 .stats-prog-bar-fill::after{
-  content:'';position:absolute;top:0;right:0;bottom:0;width:3px;background:#fff;opacity:.4;
+content:’’;position:absolute;top:0;right:0;bottom:0;width:3px;background:#fff;opacity:.4;
 }
 .stats-prog-bar-fill.over{background:#ffdd00;}
 /* wide stat row */
 .stat-row{
-  background:#0a2808;border:2px solid #1a3e0a;padding:6px 8px;
-  display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;
+background:#0a2808;border:2px solid #1a3e0a;padding:6px 8px;
+display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;
 }
 .stat-row-lbl{font-size:9px;font-weight:700;color:#306230;}
 .stat-row-val{font-size:12px;font-weight:900;color:#8bac0f;}
 /* Ranking table (in-game overlay only) */
 .rank-name{ max-width:70px;overflow:hidden;text-overflow:ellipsis; }
 #lang-switch{
-  display:flex;gap:8px;margin-bottom:16px;
+display:flex;gap:8px;margin-bottom:16px;
 }
 .lang-btn{
-  font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:900;
-  padding:10px 16px;border:2px solid #306230;
-  background:#0a2808;color:#8bac0f;
-  cursor:pointer;transition:all .1s;letter-spacing:.04em;
+font-family:‘Noto Sans JP’,sans-serif;font-size:12px;font-weight:900;
+padding:10px 16px;border:2px solid #306230;
+background:#0a2808;color:#8bac0f;
+cursor:pointer;transition:all .1s;letter-spacing:.04em;
 }
 .lang-btn:active{transform:scale(.94);}
 .lang-btn.active{
-  background:#9bbc0f;color:#0f380f;
-  border-color:#9bbc0f;
-  box-shadow:0 0 0 2px #306230,2px 2px 0 #306230;
+background:#9bbc0f;color:#0f380f;
+border-color:#9bbc0f;
+box-shadow:0 0 0 2px #306230,2px 2px 0 #306230;
+}
+/* Mode toggle buttons */
+.mode-btn{
+padding:12px 20px;border:2px solid #306230;
+background:#0a2808;color:#8bac0f;
+cursor:pointer;transition:all .12s;
+font-family:‘Noto Sans JP’,sans-serif;font-size:13px;font-weight:900;
+letter-spacing:.02em;
+}
+.mode-btn:first-child{border-radius:6px 0 0 6px;border-right:1px solid #306230;}
+.mode-btn:last-child{border-radius:0 6px 6px 0;border-left:1px solid #306230;}
+.mode-btn:active{transform:scale(.95);}
+.mode-btn.active{
+background:#9bbc0f;color:#0f380f;
+border-color:#9bbc0f;
+box-shadow:inset 0 2px 4px rgba(0,0,0,.15);
 }
 </style>
+
 </head>
 <body oncopy="return false" oncut="return false" onselectstart="return false">
 <div id="screen">
@@ -476,6 +493,7 @@ body{display:flex;align-items:center;justify-content:center;}
   <canvas id="scanlines"></canvas>
 
   <!-- HUD -->
+
   <div id="hud">
     <div id="hud-left">
       <div id="hud-batch">BATCH: <span id="hb-n">1</span></div>
@@ -485,17 +503,21 @@ body{display:flex;align-items:center;justify-content:center;}
   </div>
 
   <!-- ダブルタップ通知ヒント -->
+
   <div id="doit-hint">📢</div>
 
   <!-- BGM toggle button -->
+
   <div id="bgm-wrap">
     <button id="bgm-btn">BGM</button>
   </div>
 
   <!-- Scan button — floats right, always on top -->
-  <button id="scan-btn"><div id="scan-ico">📱</div>SCAN</button>
+
+<button id="scan-btn"><div id="scan-ico">📱</div>SCAN</button>
 
   <!-- Scanner panel -->
+
   <div id="sp">
     <div class="sp-h">■ SCANNER ■</div>
     <div id="sp-main-row">
@@ -514,6 +536,7 @@ body{display:flex;align-items:center;justify-content:center;}
   </div>
 
   <!-- Shelf panel -->
+
   <div id="shelf-panel">
     <div id="sp-hdr">
       <div>
@@ -529,6 +552,7 @@ body{display:flex;align-items:center;justify-content:center;}
   </div>
 
   <!-- Drawer panel -->
+
   <div id="drawer-panel">
     <div id="dp-hdr">
       <div>
@@ -577,6 +601,7 @@ body{display:flex;align-items:center;justify-content:center;}
   </div>
 
   <!-- Workflow: batch done -->
+
   <div class="wf-overlay" id="wf-batch">
     <div class="wf-icon">📦</div>
     <div class="wf-title" id="wf-batch-title">バッチ完了！</div>
@@ -585,6 +610,7 @@ body{display:flex;align-items:center;justify-content:center;}
   </div>
 
   <!-- Workflow: at return zone -->
+
   <div class="wf-overlay" id="wf-return">
     <div class="wf-icon">🏁</div>
     <div class="wf-title" id="wf-return-title">回収ゾーン</div>
@@ -593,6 +619,7 @@ body{display:flex;align-items:center;justify-content:center;}
   </div>
 
   <!-- Workflow: at empty container zone -->
+
   <div class="wf-overlay" id="wf-empty">
     <div class="wf-icon">🗃️</div>
     <div class="wf-title" id="wf-empty-title">空コンテナゾーン</div>
@@ -602,6 +629,7 @@ body{display:flex;align-items:center;justify-content:center;}
   </div>
 
   <!-- Ranking overlay (in-game) -->
+
   <div class="wf-overlay" id="wf-ranking" style="padding:16px 12px;">
     <div style="width:100%;max-width:360px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
@@ -636,6 +664,7 @@ body{display:flex;align-items:center;justify-content:center;}
   </div>
 
   <!-- 業務終了確認 -->
+
   <div class="wf-overlay" id="wf-exit-confirm">
     <div class="wf-icon">🏠</div>
     <div class="wf-title" id="wf-exit-title">本日の業務を<br>終了しますか？</div>
@@ -654,6 +683,7 @@ body{display:flex;align-items:center;justify-content:center;}
   </div>
 
   <!-- Start hint overlay (non-tutorial mode only) -->
+
   <div class="wf-overlay" id="wf-start-hint">
     <div class="wf-icon">🗃️</div>
     <div class="wf-title" id="wf-sh-title">まず空コンテナゾーンへ！</div>
@@ -662,15 +692,19 @@ body{display:flex;align-items:center;justify-content:center;}
   </div>
 
   <!-- Tutorial hint overlay -->
+
   <div id="tut-hint"><div id="tut-step">STEP 1/7</div><span id="tut-arrow">▼</span><div id="tut-msg">空コンテナゾーンへ移動しよう</div></div>
 
   <!-- Toast -->
+
   <div id="toast"><div id="toast-m"></div><div id="toast-sub"></div></div>
 
   <!-- Bot bubble -->
+
   <div id="bbub">「すみません！」</div>
 
   <!-- Intro -->
+
   <div id="intro">
     <!-- Language switcher -->
     <div id="lang-switch">
@@ -681,89 +715,95 @@ body{display:flex;align-items:center;justify-content:center;}
     <div class="intro-title">EC<span>倉庫</span><br>PICKING</div>
     <div class="intro-sub" id="intro-sub">〜 安全第一 〜</div>
 
-    <!-- Mode checkboxes (上に移動) -->
-    <div style="margin-top:14px;display:flex;align-items:center;gap:10px;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;color:#8bac0f;">
-      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-        <input type="checkbox" id="hard-mode-chk" style="width:16px;height:16px;cursor:pointer;accent-color:#9bbc0f;">
-        <span id="hard-mode-lbl">HARD MODE</span>
-      </label>
+```
+<!-- Mode selection: EASY / HARD -->
+<div id="mode-switch" style="margin-top:14px;display:flex;gap:0;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:900;">
+  <button id="mode-easy-btn" class="mode-btn active" onclick="selectMode('easy')">
+    <span id="mode-easy-lbl">🟢 EASY</span>
+  </button>
+  <button id="mode-hard-btn" class="mode-btn" onclick="selectMode('hard')">
+    <span id="mode-hard-lbl">💀 HARD</span>
+  </button>
+</div>
+<div id="tut-choice" style="margin-top:8px;">
+  <label id="tut-chk-wrap" style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;color:#9bbc0f;">
+    <input type="checkbox" id="tutorial-chk" checked style="width:16px;height:16px;cursor:pointer;accent-color:#9bbc0f;">
+    <span id="tut-chk-lbl">チュートリアルあり</span>
+  </label>
+</div>
+<div id="hard-desc" style="font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:#306230;margin-top:4px;margin-bottom:14px;text-align:center;line-height:1.6;" ></div>
+
+<!-- Player name input -->
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:14px;width:100%;max-width:300px;">
+  <label style="font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:#8bac0f;" id="name-lbl">Your Name</label>
+  <input id="player-name" type="text" maxlength="12" placeholder="NAME"
+    style="width:100%;background:#0a2808;border:2px solid #306230;color:#9bbc0f;
+           font-family:'Press Start 2P',monospace;font-size:11px;padding:8px 10px;
+           text-align:center;outline:none;letter-spacing:.05em;"
+    onfocus="this.style.borderColor='#9bbc0f';setTimeout(()=>this.scrollIntoView({behavior:'smooth',block:'center'}),300)" onblur="this.style.borderColor='#306230'">
+</div>
+
+<button id="intro-go">START GAME</button>
+
+<!-- Today's Stats Dashboard -->
+<div id="today-stats">
+  <div class="stats-header">
+    📊 TODAY'S STATUS
+    <span class="stats-date" id="stats-date-lbl">----/--/--</span>
+  </div>
+
+  <!-- 出荷数 & 目標 big numbers -->
+  <div class="stats-grid">
+    <div class="stat-card accent">
+      <div class="stat-lbl" id="stats-ship-lbl">📦 出荷数</div>
+      <div class="stat-val"><span id="stats-ship-count">--</span><span class="stat-unit">個</span></div>
     </div>
-    <div id="tut-choice" style="margin-top:8px;">
-      <label id="tut-chk-wrap" style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;color:#9bbc0f;">
-        <input type="checkbox" id="tutorial-chk" checked style="width:16px;height:16px;cursor:pointer;accent-color:#9bbc0f;">
-        <span id="tut-chk-lbl">チュートリアルあり</span>
-      </label>
+    <div class="stat-card">
+      <div class="stat-lbl" id="stats-target-lbl">🎯 本日目標</div>
+      <div class="stat-val dim"><span id="stats-target-val">500</span><span class="stat-unit">個</span></div>
     </div>
-    <div id="hard-desc" style="font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:#306230;margin-top:4px;margin-bottom:14px;text-align:center;line-height:2;">ハイライトなし</div>
+  </div>
 
-    <!-- Player name input -->
-    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:14px;width:100%;max-width:300px;">
-      <label style="font-family:'Noto Sans JP',sans-serif;font-size:11px;font-weight:700;color:#8bac0f;" id="name-lbl">Your Name</label>
-      <input id="player-name" type="text" maxlength="12" placeholder="NAME"
-        style="width:100%;background:#0a2808;border:2px solid #306230;color:#9bbc0f;
-               font-family:'Press Start 2P',monospace;font-size:11px;padding:8px 10px;
-               text-align:center;outline:none;letter-spacing:.05em;"
-        onfocus="this.style.borderColor='#9bbc0f';setTimeout(()=>this.scrollIntoView({behavior:'smooth',block:'center'}),300)" onblur="this.style.borderColor='#306230'">
+  <!-- Progress bar -->
+  <div class="stats-prog-wrap">
+    <div class="stats-prog-lbl">
+      <span id="stats-prog-left">達成率</span>
+      <span id="stats-prog-pct">--%</span>
     </div>
-
-    <button id="intro-go">START GAME</button>
-
-    <!-- Today's Stats Dashboard -->
-    <div id="today-stats">
-      <div class="stats-header">
-        📊 TODAY'S STATUS
-        <span class="stats-date" id="stats-date-lbl">----/--/--</span>
-      </div>
-
-      <!-- 出荷数 & 目標 big numbers -->
-      <div class="stats-grid">
-        <div class="stat-card accent">
-          <div class="stat-lbl" id="stats-ship-lbl">📦 出荷数</div>
-          <div class="stat-val"><span id="stats-ship-count">--</span><span class="stat-unit">個</span></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-lbl" id="stats-target-lbl">🎯 本日目標</div>
-          <div class="stat-val dim"><span id="stats-target-val">500</span><span class="stat-unit">個</span></div>
-        </div>
-      </div>
-
-      <!-- Progress bar -->
-      <div class="stats-prog-wrap">
-        <div class="stats-prog-lbl">
-          <span id="stats-prog-left">達成率</span>
-          <span id="stats-prog-pct">--%</span>
-        </div>
-        <div class="stats-prog-bar-bg">
-          <div class="stats-prog-bar-fill" id="stats-prog-fill" style="width:0%"></div>
-        </div>
-      </div>
-
-      <!-- 入荷数 / 在庫数 row -->
-      <div class="stat-row">
-        <span class="stat-row-lbl" id="stats-arrival-lbl">📥 本日入荷</span>
-        <span class="stat-row-val"><span id="stats-arrival-val">---</span> 個</span>
-      </div>
-      <div class="stat-row">
-        <span class="stat-row-lbl" id="stats-stock-lbl">📋 残在庫</span>
-        <span class="stat-row-val"><span id="stats-stock-val">---</span> 個</span>
-      </div>
-      <div class="stat-row">
-        <span class="stat-row-lbl" id="stats-workers-lbl">👤 本日稼働</span>
-        <span class="stat-row-val"><span id="stats-workers-val">-</span> 名</span>
-      </div>
+    <div class="stats-prog-bar-bg">
+      <div class="stats-prog-bar-fill" id="stats-prog-fill" style="width:0%"></div>
     </div>
+  </div>
 
-    <ul class="intro-rules" id="intro-rules-list" style="margin-top:14px;">
-      <li>📱をみて行き先を確認</li>
-      <li>棚をタップして📱に表示された引き出しをタップ</li>
-      <li>商材をスキャンしてコンテナにいれる</li>
-      <li>バッチ終了後は回収ゾーンへ</li>
-      <li>出入口から出ると業務終了</li>
-    </ul>
+  <!-- 入荷数 / 在庫数 row -->
+  <div class="stat-row">
+    <span class="stat-row-lbl" id="stats-arrival-lbl">📥 本日入荷</span>
+    <span class="stat-row-val"><span id="stats-arrival-val">---</span> 個</span>
+  </div>
+  <div class="stat-row">
+    <span class="stat-row-lbl" id="stats-stock-lbl">📋 残在庫</span>
+    <span class="stat-row-val"><span id="stats-stock-val">---</span> 個</span>
+  </div>
+  <div class="stat-row">
+    <span class="stat-row-lbl" id="stats-workers-lbl">👤 本日稼働</span>
+    <span class="stat-row-val"><span id="stats-workers-val">-</span> 名</span>
+  </div>
+</div>
+
+<ul class="intro-rules" id="intro-rules-list" style="margin-top:14px;">
+  <li>📱をみて行き先を確認</li>
+  <li>棚をタップして📱に表示された引き出しをタップ</li>
+  <li>商材をスキャンしてコンテナにいれる</li>
+  <li>バッチ終了後は回収ゾーンへ</li>
+  <li>出入口から出ると業務終了</li>
+</ul>
+```
+
   </div>
 </div>
 
 <!-- Firebase SDK -->
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 import { getDatabase, ref, push, onValue, query, orderByChild, limitToLast, set, remove, onDisconnect }
@@ -1945,7 +1985,7 @@ const LANG={
   ja:{
     introSub:'〜 安全第一 〜',
     introRules:['📱をみて行き先を確認','棚をタップして📱に表示された引き出しをタップ','商材をスキャンしてコンテナにいれる','バッチ終了後は回収ゾーンへ','出入口から出ると業務終了'],
-    hardModeLabel:'HARD MODE',hardDesc:'ハイライトなし',tutLabel:'チュートリアルあり',
+    hardModeLabel:'HARD MODE',easyModeLabel:'EASY',hardDesc:'ハイライトなし',easyDesc:'ハイライトあり / 初心者向け',tutLabel:'チュートリアルあり',
     picksLabel:'ピック完了',hudDefault:'スキャナー長押しでピック指示確認',
     hudNoContainer:'→ 空コンテナゾーンへ移動\nスキャナー長押しでコンテナをセット',
     hudPickOrder:'スキャナー長押しでピック指示確認',
@@ -1998,7 +2038,7 @@ const LANG={
   en:{
     introSub:'~ SAFETY FIRST ~',
     introRules:['📱 Check scanner for next pick','Tap shelf, then tap the correct drawer','Scan item and put it in the container','After batch: go to Return Zone','Walk through EXIT to end your shift'],
-    hardModeLabel:'HARD MODE',hardDesc:'No highlights',tutLabel:'TUTORIAL ON',
+    hardModeLabel:'HARD MODE',easyModeLabel:'EASY',hardDesc:'No highlights',easyDesc:'Highlights on / Beginner friendly',tutLabel:'TUTORIAL ON',
     picksLabel:'picks done',hudDefault:'Hold SCAN for pick order',
     hudNoContainer:'→ Go to EMPTY BOX ZONE\nHold SCAN to grab a container',
     hudPickOrder:'Hold SCAN for pick order',hudReturn:'Go to RETURN ZONE! Drop container',
@@ -2055,8 +2095,11 @@ function applyLang(){
   document.getElementById('lang-en').classList.toggle('active',lang==='en');
   document.getElementById('intro-sub').textContent=L.introSub;
   const rl=document.getElementById('intro-rules-list');if(rl)rl.innerHTML=L.introRules.map(r=>`<li>${r}</li>`).join('');
-  document.getElementById('hard-mode-lbl').textContent=L.hardModeLabel;
-  document.getElementById('hard-desc').textContent=L.hardDesc;
+  document.getElementById('mode-easy-lbl').textContent='🟢 '+L.easyModeLabel;
+  document.getElementById('mode-hard-lbl').textContent='💀 '+L.hardModeLabel;
+  // Update mode description based on current selection
+  const isHard=document.getElementById('mode-hard-btn').classList.contains('active');
+  document.getElementById('hard-desc').textContent=isHard?L.hardDesc:L.easyDesc;
   document.getElementById('tut-chk-lbl').textContent=L.tutLabel;
   const pl=document.getElementById('hud-picks-lbl');if(pl)pl.textContent=L.picksLabel;
   document.getElementById('hud-state-msg').textContent=L.hudDefault;
@@ -2177,20 +2220,38 @@ applyLang();
 
 try{const saved=localStorage.getItem('ecgame_player_name');if(saved)document.getElementById('player-name').value=saved;}catch(e){}
 try{
-  const savedHard=localStorage.getItem('ecgame_hard_mode');
+  const savedMode=localStorage.getItem('ecgame_mode');
+  if(savedMode==='hard') selectMode('hard');
+  else selectMode('easy');
   const savedTut=localStorage.getItem('ecgame_tutorial');
-  if(savedHard!==null){document.getElementById('hard-mode-chk').checked=savedHard==='true';document.getElementById('tut-choice').style.display=savedHard==='true'?'none':'flex';}
   if(savedTut!==null)document.getElementById('tutorial-chk').checked=savedTut==='true';
-}catch(e){}
+}catch(e){selectMode('easy');}
 document.getElementById('player-name').addEventListener('input',function(){try{localStorage.setItem('ecgame_player_name',this.value);}catch(e){}});
 document.getElementById('tutorial-chk').addEventListener('change',function(){try{localStorage.setItem('ecgame_tutorial',this.checked);}catch(e){}});
-document.getElementById('hard-mode-chk').addEventListener('change',function(){
-  document.getElementById('tut-choice').style.display=this.checked?'none':'flex';
-  try{localStorage.setItem('ecgame_hard_mode',this.checked);}catch(e){}
-});
+
+// ── モード選択 ──
+function selectMode(mode){
+  const easyBtn=document.getElementById('mode-easy-btn');
+  const hardBtn=document.getElementById('mode-hard-btn');
+  const tutEl=document.getElementById('tut-choice');
+  const descEl=document.getElementById('hard-desc');
+  if(mode==='hard'){
+    easyBtn.classList.remove('active');
+    hardBtn.classList.add('active');
+    tutEl.style.display='none';
+    descEl.textContent=t('hardDesc');
+  }else{
+    hardBtn.classList.remove('active');
+    easyBtn.classList.add('active');
+    tutEl.style.display='flex';
+    descEl.textContent=t('easyDesc');
+  }
+  try{localStorage.setItem('ecgame_mode',mode);}catch(e){}
+}
+window.selectMode=selectMode; // onclick から呼べるように
 
 document.getElementById('intro-go').onclick=()=>{
-  hardMode=document.getElementById('hard-mode-chk').checked;
+  hardMode=document.getElementById('mode-hard-btn').classList.contains('active');
   tutorialMode=!hardMode&&document.getElementById('tutorial-chk').checked;
   buildDB(hardMode?TYPES_HARD:TYPES_NORMAL);reinitShelves();
   document.getElementById('intro').style.display='none';
@@ -2207,5 +2268,6 @@ document.getElementById('intro-go').onclick=()=>{
   mpJoin();
 };
 </script>
+
 </body>
 </html>
