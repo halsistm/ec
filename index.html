@@ -65,9 +65,6 @@ width: auto;
 #c, #scanlines{position:absolute;top:0;left:0;width:100%;height:100%;image-rendering:pixelated;}
 #scanlines{pointer-events:none;z-index:100;opacity:.18;}
 
-/* ── Base Japanese Gothic font ── */
-.jp{font-family:‘Noto Sans JP’,‘Hiragino Sans’,sans-serif!important;}
-
 /* ── HUD ── */
 #hud{
 position:absolute;bottom:0;left:0;right:0;z-index:30;
@@ -151,7 +148,7 @@ font-family:‘Press Start 2P’,monospace;
 image-rendering:pixelated;
 }
 #sp.show{display:block;}
-.sp-h{font-size:10px;font-weight:700;color:#306230;margin-bottom:8px;border-bottom:1px solid #306230;padding-bottom:5px;}
+.sp-h{font-family:‘Press Start 2P’,monospace!important;font-size:10px;color:#306230;margin-bottom:8px;border-bottom:1px solid #306230;padding-bottom:5px;}
 #sp-main-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 #sp-shape-area{width:56px;height:56px;flex-shrink:0;border:2px solid #306230;background:#0a2808;display:flex;align-items:center;justify-content:center;overflow:hidden;}
 #sp-cnv{display:block;}
@@ -223,7 +220,7 @@ line-height:1.2;
 /* label (big) at bottom */
 .dr-label-bar{
 flex:1;display:flex;align-items:center;justify-content:center;
-font-family:‘Press Start 2P’,monospace;font-size:8px;
+font-family:‘Press Start 2P’,monospace!important;font-size:8px;
 color:#8bac0f;padding:6px 2px;letter-spacing:.02em;
 text-align:center;line-height:1.3;
 }
@@ -319,15 +316,15 @@ position:absolute;inset:0;z-index:60;
 background:rgba(10,28,5,.95);
 display:none;flex-direction:column;align-items:center;justify-content:center;
 text-align:center;padding:20px;
-font-family:‘Press Start 2P’,monospace;
+font-family:‘Press Start 2P’,monospace!important;
 }
 .wf-overlay.show{display:flex;}
 .wf-icon{font-size:48px;margin-bottom:14px;}
-.wf-title{font-size:13px;color:#9bbc0f;margin-bottom:8px;letter-spacing:.03em;}
-.wf-sub{font-family:‘Noto Sans JP’,sans-serif;font-size:13px;font-weight:700;color:#8bac0f;line-height:1.8;margin-bottom:20px;}
+.wf-title{font-family:‘Press Start 2P’,monospace!important;font-size:13px;color:#9bbc0f;margin-bottom:8px;letter-spacing:.03em;}
+.wf-sub{font-family:‘Noto Sans JP’,sans-serif!important;font-size:13px;font-weight:700;color:#8bac0f;line-height:1.8;margin-bottom:20px;}
 .wf-btn{
 background:#306230;border:3px solid #8bac0f;color:#9bbc0f;
-padding:14px 28px;font-family:‘Press Start 2P’,monospace;font-size:10px;
+padding:14px 28px;font-family:‘Press Start 2P’,monospace!important;font-size:10px;
 cursor:pointer;transition:all .08s;letter-spacing:.03em;
 }
 .wf-btn:active{background:#0f380f;}
@@ -371,8 +368,8 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;
 text-align:center;padding:20px;overflow-y:auto;
 font-family:‘Noto Sans JP’,sans-serif;
 }
-.intro-title{font-family:‘Press Start 2P’,monospace;font-size:18px;color:#9bbc0f;margin-bottom:8px;letter-spacing:.06em;}
-.intro-title span{font-family:‘Noto Sans JP’,sans-serif;font-weight:900;color:#8bac0f;}
+.intro-title{font-family:‘Press Start 2P’,monospace!important;font-size:18px;color:#9bbc0f;margin-bottom:8px;letter-spacing:.06em;}
+.intro-title span{font-family:‘Noto Sans JP’,sans-serif!important;font-weight:900;color:#8bac0f;}
 .intro-sub{font-size:12px;font-weight:700;color:#306230;margin-bottom:20px;letter-spacing:.1em;}
 .intro-rules{
 background:#0a2808;border:2px solid #306230;padding:14px 18px;
@@ -414,7 +411,7 @@ width:100%;max-width:380px;margin-top:18px;
 font-family:‘Noto Sans JP’,sans-serif;
 }
 .stats-header{
-font-size:11px;font-weight:900;color:#9bbc0f;margin-bottom:10px;text-align:left;
+font-family:‘Press Start 2P’,monospace!important;font-size:9px;color:#9bbc0f;margin-bottom:10px;text-align:left;
 display:flex;align-items:center;gap:6px;
 }
 .stats-date{font-size:9px;color:#306230;margin-left:auto;}
@@ -426,7 +423,7 @@ background:#0a2808;border:2px solid #1a3e0a;padding:8px;
 }
 .stat-card.accent{border-color:#306230;}
 .stat-lbl{font-size:9px;font-weight:700;color:#306230;margin-bottom:4px;letter-spacing:.03em;}
-.stat-val{font-family:‘Press Start 2P’,monospace;font-size:16px;color:#9bbc0f;letter-spacing:.02em;}
+.stat-val{font-family:‘Press Start 2P’,monospace!important;font-size:16px;color:#9bbc0f;letter-spacing:.02em;}
 .stat-val.dim{color:#8bac0f;font-size:13px;}
 .stat-unit{font-size:9px;color:#306230;margin-left:2px;}
 /* progress bar */
@@ -453,7 +450,7 @@ background:#0a2808;border:2px solid #1a3e0a;padding:6px 8px;
 display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;
 }
 .stat-row-lbl{font-size:9px;font-weight:700;color:#306230;}
-.stat-row-val{font-family:‘Press Start 2P’,monospace;font-size:10px;color:#8bac0f;}
+.stat-row-val{font-family:‘Press Start 2P’,monospace!important;font-size:10px;color:#8bac0f;}
 /* Ranking table (in-game overlay only) */
 .rank-name{ max-width:70px;overflow:hidden;text-overflow:ellipsis; }
 #lang-switch{
@@ -476,7 +473,7 @@ box-shadow:0 0 0 2px #306230,2px 2px 0 #306230;
 padding:12px 20px;border:2px solid #306230;
 background:#0a2808;color:#8bac0f;
 cursor:pointer;transition:all .12s;
-font-family:‘Press Start 2P’,monospace;font-size:9px;
+font-family:‘Press Start 2P’,monospace!important;font-size:9px;
 letter-spacing:.02em;
 }
 .mode-btn:first-child{border-radius:6px 0 0 6px;border-right:1px solid #306230;}
