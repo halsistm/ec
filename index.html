@@ -87,7 +87,7 @@ right:14px;
 width:56px;height:56px;border-radius:50%;
 background:#9bbc0f;border:3px solid #306230;
 outline:3px solid #9bbc0f;
-font-family:‘Noto Sans JP’,sans-serif;font-size:8px;font-weight:900;
+font-family:‘Press Start 2P’,monospace;font-size:6px;
 color:#0f380f;cursor:pointer;z-index:65;
 display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
 user-select:none;-webkit-user-select:none;
@@ -144,7 +144,7 @@ bottom:calc(88px + env(safe-area-inset-bottom));
 left:8px;right:8px;
 background:#0f380f;border:3px solid #8bac0f;border-radius:2px;
 padding:10px 12px;z-index:66;display:none;
-font-family:‘Noto Sans JP’,sans-serif;
+font-family:‘Press Start 2P’,monospace;
 image-rendering:pixelated;
 }
 #sp.show{display:block;}
@@ -153,11 +153,11 @@ image-rendering:pixelated;
 #sp-shape-area{width:56px;height:56px;flex-shrink:0;border:2px solid #306230;background:#0a2808;display:flex;align-items:center;justify-content:center;overflow:hidden;}
 #sp-cnv{display:block;}
 #sp-info{flex:1;}
-#sp-shelf-lbl{font-size:10px;color:#8bac0f;margin-bottom:4px;font-weight:700;}
-#sp-shelf-id{font-size:15px;color:#9bbc0f;margin-bottom:4px;font-weight:900;}
+#sp-shelf-lbl{font-family:‘Noto Sans JP’,sans-serif;font-size:10px;color:#8bac0f;margin-bottom:4px;font-weight:700;}
+#sp-shelf-id{font-family:‘Press Start 2P’,monospace;font-size:13px;color:#9bbc0f;margin-bottom:4px;}
 #sp-code{font-family:‘Press Start 2P’,monospace;font-size:12px;color:#9bbc0f;}
-#sp-type{font-size:11px;color:#8bac0f;margin-top:2px;font-weight:700;}
-#sp-footer{display:flex;justify-content:space-between;font-size:10px;color:#306230;border-top:1px solid #306230;padding-top:5px;font-weight:700;}
+#sp-type{font-family:‘Noto Sans JP’,sans-serif;font-size:11px;color:#8bac0f;margin-top:2px;font-weight:700;}
+#sp-footer{display:flex;justify-content:space-between;font-family:‘Press Start 2P’,monospace;font-size:8px;color:#306230;border-top:1px solid #306230;padding-top:5px;}
 
 /* ── Shelf Panel ── */
 #shelf-panel{
@@ -171,7 +171,7 @@ background:#0a2808;border-bottom:3px solid #306230;
 padding:10px 12px;display:flex;justify-content:center;align-items:center;
 flex-shrink:0;
 }
-#sp-hdr-title{font-size:14px;color:#9bbc0f;font-weight:900;}
+#sp-hdr-title{font-family:‘Press Start 2P’,monospace;font-size:12px;color:#9bbc0f;}
 #sp-hdr-sub{display:none;}
 #sp-hdr-back{
 background:#306230;border:3px solid #8bac0f;
@@ -240,8 +240,8 @@ font-family:‘Noto Sans JP’,sans-serif;
 background:#0a2808;border-bottom:3px solid #306230;
 padding:8px 12px;display:flex;justify-content:center;align-items:center;flex-shrink:0;
 }
-#dp-title{font-size:14px;color:#9bbc0f;font-weight:900;}
-#dp-shelf-lbl{font-size:11px;color:#8bac0f;margin-top:2px;font-weight:700;}
+#dp-title{font-family:‘Press Start 2P’,monospace;font-size:11px;color:#9bbc0f;}
+#dp-shelf-lbl{font-family:‘Press Start 2P’,monospace;font-size:8px;color:#8bac0f;margin-top:2px;}
 #dp-back{
 position:absolute;top:8px;left:12px;z-index:55;
 background:#306230;border:3px solid #8bac0f;color:#9bbc0f;
@@ -275,11 +275,11 @@ padding:8px 12px;flex-shrink:0;display:none;
 #dp-confirm.show{display:block;}
 #dpc-row{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
 #dpc-canvas{border:2px solid #306230;flex-shrink:0;}
-#dpc-code{font-family:‘Press Start 2P’,monospace;font-size:16px;color:#9bbc0f;}
+#dpc-code{font-family:‘Press Start 2P’,monospace;font-size:14px;color:#9bbc0f;}
 #dpc-type{font-family:‘Noto Sans JP’,sans-serif;font-size:11px;font-weight:700;color:#8bac0f;margin-top:3px;}
 #dpc-result-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 #dpc-result-icon{font-size:18px;flex-shrink:0;font-family:‘Press Start 2P’,monospace;color:#fff;}
-#dpc-match{font-size:13px;font-family:‘Noto Sans JP’,sans-serif;font-weight:900;}
+#dpc-match{font-size:11px;font-family:‘Press Start 2P’,monospace;}
 #dpc-match.ok{color:#ffffff;}
 #dpc-match.ng{color:#ff6060;}
 .dpc-btns{display:flex;gap:6px;}
@@ -307,31 +307,31 @@ display:flex;align-items:center;gap:12px;
 font-family:‘Noto Sans JP’,sans-serif;
 }
 #dsb-info{flex:1;min-width:0;}
-#dsb-box{font-size:14px;font-weight:900;color:#9bbc0f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-#dsb-box-lbl{font-size:10px;font-weight:700;color:#306230;margin-bottom:3px;}
+#dsb-box{font-family:‘Press Start 2P’,monospace;font-size:11px;color:#9bbc0f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#dsb-box-lbl{font-family:‘Noto Sans JP’,sans-serif;font-size:10px;font-weight:700;color:#306230;margin-bottom:3px;}
 #dsb-code{font-family:‘Press Start 2P’,monospace;font-size:10px;color:#8bac0f;margin-top:4px;}
-#dsb-prog{font-size:11px;font-weight:700;color:#306230;margin-top:3px;}
+#dsb-prog{font-family:‘Press Start 2P’,monospace;font-size:8px;color:#306230;margin-top:3px;}
 .wf-overlay{
 position:absolute;inset:0;z-index:60;
 background:rgba(10,28,5,.95);
 display:none;flex-direction:column;align-items:center;justify-content:center;
 text-align:center;padding:20px;
-font-family:‘Noto Sans JP’,sans-serif;
+font-family:‘Press Start 2P’,monospace;
 }
 .wf-overlay.show{display:flex;}
 .wf-icon{font-size:48px;margin-bottom:14px;}
-.wf-title{font-size:16px;font-weight:900;color:#9bbc0f;margin-bottom:8px;letter-spacing:.03em;}
-.wf-sub{font-size:13px;font-weight:700;color:#8bac0f;line-height:1.8;margin-bottom:20px;}
+.wf-title{font-size:13px;color:#9bbc0f;margin-bottom:8px;letter-spacing:.03em;}
+.wf-sub{font-family:‘Noto Sans JP’,sans-serif;font-size:13px;font-weight:700;color:#8bac0f;line-height:1.8;margin-bottom:20px;}
 .wf-btn{
 background:#306230;border:3px solid #8bac0f;color:#9bbc0f;
-padding:14px 28px;font-family:‘Noto Sans JP’,sans-serif;font-size:14px;font-weight:900;
+padding:14px 28px;font-family:‘Press Start 2P’,monospace;font-size:10px;
 cursor:pointer;transition:all .08s;letter-spacing:.03em;
 }
 .wf-btn:active{background:#0f380f;}
 .wf-scan-target{
 border:3px solid #8bac0f;background:#0f380f;
 padding:14px 20px;margin:12px 0 16px;
-font-size:13px;font-weight:700;color:#9bbc0f;line-height:1.8;
+font-family:‘Noto Sans JP’,sans-serif;font-size:13px;font-weight:700;color:#9bbc0f;line-height:1.8;
 }
 .wf-progress{
 width:200px;height:8px;background:#0f380f;border:2px solid #306230;
@@ -343,12 +343,12 @@ margin:10px 0;position:relative;overflow:hidden;
 #toast{
 position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
 background:#0f380f;border:3px solid #8bac0f;
-padding:14px 24px;font-family:‘Noto Sans JP’,sans-serif;font-size:18px;font-weight:900;
+padding:14px 24px;font-family:‘Press Start 2P’,monospace;font-size:14px;
 z-index:70;display:none;text-align:center;pointer-events:none;
 }
 #toast.ok{color:#ffffff;border-color:#9bbc0f;background:#0f380f;}
 #toast.ng{color:#ff6060;border-color:#ff6060;background:#0f380f;}
-#toast-sub{font-size:11px;font-weight:700;margin-top:5px;color:#8bac0f;}
+#toast-sub{font-family:‘Noto Sans JP’,sans-serif;font-size:11px;font-weight:700;margin-top:5px;color:#8bac0f;}
 
 /* ── Bot bubble ── */
 #bbub{
@@ -380,7 +380,7 @@ font-size:13px;font-weight:700;color:#8bac0f;line-height:2.2;
 .intro-rules li::before{content:’>’;position:absolute;left:0;color:#9bbc0f;}
 #intro-go{
 background:#9bbc0f;color:#0f380f;border:3px solid #306230;
-padding:14px 32px;font-family:‘Noto Sans JP’,sans-serif;font-size:14px;font-weight:900;
+padding:14px 32px;font-family:‘Press Start 2P’,monospace;font-size:11px;
 cursor:pointer;letter-spacing:.06em;
 box-shadow:4px 4px 0 #306230;transition:all .08s;
 }
@@ -473,7 +473,7 @@ box-shadow:0 0 0 2px #306230,2px 2px 0 #306230;
 padding:12px 20px;border:2px solid #306230;
 background:#0a2808;color:#8bac0f;
 cursor:pointer;transition:all .12s;
-font-family:‘Noto Sans JP’,sans-serif;font-size:13px;font-weight:900;
+font-family:‘Press Start 2P’,monospace;font-size:9px;
 letter-spacing:.02em;
 }
 .mode-btn:first-child{border-radius:6px 0 0 6px;border-right:1px solid #306230;}
