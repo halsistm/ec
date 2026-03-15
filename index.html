@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>EC倉庫 PICKING v4</title>
+<title>EC倉庫 PICKING</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
@@ -25,6 +25,7 @@ padding-left:env(safe-area-inset-left);
 padding-right:env(safe-area-inset-right);
 background:#9bbc0f;overflow:hidden;
 image-rendering:pixelated;
+font-family:‘Press Start 2P’,monospace;
 -webkit-touch-callout:none;
 user-select:none;-webkit-user-select:none;
 }
@@ -148,7 +149,7 @@ font-family:‘Press Start 2P’,monospace;
 image-rendering:pixelated;
 }
 #sp.show{display:block;}
-.sp-h{font-family:‘Press Start 2P’,monospace!important;font-size:10px;color:#306230;margin-bottom:8px;border-bottom:1px solid #306230;padding-bottom:5px;}
+.sp-h{font-family:‘Press Start 2P’,monospace;font-size:10px;color:#306230;margin-bottom:8px;border-bottom:1px solid #306230;padding-bottom:5px;}
 #sp-main-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 #sp-shape-area{width:56px;height:56px;flex-shrink:0;border:2px solid #306230;background:#0a2808;display:flex;align-items:center;justify-content:center;overflow:hidden;}
 #sp-cnv{display:block;}
@@ -163,7 +164,6 @@ image-rendering:pixelated;
 #shelf-panel{
 position:absolute;inset:0;z-index:40;
 background:#0f380f;display:none;flex-direction:column;
-font-family:‘Noto Sans JP’,sans-serif;
 }
 #shelf-panel.show{display:flex;}
 #sp-hdr{
@@ -220,7 +220,7 @@ line-height:1.2;
 /* label (big) at bottom */
 .dr-label-bar{
 flex:1;display:flex;align-items:center;justify-content:center;
-font-family:‘Press Start 2P’,monospace!important;font-size:8px;
+font-family:‘Press Start 2P’,monospace;font-size:8px;
 color:#8bac0f;padding:6px 2px;letter-spacing:.02em;
 text-align:center;line-height:1.3;
 }
@@ -233,7 +233,6 @@ text-align:center;line-height:1.3;
 #drawer-panel{
 position:absolute;inset:0;z-index:50;
 background:#0f380f;display:none;flex-direction:column;
-font-family:‘Noto Sans JP’,sans-serif;
 }
 #drawer-panel.show{display:flex;animation:drawerOpen .2s ease-out;}
 #dp-hdr{
@@ -304,7 +303,6 @@ background:#1a3e0a;color:#9bbc0f;
 background:#0a2808;border-top:3px solid #306230;
 padding:8px 12px;flex-shrink:0;
 display:flex;align-items:center;gap:12px;
-font-family:‘Noto Sans JP’,sans-serif;
 }
 #dsb-info{flex:1;min-width:0;}
 #dsb-box{font-family:‘Press Start 2P’,monospace;font-size:11px;color:#9bbc0f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -316,15 +314,15 @@ position:absolute;inset:0;z-index:60;
 background:rgba(10,28,5,.95);
 display:none;flex-direction:column;align-items:center;justify-content:center;
 text-align:center;padding:20px;
-font-family:‘Press Start 2P’,monospace!important;
+font-family:‘Press Start 2P’,monospace;
 }
 .wf-overlay.show{display:flex;}
 .wf-icon{font-size:48px;margin-bottom:14px;}
-.wf-title{font-family:‘Press Start 2P’,monospace!important;font-size:13px;color:#9bbc0f;margin-bottom:8px;letter-spacing:.03em;}
-.wf-sub{font-family:‘Noto Sans JP’,sans-serif!important;font-size:13px;font-weight:700;color:#8bac0f;line-height:1.8;margin-bottom:20px;}
+.wf-title{font-family:‘Press Start 2P’,monospace;font-size:13px;color:#9bbc0f;margin-bottom:8px;letter-spacing:.03em;}
+.wf-sub{font-family:‘Noto Sans JP’,sans-serif;font-size:13px;font-weight:700;color:#8bac0f;line-height:1.8;margin-bottom:20px;}
 .wf-btn{
 background:#306230;border:3px solid #8bac0f;color:#9bbc0f;
-padding:14px 28px;font-family:‘Press Start 2P’,monospace!important;font-size:10px;
+padding:14px 28px;font-family:‘Press Start 2P’,monospace;font-size:10px;
 cursor:pointer;transition:all .08s;letter-spacing:.03em;
 }
 .wf-btn:active{background:#0f380f;}
@@ -366,15 +364,14 @@ position:absolute;inset:0;z-index:90;
 background:#0f380f;
 display:flex;flex-direction:column;align-items:center;justify-content:center;
 text-align:center;padding:20px;overflow-y:auto;
-font-family:‘Noto Sans JP’,sans-serif;
 }
-.intro-title{font-family:‘Press Start 2P’,monospace!important;font-size:18px;color:#9bbc0f;margin-bottom:8px;letter-spacing:.06em;}
-.intro-title span{font-family:‘Noto Sans JP’,sans-serif!important;font-weight:900;color:#8bac0f;}
-.intro-sub{font-size:12px;font-weight:700;color:#306230;margin-bottom:20px;letter-spacing:.1em;}
+.intro-title{font-family:‘Press Start 2P’,monospace;font-size:18px;color:#9bbc0f;margin-bottom:8px;letter-spacing:.06em;}
+.intro-title span{font-family:‘Noto Sans JP’,sans-serif;font-weight:900;color:#8bac0f;}
+.intro-sub{font-family:‘Noto Sans JP’,sans-serif;font-size:12px;font-weight:700;color:#306230;margin-bottom:20px;letter-spacing:.1em;}
 .intro-rules{
 background:#0a2808;border:2px solid #306230;padding:14px 18px;
 text-align:left;max-width:380px;width:100%;margin-bottom:20px;
-font-size:13px;font-weight:700;color:#8bac0f;line-height:2.2;
+font-family:‘Noto Sans JP’,sans-serif;font-size:13px;font-weight:700;color:#8bac0f;line-height:2.2;
 }
 .intro-rules li{list-style:none;padding-left:14px;position:relative;}
 .intro-rules li::before{content:’>’;position:absolute;left:0;color:#9bbc0f;}
@@ -408,13 +405,12 @@ display:none;pointer-events:none;
 /* ── Today’s Stats Dashboard ── */
 #today-stats{
 width:100%;max-width:380px;margin-top:18px;
-font-family:‘Noto Sans JP’,sans-serif;
 }
 .stats-header{
-font-family:‘Press Start 2P’,monospace!important;font-size:9px;color:#9bbc0f;margin-bottom:10px;text-align:left;
+font-family:‘Press Start 2P’,monospace;font-size:9px;color:#9bbc0f;margin-bottom:10px;text-align:left;
 display:flex;align-items:center;gap:6px;
 }
-.stats-date{font-size:9px;color:#306230;margin-left:auto;}
+.stats-date{font-family:‘Press Start 2P’,monospace;font-size:9px;color:#306230;margin-left:auto;}
 .stats-grid{
 display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;
 }
@@ -422,17 +418,17 @@ display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;
 background:#0a2808;border:2px solid #1a3e0a;padding:8px;
 }
 .stat-card.accent{border-color:#306230;}
-.stat-lbl{font-size:9px;font-weight:700;color:#306230;margin-bottom:4px;letter-spacing:.03em;}
-.stat-val{font-family:‘Press Start 2P’,monospace!important;font-size:16px;color:#9bbc0f;letter-spacing:.02em;}
+.stat-lbl{font-family:‘Noto Sans JP’,sans-serif;font-size:9px;font-weight:700;color:#306230;margin-bottom:4px;letter-spacing:.03em;}
+.stat-val{font-family:‘Press Start 2P’,monospace;font-size:16px;color:#9bbc0f;letter-spacing:.02em;}
 .stat-val.dim{color:#8bac0f;font-size:13px;}
-.stat-unit{font-size:9px;color:#306230;margin-left:2px;}
+.stat-unit{font-family:‘Noto Sans JP’,sans-serif;font-size:9px;color:#306230;margin-left:2px;}
 /* progress bar */
 .stats-prog-wrap{margin-bottom:6px;}
 .stats-prog-lbl{
 display:flex;justify-content:space-between;
-font-size:9px;font-weight:700;color:#306230;margin-bottom:4px;
+font-family:‘Noto Sans JP’,sans-serif;font-size:9px;font-weight:700;color:#306230;margin-bottom:4px;
 }
-.stats-prog-lbl span{color:#8bac0f;}
+.stats-prog-lbl span{font-family:‘Press Start 2P’,monospace;color:#8bac0f;}
 .stats-prog-bar-bg{
 width:100%;height:10px;background:#0a2808;border:2px solid #1a3e0a;position:relative;overflow:hidden;
 }
@@ -449,8 +445,8 @@ content:’’;position:absolute;top:0;right:0;bottom:0;width:3px;background:#ff
 background:#0a2808;border:2px solid #1a3e0a;padding:6px 8px;
 display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;
 }
-.stat-row-lbl{font-size:9px;font-weight:700;color:#306230;}
-.stat-row-val{font-family:‘Press Start 2P’,monospace!important;font-size:10px;color:#8bac0f;}
+.stat-row-lbl{font-family:‘Noto Sans JP’,sans-serif;font-size:9px;font-weight:700;color:#306230;}
+.stat-row-val{font-family:‘Press Start 2P’,monospace;font-size:10px;color:#8bac0f;}
 /* Ranking table (in-game overlay only) */
 .rank-name{ max-width:70px;overflow:hidden;text-overflow:ellipsis; }
 #lang-switch{
@@ -473,7 +469,7 @@ box-shadow:0 0 0 2px #306230,2px 2px 0 #306230;
 padding:12px 20px;border:2px solid #306230;
 background:#0a2808;color:#8bac0f;
 cursor:pointer;transition:all .12s;
-font-family:‘Press Start 2P’,monospace!important;font-size:9px;
+font-family:‘Press Start 2P’,monospace;font-size:9px;
 letter-spacing:.02em;
 }
 .mode-btn:first-child{border-radius:6px 0 0 6px;border-right:1px solid #306230;}
