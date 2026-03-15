@@ -5,9 +5,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>EC倉庫 PICKING</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+/* iOS Safari: form elements ignore CSS font by default — reset to allow class overrides */
+button,input,select,textarea{font-family:inherit;font-size:inherit;}
 html,body{width:100%;height:100%;overflow:hidden;background:#0f380f;}
 body{display:flex;align-items:center;justify-content:center;}
 
@@ -450,7 +453,7 @@ background:#0a2808;border:2px solid #1a3e0a;padding:6px 8px;
 display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;
 }
 .stat-row-lbl{font-size:9px;font-weight:700;color:#306230;}
-.stat-row-val{font-size:12px;font-weight:900;color:#8bac0f;}
+.stat-row-val{font-family:‘Press Start 2P’,monospace;font-size:10px;color:#8bac0f;}
 /* Ranking table (in-game overlay only) */
 .rank-name{ max-width:70px;overflow:hidden;text-overflow:ellipsis; }
 #lang-switch{
@@ -717,11 +720,11 @@ box-shadow:inset 0 2px 4px rgba(0,0,0,.15);
 
 ```
 <!-- Mode selection: EASY / HARD -->
-<div id="mode-switch" style="margin-top:14px;display:flex;gap:0;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:900;">
-  <button id="mode-easy-btn" class="mode-btn active" onclick="selectMode('easy')">
+<div id="mode-switch" style="margin-top:14px;display:flex;gap:0;">
+  <button id="mode-easy-btn" class="mode-btn active" style="font-family:'Press Start 2P',monospace" onclick="selectMode('easy')">
     <span id="mode-easy-lbl">🟢 EASY</span>
   </button>
-  <button id="mode-hard-btn" class="mode-btn" onclick="selectMode('hard')">
+  <button id="mode-hard-btn" class="mode-btn" style="font-family:'Press Start 2P',monospace" onclick="selectMode('hard')">
     <span id="mode-hard-lbl">💀 HARD</span>
   </button>
 </div>
@@ -743,7 +746,7 @@ box-shadow:inset 0 2px 4px rgba(0,0,0,.15);
     onfocus="this.style.borderColor='#9bbc0f';setTimeout(()=>this.scrollIntoView({behavior:'smooth',block:'center'}),300)" onblur="this.style.borderColor='#306230'">
 </div>
 
-<button id="intro-go">START GAME</button>
+<button id="intro-go" style="font-family:'Press Start 2P',monospace">START GAME</button>
 
 <!-- Today's Stats Dashboard -->
 <div id="today-stats">
