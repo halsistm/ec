@@ -677,7 +677,7 @@ box-shadow:inset 0 2px 4px rgba(0,0,0,.15);
     <div class="wf-title" id="wf-end-title" style="font-size:18px;letter-spacing:.03em;">本日の勤務終了</div>
     <div id="wf-end-stats" style="font-family:'Press Start 2P',-apple-system,'Hiragino Sans','Hiragino Kaku Gothic ProN',sans-serif;font-size:14px;font-weight:700;color:#8bac0f;line-height:2.2;text-align:left;margin:18px 0 6px;width:100%;max-width:300px;"></div>
     <div class="wf-title" id="wf-end-thanks" style="font-size:18px;color:#9bbc0f;margin-top:8px;">お疲れ様でした</div>
-    <button class="wf-btn" id="wf-end-restart" style="margin-top:20px;font-size:13px;">もう一度プレイ</button>
+    <button class="wf-btn" id="wf-end-restart" style="margin-top:20px;font-size:13px;">タイトルへ</button>
   </div>
 
   <!-- Start hint overlay (non-tutorial mode only) -->
@@ -712,9 +712,6 @@ box-shadow:inset 0 2px 4px rgba(0,0,0,.15);
     <div style="font-size:32px;margin-bottom:12px;">📦</div>
     <div class="intro-title">EC<span>倉庫</span><br>PICKING</div>
     <div class="intro-sub" id="intro-sub">〜 安全第一 〜</div>
-    <div style="font-size:6px;color:#306230;margin-bottom:4px;">v9</div>
-
-```
 <!-- Mode selection: EASY / HARD -->
 <div id="mode-switch" style="margin-top:14px;display:flex;gap:0;">
   <button id="mode-easy-btn" class="mode-btn active" style="font-family:'Press Start 2P',-apple-system,'Hiragino Sans','Hiragino Kaku Gothic ProN',sans-serif" onclick="selectMode('easy')">
@@ -796,7 +793,6 @@ box-shadow:inset 0 2px 4px rgba(0,0,0,.15);
   <li>バッチ終了後は回収ゾーンへ</li>
   <li>出入口から出ると業務終了</li>
 </ul>
-```
 
   </div>
 </div>
@@ -2127,7 +2123,7 @@ const LANG={
     emptyTitle:'空コンテナゾーン',emptyScanTarget:'スキャナーを長押しして<br>空コンテナをセット',
     emptyScanMsg:'スキャナーボタンを長押し…',emptyScanProgress:(p)=>`スキャン中... ${p}%`,emptyScanDone:'スキャン完了！',
     exitTitle:'本日の業務を<br>終了しますか？',exitYes:'はい',exitNo:'いいえ',
-    endTitle:'本日の勤務終了',endThanks:'お疲れ様でした',endRestart:'もう一度プレイ',
+    endTitle:'本日の勤務終了',endThanks:'お疲れ様でした',endRestart:'タイトルへ',
     endStatsFmt:(hh,mm,ss,picks,misses,acc,prod)=>`勤務時間　　${hh}:${mm}:${ss}<br>ピック総数　${picks}個<br>ピックミス　${misses}回<br>正確率　　　${acc}%<br>生産性　　　${prod}個/時`,
     startHintTitle:'まず空コンテナゾーンへ！',
     startHintSub:'画面右下の「空コンテナゾーン」へ移動して\nスキャナーを長押しして\nコンテナをセットしよう',
@@ -2178,7 +2174,7 @@ const LANG={
     emptyTitle:'EMPTY BOX ZONE',emptyScanTarget:'Hold SCAN button<br>to grab an empty box',
     emptyScanMsg:'Hold SCAN button...',emptyScanProgress:(p)=>`Scanning... ${p}%`,emptyScanDone:'Scan complete!',
     exitTitle:'End today\'s<br>shift?',exitYes:'YES',exitNo:'NO',
-    endTitle:'SHIFT COMPLETE',endThanks:'Good work today!',endRestart:'PLAY AGAIN',
+    endTitle:'SHIFT COMPLETE',endThanks:'Good work today!',endRestart:'Back to title',
     endStatsFmt:(hh,mm,ss,picks,misses,acc,prod)=>`Shift Time　${hh}:${mm}:${ss}<br>Total Picks　${picks}<br>Mistakes　　${misses}<br>Accuracy　　${acc}%<br>Productivity ${prod}/hr`,
     startHintTitle:'First: Go to Empty Box Zone!',
     startHintSub:'Move to the EMPTY BOX ZONE\nin the bottom-right of the map,\nthen hold SCAN\nto grab a container.',
