@@ -244,10 +244,9 @@ padding:8px 12px;display:flex;justify-content:center;align-items:center;flex-shr
 #dp-title{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:11px;color:#9bbc0f;}
 #dp-shelf-lbl{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:8px;color:#8bac0f;margin-top:2px;}
 #dp-back{
-position:absolute;top:8px;left:12px;z-index:55;
 background:#306230;border:3px solid #8bac0f;color:#9bbc0f;
-padding:10px 16px;font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:13px;font-weight:900;cursor:pointer;
-border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.4);transition:all .08s;
+padding:10px 14px;font-family:’Press Start 2P’,-apple-system,’Hiragino Sans’,’Hiragino Kaku Gothic ProN’,sans-serif;font-size:12px;font-weight:900;cursor:pointer;
+border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.4);transition:all .08s;flex-shrink:0;
 }
 #dp-back:active{background:#0f380f;transform:scale(.93);}
 #dp-hint{
@@ -264,20 +263,11 @@ align-items:center;justify-content:center;text-align:center;padding:20px;
 #dp-empty.show{display:flex;}
 
 /* Scan confirm (in drawer) */
-#dp-pre-scan{
-background:#0a2808;border-top:3px solid #306230;
-padding:8px 12px;flex-shrink:0;display:none;
-}
-#dp-pre-scan.show{display:block;}
 #dp-confirm{
 background:#0a2808;border-top:2px solid #306230;
 padding:8px 12px;flex-shrink:0;display:none;
 }
 #dp-confirm.show{display:block;}
-#dpc-row{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
-#dpc-canvas{border:2px solid #306230;flex-shrink:0;}
-#dpc-code{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:14px;color:#9bbc0f;}
-#dpc-type{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:11px;font-weight:700;color:#8bac0f;margin-top:3px;}
 #dpc-result-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 #dpc-result-icon{font-size:18px;flex-shrink:0;font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;color:#fff;}
 #dpc-match{font-size:11px;font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;}
@@ -288,13 +278,6 @@ padding:8px 12px;flex-shrink:0;display:none;
 flex:1;padding:12px 4px;border:2px solid #8bac0f;font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;
 font-size:12px;font-weight:900;cursor:pointer;transition:all .08s;
 }
-.dpc-scan-btn{
-display:block;width:100%;padding:14px;
-border:2px solid #9bbc0f;font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;
-font-size:14px;font-weight:900;cursor:pointer;transition:all .08s;
-background:#1a3e0a;color:#9bbc0f;
-}
-.dpc-scan-btn:active{background:#0f380f;transform:scale(.97);}
 .dpc-ok{background:#306230;color:#9bbc0f;}
 .dpc-ok:active{background:#0f380f;}
 .dpc-no{background:#0f380f;color:#8bac0f;border-color:#306230;}
@@ -304,9 +287,10 @@ background:#1a3e0a;color:#9bbc0f;
 #dp-scanner-bar{
 background:#0a2808;border-top:3px solid #306230;
 padding:8px 12px;flex-shrink:0;
-display:flex;align-items:center;gap:12px;
+display:flex;align-items:center;justify-content:space-between;gap:12px;
 }
-#dsb-info{flex:1;min-width:0;}
+#dsb-right{display:flex;align-items:center;gap:10px;}
+#dsb-info{min-width:0;text-align:right;}
 #dsb-box{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:11px;color:#9bbc0f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 #dsb-box-lbl{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:10px;font-weight:700;color:#306230;margin-bottom:3px;}
 #dsb-code{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:10px;color:#8bac0f;margin-top:4px;}
@@ -557,33 +541,24 @@ box-shadow:inset 0 2px 4px rgba(0,0,0,.15);
         <div id="dp-title">D01</div>
         <div id="dp-shelf-lbl">棚 ------</div>
       </div>
-      <button id="dp-back">◀ もどる</button>
     </div>
     <div id="dp-hint">ドラッグでごそごそ｜タップで商材を選ぶ</div>
     <div id="dp-canvas-wrap">
       <canvas id="dp-canvas"></canvas>
       <div id="dp-empty">空の引き出し</div>
     </div>
-    <!-- Permanent scanner info bar -->
+    <!-- Permanent scanner info bar with back button -->
     <div id="dp-scanner-bar">
-      <canvas id="dsb-canvas" width="64" height="64"></canvas>
-      <div id="dsb-info">
-        <div id="dsb-box-lbl">スキャン指示</div>
-        <div id="dsb-box">------</div>
-        <div id="dsb-code">---- / --</div>
-        <div id="dsb-prog">-- / --</div>
-      </div>
-    </div>
-    <!-- Stage 1: tap item → show scan button -->
-    <div id="dp-pre-scan">
-      <div id="dpc-row">
-        <canvas id="dpc-canvas" width="60" height="60" style="border:2px solid #306230;flex-shrink:0;"></canvas>
-        <div>
-          <div id="dpc-code">----</div>
-          <div id="dpc-type">--</div>
+      <button id="dp-back">◀ もどる</button>
+      <div id="dsb-right">
+        <canvas id="dsb-canvas" width="64" height="64"></canvas>
+        <div id="dsb-info">
+          <div id="dsb-box-lbl">スキャン指示</div>
+          <div id="dsb-box">------</div>
+          <div id="dsb-code">---- / --</div>
+          <div id="dsb-prog">-- / --</div>
         </div>
       </div>
-      <button class="dpc-btn dpc-scan-btn" id="dpc-scan">📱 スキャン</button>
     </div>
     <!-- Stage 2: after scan → result + 2 actions -->
     <div id="dp-confirm">
@@ -1890,7 +1865,7 @@ function openDrawerPanel(dr,shelf){
   document.getElementById('dp-title').textContent=dr.label;
   const dpShelfLabel=shelf.ltr+String(shelf.colNum/100|0).padStart(2,'0');
   document.getElementById('dp-shelf-lbl').textContent=(lang==='ja'?'棚 ':'Shelf ')+dpShelfLabel;
-  hide('dp-confirm');hide('dp-pre-scan');hide('dp-empty');
+  hide('dp-confirm');hide('dp-empty');
   hide('shelf-panel');panelOpen=false;
   document.getElementById('scan-btn').style.display='none';
   document.getElementById('bgm-wrap').style.display='none';
@@ -2007,23 +1982,15 @@ dpCv.addEventListener('pointercancel',e=>{if(dragIdx>=0){physItems[dragIdx].drag
 
 function selectDrawerItem(idx){
   const phys=physItems[idx],code=phys.code,drItem=DB[code];if(!drItem)return;
-  document.getElementById('dpc-code').textContent=code;
-  document.getElementById('dpc-type').textContent=typeLabel(drItem.type);
-  drawItemShape(document.getElementById('dpc-canvas'),code,60);
   selItemData={physIdx:idx,code,drawer:currentDrawer,shelf:currentDrawerShelf};
-  hide('dp-confirm');show('dp-pre-scan');
-  if(tutorialMode&&tutStep===4)advanceTut(5);
-}
-
-document.getElementById('dpc-scan').onclick=()=>{
-  if(!selItemData)return;
-  if(tutorialMode&&tutStep===5)advanceTut(6);
-  const{code}=selItemData;const tc=bidx<batch.length?batch[bidx].code:null;const isMatch=code===tc;
+  hide('dp-confirm');
+  const tc=bidx<batch.length?batch[bidx].code:null;const isMatch=code===tc;
   const matchEl=document.getElementById('dpc-match'),iconEl=document.getElementById('dpc-result-icon');
   if(isMatch){iconEl.textContent='✓';matchEl.textContent=t('matchOk');matchEl.className='ok';bidx++;updateHUD();updateDrawerScannerBar();totalPicks++;selItemData.scanned=true;showToast(t('toastPickedItem'),t('toastRemFmt',batch.length-bidx),'ok');}
   else{iconEl.textContent='✗';matchEl.textContent=t('matchNg');matchEl.className='ng';}
-  hide('dp-pre-scan');show('dp-confirm');
-};
+  show('dp-confirm');
+  if(tutorialMode&&tutStep===4)advanceTut(6);
+}
 
 document.getElementById('dpc-ok').onclick=()=>{
   if(!selItemData)return;const{physIdx,code,drawer}=selItemData;
@@ -2036,13 +2003,13 @@ document.getElementById('dpc-ok').onclick=()=>{
 };
 document.getElementById('dpc-no').onclick=()=>{
   if(selItemData&&selItemData.scanned){totalMisses++;totalLost++;}
-  hide('dp-confirm');hide('dp-pre-scan');selItemData=null;
+  hide('dp-confirm');selItemData=null;
 };
 
 document.getElementById('dp-back').onclick=closeDrawerPanel;
 function closeDrawerPanel(){
   if(selItemData&&selItemData.scanned){totalMisses++;totalLost++;}
-  hide('drawer-panel');hide('dp-confirm');hide('dp-pre-scan');drawerOpen=false;
+  hide('drawer-panel');hide('dp-confirm');drawerOpen=false;
   selItemData=null;currentDrawer=null;currentDrawerShelf=null;
   document.getElementById('scan-btn').style.display='';
   document.getElementById('bgm-wrap').style.display='';
@@ -2237,7 +2204,6 @@ function applyLang(){
   document.getElementById('dp-hint').textContent=L.dpHint;
   document.getElementById('dp-empty').textContent=L.dpEmpty;
   document.getElementById('dsb-box-lbl').textContent=L.dsbLbl;
-  document.getElementById('dpc-scan').textContent=L.scanBtn2;
   document.getElementById('dpc-ok').textContent=L.containerBtn;
   document.getElementById('dpc-no').textContent=L.putBackBtn;
   document.getElementById('wf-batch-title').textContent=L.batchTitle;
