@@ -80,7 +80,7 @@ min-height:calc(76px + env(safe-area-inset-bottom));
 #hud-left{flex:1;display:flex;flex-direction:column;gap:5px;}
 #hud-batch{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:9px;color:#9bbc0f;}
 #hud-prog{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:13px;color:#9bbc0f;letter-spacing:.05em;}
-#hud-state-msg{font-family:’Press Start 2P’,-apple-system,’Hiragino Sans’,’Hiragino Kaku Gothic ProN’,sans-serif;font-size:12px;font-weight:700;color:#8bac0f;letter-spacing:.03em;line-height:1.4;min-height:28px;}
+#hud-state-msg{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:12px;font-weight:700;color:#8bac0f;letter-spacing:.03em;line-height:1.4;}
 
 /* Scan button always on top — above all panels */
 #scan-btn{
@@ -245,8 +245,8 @@ padding:8px 12px;display:flex;justify-content:center;align-items:center;flex-shr
 #dp-shelf-lbl{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:8px;color:#8bac0f;margin-top:2px;}
 #dp-back{
 background:#306230;border:3px solid #8bac0f;color:#9bbc0f;
-padding:10px 14px;font-family:’Press Start 2P’,-apple-system,’Hiragino Sans’,’Hiragino Kaku Gothic ProN’,sans-serif;font-size:12px;font-weight:900;cursor:pointer;
-border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.4);transition:all .08s;flex-shrink:0;
+padding:8px 12px;font-family:’Press Start 2P’,-apple-system,’Hiragino Sans’,’Hiragino Kaku Gothic ProN’,sans-serif;font-size:13px;font-weight:900;cursor:pointer;
+border-radius:4px;transition:all .08s;flex-shrink:0;
 }
 #dp-back:active{background:#0f380f;transform:scale(.93);}
 #dp-hint{
@@ -263,11 +263,20 @@ align-items:center;justify-content:center;text-align:center;padding:20px;
 #dp-empty.show{display:flex;}
 
 /* Scan confirm (in drawer) */
+#dp-pre-scan{
+background:#0a2808;border-top:3px solid #306230;
+padding:8px 12px;flex-shrink:0;display:none;
+}
+#dp-pre-scan.show{display:block;}
 #dp-confirm{
 background:#0a2808;border-top:2px solid #306230;
 padding:8px 12px;flex-shrink:0;display:none;
 }
 #dp-confirm.show{display:block;}
+#dpc-row{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
+#dpc-canvas{border:2px solid #306230;flex-shrink:0;}
+#dpc-code{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:14px;color:#9bbc0f;}
+#dpc-type{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:11px;font-weight:700;color:#8bac0f;margin-top:3px;}
 #dpc-result-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 #dpc-result-icon{font-size:18px;flex-shrink:0;font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;color:#fff;}
 #dpc-match{font-size:11px;font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;}
@@ -278,6 +287,13 @@ padding:8px 12px;flex-shrink:0;display:none;
 flex:1;padding:12px 4px;border:2px solid #8bac0f;font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;
 font-size:12px;font-weight:900;cursor:pointer;transition:all .08s;
 }
+.dpc-scan-btn{
+display:block;width:100%;padding:14px;
+border:2px solid #9bbc0f;font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;
+font-size:14px;font-weight:900;cursor:pointer;transition:all .08s;
+background:#1a3e0a;color:#9bbc0f;
+}
+.dpc-scan-btn:active{background:#0f380f;transform:scale(.97);}
 .dpc-ok{background:#306230;color:#9bbc0f;}
 .dpc-ok:active{background:#0f380f;}
 .dpc-no{background:#0f380f;color:#8bac0f;border-color:#306230;}
@@ -287,10 +303,9 @@ font-size:12px;font-weight:900;cursor:pointer;transition:all .08s;
 #dp-scanner-bar{
 background:#0a2808;border-top:3px solid #306230;
 padding:8px 12px;flex-shrink:0;
-display:flex;align-items:center;justify-content:space-between;gap:12px;
+display:flex;align-items:center;gap:12px;
 }
-#dsb-right{display:flex;align-items:center;gap:10px;}
-#dsb-info{min-width:0;text-align:right;}
+#dsb-info{flex:1;min-width:0;}
 #dsb-box{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:11px;color:#9bbc0f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 #dsb-box-lbl{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:10px;font-weight:700;color:#306230;margin-bottom:3px;}
 #dsb-code{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:10px;color:#8bac0f;margin-top:4px;}
@@ -360,7 +375,7 @@ text-align:left;max-width:380px;width:100%;margin-bottom:20px;
 font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:13px;font-weight:700;color:#8bac0f;line-height:2.2;
 }
 .intro-rules li{list-style:none;padding-left:14px;position:relative;}
-.intro-rules li::before{content:’\003E’;position:absolute;left:0;color:#9bbc0f;}
+.intro-rules li::before{content:’>’;position:absolute;left:0;color:#9bbc0f;}
 #intro-go{
 background:#9bbc0f;color:#0f380f;border:3px solid #306230;
 padding:14px 32px;font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:11px;
@@ -547,18 +562,27 @@ box-shadow:inset 0 2px 4px rgba(0,0,0,.15);
       <canvas id="dp-canvas"></canvas>
       <div id="dp-empty">空の引き出し</div>
     </div>
-    <!-- Permanent scanner info bar with back button -->
+    <!-- Permanent scanner info bar -->
     <div id="dp-scanner-bar">
       <button id="dp-back">◀ もどる</button>
-      <div id="dsb-right">
-        <canvas id="dsb-canvas" width="64" height="64"></canvas>
-        <div id="dsb-info">
-          <div id="dsb-box-lbl">スキャン指示</div>
-          <div id="dsb-box">------</div>
-          <div id="dsb-code">---- / --</div>
-          <div id="dsb-prog">-- / --</div>
+      <canvas id="dsb-canvas" width="64" height="64"></canvas>
+      <div id="dsb-info">
+        <div id="dsb-box-lbl">スキャン指示</div>
+        <div id="dsb-box">------</div>
+        <div id="dsb-code">---- / --</div>
+        <div id="dsb-prog">-- / --</div>
+      </div>
+    </div>
+    <!-- Stage 1: tap item → show scan button -->
+    <div id="dp-pre-scan">
+      <div id="dpc-row">
+        <canvas id="dpc-canvas" width="60" height="60" style="border:2px solid #306230;flex-shrink:0;"></canvas>
+        <div>
+          <div id="dpc-code">----</div>
+          <div id="dpc-type">--</div>
         </div>
       </div>
+      <button class="dpc-btn dpc-scan-btn" id="dpc-scan">📱 スキャン</button>
     </div>
     <!-- Stage 2: after scan → result + 2 actions -->
     <div id="dp-confirm">
@@ -883,7 +907,6 @@ let gameState, batch, bidx, bnum, container, t0, moveCount;
 let totalPicks=0, totalMisses=0, totalLost=0, startTime=0;
 let exitTimer=0;
 let selItemData=null;
-let prevPickLabel=null;
 let panelOpen=false, drawerOpen=false;
 let pendingShelf=null, pendingOpenShelf=null;
 let scanHoldActive=false, scanHoldTimer=null, scanProgress=0;
@@ -896,6 +919,7 @@ let physItems=[], dragIdx=-1, dragOffX=0, dragOffY=0;
 let pointerStartX=0, pointerStartY=0, isDrag=false;
 let zoneCooldown=0;
 let emptyScanAnimId=null, emptyScanProgress=0;
+let prevPickBoxPrefix=null;
 let toastT=null;
 let bgmAudio=null, bgmOn=false;
 
@@ -1210,7 +1234,7 @@ function accessRow(r){
 const GS={PICKING:'p',BATCH_DONE:'bd',RETURNING:'ret',DEPOSITED:'dep',GETTING_EMPTY:'ge',SCANNING_EMPTY:'se',EXIT_WAIT:'ew'};
 gameState=GS.PICKING;
 batch=[],bidx=0,bnum=1,container=[],t0=0,moveCount=0;
-selItemData=null;prevPickLabel=null;panelOpen=false;drawerOpen=false;
+selItemData=null;panelOpen=false;drawerOpen=false;
 pendingShelf=null;pendingOpenShelf=null;
 scanHoldActive=false;scanHoldTimer=null;scanProgress=0;
 
@@ -1811,9 +1835,6 @@ function openShelfPanel(shelf){
   document.getElementById('sp-hdr-title').textContent=(lang==='ja'?'棚 ':'Shelf ')+shelfLabel;
   document.getElementById('sp-hdr-sub').textContent='';
   document.getElementById('bgm-wrap').style.display='none';
-  const spHudEl=document.getElementById('hud');
-  spHudEl.style.zIndex='45';
-  document.getElementById('shelf-panel').style.bottom=spHudEl.offsetHeight+'px';
   buildShelfGrid(shelf);show('shelf-panel');
   if(tutorialMode&&tutStep===2)advanceTut(3);
 }
@@ -1841,8 +1862,6 @@ function refreshShelfPanelHighlights(glow){
 document.getElementById('sp-hdr-back').onclick=()=>{
   hide('shelf-panel');panelOpen=false;currentShelf=null;pendingShelf=null;
   document.getElementById('bgm-wrap').style.display='';
-  document.getElementById('hud').style.zIndex='';
-  document.getElementById('shelf-panel').style.bottom='';
 };
 
 const dpCv=document.getElementById('dp-canvas');
@@ -1855,14 +1874,7 @@ const ITEM_W=40,ITEM_H=40;
 function updateDrawerScannerBar(){
   const code=bidx<batch.length?batch[bidx].code:null;
   const boxLabel=getTargetBoxLabel()||'------';
-  const dsbEl=document.getElementById('dsb-box');
-  const dsbHtml=labelHTML(boxLabel);
-  if(dsbHtml){
-    if(lang==='ja')dsbEl.innerHTML=dsbHtml+'のBOXをスキャン';
-    else dsbEl.innerHTML='BOX: '+dsbHtml;
-  }else{
-    dsbEl.textContent=t('dsbBoxFmt',boxLabel);
-  }
+  document.getElementById('dsb-box').textContent=t('dsbBoxFmt',boxLabel);
   if(code&&DB[code]){const item=DB[code];document.getElementById('dsb-code').textContent=`${code} ／ ${typeLabel(item.type)}`;drawItemShape(document.getElementById('dsb-canvas'),code,64);}
   else document.getElementById('dsb-code').textContent=t('dsbCodeDefault');
   document.getElementById('dsb-prog').textContent=t('dsbProgFmt',bidx+1,batch.length,batch.length-bidx);
@@ -1873,15 +1885,10 @@ function openDrawerPanel(dr,shelf){
   document.getElementById('dp-title').textContent=dr.label;
   const dpShelfLabel=shelf.ltr+String(shelf.colNum/100|0).padStart(2,'0');
   document.getElementById('dp-shelf-lbl').textContent=(lang==='ja'?'棚 ':'Shelf ')+dpShelfLabel;
-  hide('dp-confirm');hide('dp-empty');
+  hide('dp-confirm');hide('dp-pre-scan');hide('dp-empty');
   hide('shelf-panel');panelOpen=false;
   document.getElementById('scan-btn').style.display='none';
   document.getElementById('bgm-wrap').style.display='none';
-  const hudEl=document.getElementById('hud');
-  hudEl.style.display='none';
-  document.getElementById('drawer-panel').style.bottom='0';
-  document.getElementById('dp-scanner-bar').style.display='flex';
-  updateHUD();
   updateDrawerScannerBar();show('drawer-panel');
   const wrap=document.getElementById('dp-canvas-wrap');
   const wW=wrap.offsetWidth||window.innerWidth,wH=Math.max(wrap.offsetHeight,200);
@@ -1990,19 +1997,30 @@ dpCv.addEventListener('pointercancel',e=>{if(dragIdx>=0){physItems[dragIdx].drag
 
 function selectDrawerItem(idx){
   const phys=physItems[idx],code=phys.code,drItem=DB[code];if(!drItem)return;
+  document.getElementById('dpc-code').textContent=code;
+  document.getElementById('dpc-type').textContent=typeLabel(drItem.type);
+  drawItemShape(document.getElementById('dpc-canvas'),code,60);
   selItemData={physIdx:idx,code,drawer:currentDrawer,shelf:currentDrawerShelf};
-  hide('dp-confirm');
-  const tc=bidx<batch.length?batch[bidx].code:null;const isMatch=code===tc;
-  const matchEl=document.getElementById('dpc-match'),iconEl=document.getElementById('dpc-result-icon');
-  if(isMatch){prevPickLabel=currentDrawer?currentDrawer.label:null;bidx++;updateHUD();updateDrawerScannerBar();totalPicks++;selItemData.scanned=true;}
-  else{totalMisses++;}
-  iconEl.textContent='✓';matchEl.textContent=t('matchOk');matchEl.className='ok';showToast(t('toastPickedItem'),t('toastRemFmt',batch.length-bidx),'ok');
-  show('dp-confirm');
-  if(tutorialMode&&tutStep===4)advanceTut(6);
+  hide('dp-confirm');show('dp-pre-scan');
+  if(tutorialMode&&tutStep===4)advanceTut(5);
 }
+
+document.getElementById('dpc-scan').onclick=()=>{
+  if(!selItemData)return;
+  if(tutorialMode&&tutStep===5)advanceTut(6);
+  const{code}=selItemData;const tc=bidx<batch.length?batch[bidx].code:null;const isMatch=code===tc;
+  const matchEl=document.getElementById('dpc-match'),iconEl=document.getElementById('dpc-result-icon');
+  if(isMatch){iconEl.textContent='✓';matchEl.textContent=t('matchOk');matchEl.className='ok';
+    const _pe=batch[bidx],_pd=_pe.shelf.drawers[_pe.drawerId];
+    if(_pd){const _m=_pd.label.match(/^([^-]+)/);prevPickBoxPrefix=_m?_m[1]:null;}else prevPickBoxPrefix=null;
+    bidx++;updateHUD();updateDrawerScannerBar();totalPicks++;selItemData.scanned=true;showToast(t('toastPickedItem'),t('toastRemFmt',batch.length-bidx),'ok');}
+  else{iconEl.textContent='✗';matchEl.textContent=t('matchNg');matchEl.className='ng';}
+  hide('dp-pre-scan');show('dp-confirm');
+};
 
 document.getElementById('dpc-ok').onclick=()=>{
   if(!selItemData)return;const{physIdx,code,drawer}=selItemData;
+  if(!selItemData.scanned){totalMisses++;showToast(t('toastWrongItem'),t('toastMissNote'),'ng');}
   const drItemIdx=drawer.items.indexOf(code);if(drItemIdx>=0)drawer.items.splice(drItemIdx,1);
   physItems.splice(physIdx,1);drawerPhysicsActive=true;renderDrawerCanvas();
   container.push(code);hide('dp-confirm');selItemData=null;
@@ -2011,18 +2029,16 @@ document.getElementById('dpc-ok').onclick=()=>{
 };
 document.getElementById('dpc-no').onclick=()=>{
   if(selItemData&&selItemData.scanned){totalMisses++;totalLost++;}
-  hide('dp-confirm');selItemData=null;
+  hide('dp-confirm');hide('dp-pre-scan');selItemData=null;
 };
 
 document.getElementById('dp-back').onclick=closeDrawerPanel;
 function closeDrawerPanel(){
   if(selItemData&&selItemData.scanned){totalMisses++;totalLost++;}
-  hide('drawer-panel');hide('dp-confirm');drawerOpen=false;
+  hide('drawer-panel');hide('dp-confirm');hide('dp-pre-scan');drawerOpen=false;
   selItemData=null;currentDrawer=null;currentDrawerShelf=null;
   document.getElementById('scan-btn').style.display='';
   document.getElementById('bgm-wrap').style.display='';
-  document.getElementById('hud').style.display='';
-  document.getElementById('drawer-panel').style.bottom='';
   if(currentShelf)openShelfPanel(currentShelf);
   renderMap();
 }
@@ -2039,7 +2055,7 @@ function startEmptyContainerScan(){
   bar.style.width='0%';
   emptyScanAnimId=setInterval(()=>{
     if(!scanHoldActive){cancelEmptyContainerScan();return;}
-    emptyScanProgress+=4;bar.style.width=emptyScanProgress+'%';
+    emptyScanProgress+=5;bar.style.width=emptyScanProgress+'%';
     msg.textContent=t('emptyScanProgress',emptyScanProgress);
     if(emptyScanProgress>=100){clearInterval(emptyScanAnimId);bar.style.width='100%';msg.textContent=t('emptyScanDone');setTimeout(startNewBatch,400);}
   },60);
@@ -2047,40 +2063,32 @@ function startEmptyContainerScan(){
 function cancelEmptyContainerScan(){clearInterval(emptyScanAnimId);emptyScanProgress=0;document.getElementById('wf-bar').style.width='0%';document.getElementById('wf-scan-msg').textContent=t('emptyScanMsg');}
 function startNewBatch(){
   hide('wf-empty');P.hasCart=true;container=[];moveCount=0;t0=Date.now();
-  if(bidx>=batch.length){advanceBatchCursors();batch=mkBatch();bidx=0;bnum++;prevPickLabel=null;}
-  gameState=GS.PICKING;updateHUD();
+  if(bidx>=batch.length){advanceBatchCursors();batch=mkBatch();bidx=0;bnum++;}
+  prevPickBoxPrefix=null;gameState=GS.PICKING;updateHUD();
   if(tutorialMode)advanceTut(1);renderMap();
 }
 
-function labelPrefixLen(prev,next){
-  if(!prev||!next)return 0;
-  let i=0;while(i<prev.length&&i<next.length&&prev[i]===next[i])i++;
-  if(i===0||i>=next.length)return 0;
-  const dashIdx=next.indexOf('-');
-  if(dashIdx>=0&&i>dashIdx+1)i=dashIdx+1;
-  return i;
-}
-function labelHTML(label){
-  const plen=labelPrefixLen(prevPickLabel,label);
-  if(plen>0){
-    const dim=label.slice(0,plen),bright=label.slice(plen);
-    return `<span style="color:#3d5c10">${dim}</span>${bright}`;
+function showHUDBoxLabel(boxLabel){
+  const el=document.getElementById('hud-state-msg');
+  const dashIdx=boxLabel.indexOf('-');
+  if(prevPickBoxPrefix&&dashIdx>0){
+    const shelfPart=boxLabel.substring(0,dashIdx);
+    if(shelfPart===prevPickBoxPrefix){
+      const prefix=boxLabel.substring(0,dashIdx+1);
+      const suffix=boxLabel.substring(dashIdx+1);
+      el.innerHTML=lang==='ja'
+        ?`<span style="opacity:0.35">${prefix}</span>${suffix}のBOXをスキャンして下さい`
+        :`Scan BOX: <span style="opacity:0.35">${prefix}</span>${suffix}`;
+      return;
+    }
   }
-  return null;
+  el.textContent=t('hudBoxFmt',boxLabel);
 }
 function updateHUD(){
   document.getElementById('hb-n').textContent=bnum;document.getElementById('hp-n').textContent=bidx;document.getElementById('hp-t').textContent=batch.length;
   if(gameState===GS.PICKING&&bidx<batch.length){
     const entry=batch[bidx],drawer=entry.shelf.drawers[entry.drawerId];
-    const label=drawer?drawer.label:'------';
-    const el=document.getElementById('hud-state-msg');
-    const html=labelHTML(label);
-    if(html){
-      if(lang==='ja')el.innerHTML=html+'のBOXをスキャンして下さい';
-      else el.innerHTML='Scan BOX: '+html;
-    }else{
-      el.textContent=t('hudBoxFmt',label);
-    }
+    showHUDBoxLabel(drawer?drawer.label:'------');
   }
 }
 function updateHUDStateMsg(msg){document.getElementById('hud-state-msg').textContent=msg;}
@@ -2236,6 +2244,7 @@ function applyLang(){
   document.getElementById('dp-hint').textContent=L.dpHint;
   document.getElementById('dp-empty').textContent=L.dpEmpty;
   document.getElementById('dsb-box-lbl').textContent=L.dsbLbl;
+  document.getElementById('dpc-scan').textContent=L.scanBtn2;
   document.getElementById('dpc-ok').textContent=L.containerBtn;
   document.getElementById('dpc-no').textContent=L.putBackBtn;
   document.getElementById('wf-batch-title').textContent=L.batchTitle;
