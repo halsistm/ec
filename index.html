@@ -1835,6 +1835,9 @@ function openShelfPanel(shelf){
   document.getElementById('sp-hdr-title').textContent=(lang==='ja'?'棚 ':'Shelf ')+shelfLabel;
   document.getElementById('sp-hdr-sub').textContent='';
   document.getElementById('bgm-wrap').style.display='none';
+  const spHudEl=document.getElementById('hud');
+  spHudEl.style.zIndex='45';
+  document.getElementById('shelf-panel').style.bottom=spHudEl.offsetHeight+'px';
   buildShelfGrid(shelf);show('shelf-panel');
   if(tutorialMode&&tutStep===2)advanceTut(3);
 }
@@ -1862,6 +1865,8 @@ function refreshShelfPanelHighlights(glow){
 document.getElementById('sp-hdr-back').onclick=()=>{
   hide('shelf-panel');panelOpen=false;currentShelf=null;pendingShelf=null;
   document.getElementById('bgm-wrap').style.display='';
+  document.getElementById('hud').style.zIndex='';
+  document.getElementById('shelf-panel').style.bottom='';
 };
 
 const dpCv=document.getElementById('dp-canvas');
@@ -1892,7 +1897,7 @@ function openDrawerPanel(dr,shelf){
   const hudEl=document.getElementById('hud');
   hudEl.style.zIndex='55';
   document.getElementById('drawer-panel').style.bottom=hudEl.offsetHeight+'px';
-  document.getElementById('dp-scanner-bar').style.display='none';
+  document.getElementById('dp-scanner-bar').style.display='flex';
   updateHUD();
   updateDrawerScannerBar();show('drawer-panel');
   const wrap=document.getElementById('dp-canvas-wrap');
