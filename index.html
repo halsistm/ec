@@ -80,7 +80,7 @@ min-height:calc(76px + env(safe-area-inset-bottom));
 #hud-left{flex:1;display:flex;flex-direction:column;gap:5px;}
 #hud-batch{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:9px;color:#9bbc0f;}
 #hud-prog{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:13px;color:#9bbc0f;letter-spacing:.05em;}
-#hud-state-msg{font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:12px;font-weight:700;color:#8bac0f;letter-spacing:.03em;line-height:1.4;}
+#hud-state-msg{font-family:’Press Start 2P’,-apple-system,’Hiragino Sans’,’Hiragino Kaku Gothic ProN’,sans-serif;font-size:12px;font-weight:700;color:#8bac0f;letter-spacing:.03em;line-height:1.4;min-height:28px;}
 
 /* Scan button always on top — above all panels */
 #scan-btn{
@@ -376,7 +376,7 @@ text-align:left;max-width:380px;width:100%;margin-bottom:20px;
 font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:13px;font-weight:700;color:#8bac0f;line-height:2.2;
 }
 .intro-rules li{list-style:none;padding-left:14px;position:relative;}
-.intro-rules li::before{content:’>’;position:absolute;left:0;color:#9bbc0f;}
+.intro-rules li::before{content:’\003E’;position:absolute;left:0;color:#9bbc0f;}
 #intro-go{
 background:#9bbc0f;color:#0f380f;border:3px solid #306230;
 padding:14px 32px;font-family:‘Press Start 2P’,-apple-system,‘Hiragino Sans’,‘Hiragino Kaku Gothic ProN’,sans-serif;font-size:11px;
@@ -1889,6 +1889,11 @@ function openDrawerPanel(dr,shelf){
   hide('shelf-panel');panelOpen=false;
   document.getElementById('scan-btn').style.display='none';
   document.getElementById('bgm-wrap').style.display='none';
+  const hudEl=document.getElementById('hud');
+  hudEl.style.zIndex='55';
+  document.getElementById('drawer-panel').style.bottom=hudEl.offsetHeight+'px';
+  document.getElementById('dp-scanner-bar').style.display='none';
+  updateHUD();
   updateDrawerScannerBar();show('drawer-panel');
   const wrap=document.getElementById('dp-canvas-wrap');
   const wW=wrap.offsetWidth||window.innerWidth,wH=Math.max(wrap.offsetHeight,200);
@@ -2036,6 +2041,8 @@ function closeDrawerPanel(){
   selItemData=null;currentDrawer=null;currentDrawerShelf=null;
   document.getElementById('scan-btn').style.display='';
   document.getElementById('bgm-wrap').style.display='';
+  document.getElementById('hud').style.zIndex='';
+  document.getElementById('drawer-panel').style.bottom='';
   if(currentShelf)openShelfPanel(currentShelf);
   renderMap();
 }
@@ -2052,7 +2059,7 @@ function startEmptyContainerScan(){
   bar.style.width='0%';
   emptyScanAnimId=setInterval(()=>{
     if(!scanHoldActive){cancelEmptyContainerScan();return;}
-    emptyScanProgress+=2;bar.style.width=emptyScanProgress+'%';
+    emptyScanProgress+=4;bar.style.width=emptyScanProgress+'%';
     msg.textContent=t('emptyScanProgress',emptyScanProgress);
     if(emptyScanProgress>=100){clearInterval(emptyScanAnimId);bar.style.width='100%';msg.textContent=t('emptyScanDone');setTimeout(startNewBatch,400);}
   },60);
@@ -2061,7 +2068,7 @@ function cancelEmptyContainerScan(){clearInterval(emptyScanAnimId);emptyScanProg
 function startNewBatch(){
   hide('wf-empty');P.hasCart=true;container=[];moveCount=0;t0=Date.now();
   if(bidx>=batch.length){advanceBatchCursors();batch=mkBatch();bidx=0;bnum++;}
-  gameState=GS.PICKING;updateHUD();updateHUDStateMsg(t('hudPickOrder'));
+  gameState=GS.PICKING;updateHUD();
   if(tutorialMode)advanceTut(1);renderMap();
 }
 
