@@ -883,6 +883,7 @@ let gameState, batch, bidx, bnum, container, t0, moveCount;
 let totalPicks=0, totalMisses=0, totalLost=0, startTime=0;
 let exitTimer=0;
 let selItemData=null;
+let prevPickLabel=null;
 let panelOpen=false, drawerOpen=false;
 let pendingShelf=null, pendingOpenShelf=null;
 let scanHoldActive=false, scanHoldTimer=null, scanProgress=0;
@@ -1209,7 +1210,7 @@ function accessRow(r){
 const GS={PICKING:'p',BATCH_DONE:'bd',RETURNING:'ret',DEPOSITED:'dep',GETTING_EMPTY:'ge',SCANNING_EMPTY:'se',EXIT_WAIT:'ew'};
 gameState=GS.PICKING;
 batch=[],bidx=0,bnum=1,container=[],t0=0,moveCount=0;
-selItemData=null;panelOpen=false;drawerOpen=false;
+selItemData=null;prevPickLabel=null;panelOpen=false;drawerOpen=false;
 pendingShelf=null;pendingOpenShelf=null;
 scanHoldActive=false;scanHoldTimer=null;scanProgress=0;
 
@@ -1854,7 +1855,14 @@ const ITEM_W=40,ITEM_H=40;
 function updateDrawerScannerBar(){
   const code=bidx<batch.length?batch[bidx].code:null;
   const boxLabel=getTargetBoxLabel()||'------';
-  document.getElementById('dsb-box').textContent=t('dsbBoxFmt',boxLabel);
+  const dsbEl=document.getElementById('dsb-box');
+  const dsbHtml=labelHTML(boxLabel);
+  if(dsbHtml){
+    if(lang==='ja')dsbEl.innerHTML=dsbHtml+'のBOXをスキャン';
+    else dsbEl.innerHTML='BOX: '+dsbHtml;
+  }else{
+    dsbEl.textContent=t('dsbBoxFmt',boxLabel);
+  }
   if(code&&DB[code]){const item=DB[code];document.getElementById('dsb-code').textContent=`${code} ／ ${typeLabel(item.type)}`;drawItemShape(document.getElementById('dsb-canvas'),code,64);}
   else document.getElementById('dsb-code').textContent=t('dsbCodeDefault');
   document.getElementById('dsb-prog').textContent=t('dsbProgFmt',bidx+1,batch.length,batch.length-bidx);
@@ -1986,7 +1994,7 @@ function selectDrawerItem(idx){
   hide('dp-confirm');
   const tc=bidx<batch.length?batch[bidx].code:null;const isMatch=code===tc;
   const matchEl=document.getElementById('dpc-match'),iconEl=document.getElementById('dpc-result-icon');
-  if(isMatch){iconEl.textContent='✓';matchEl.textContent=t('matchOk');matchEl.className='ok';bidx++;updateHUD();updateDrawerScannerBar();totalPicks++;selItemData.scanned=true;showToast(t('toastPickedItem'),t('toastRemFmt',batch.length-bidx),'ok');}
+  if(isMatch){prevPickLabel=currentDrawer?currentDrawer.label:null;iconEl.textContent='✓';matchEl.textContent=t('matchOk');matchEl.className='ok';bidx++;updateHUD();updateDrawerScannerBar();totalPicks++;selItemData.scanned=true;showToast(t('toastPickedItem'),t('toastRemFmt',batch.length-bidx),'ok');}
   else{iconEl.textContent='✗';matchEl.textContent=t('matchNg');matchEl.className='ng';}
   show('dp-confirm');
   if(tutorialMode&&tutStep===4)advanceTut(6);
@@ -2039,16 +2047,37 @@ function startEmptyContainerScan(){
 function cancelEmptyContainerScan(){clearInterval(emptyScanAnimId);emptyScanProgress=0;document.getElementById('wf-bar').style.width='0%';document.getElementById('wf-scan-msg').textContent=t('emptyScanMsg');}
 function startNewBatch(){
   hide('wf-empty');P.hasCart=true;container=[];moveCount=0;t0=Date.now();
-  if(bidx>=batch.length){advanceBatchCursors();batch=mkBatch();bidx=0;bnum++;}
+  if(bidx>=batch.length){advanceBatchCursors();batch=mkBatch();bidx=0;bnum++;prevPickLabel=null;}
   gameState=GS.PICKING;updateHUD();
   if(tutorialMode)advanceTut(1);renderMap();
 }
 
+function labelPrefixLen(prev,next){
+  if(!prev||!next)return 0;
+  let i=0;while(i<prev.length&&i<next.length&&prev[i]===next[i])i++;
+  return(i>0&&i<next.length)?i:0;
+}
+function labelHTML(label){
+  const plen=labelPrefixLen(prevPickLabel,label);
+  if(plen>0){
+    const dim=label.slice(0,plen),bright=label.slice(plen);
+    return `<span style="color:#3d5c10">${dim}</span>${bright}`;
+  }
+  return null;
+}
 function updateHUD(){
   document.getElementById('hb-n').textContent=bnum;document.getElementById('hp-n').textContent=bidx;document.getElementById('hp-t').textContent=batch.length;
   if(gameState===GS.PICKING&&bidx<batch.length){
     const entry=batch[bidx],drawer=entry.shelf.drawers[entry.drawerId];
-    updateHUDStateMsg(t('hudBoxFmt',drawer?drawer.label:'------'));
+    const label=drawer?drawer.label:'------';
+    const el=document.getElementById('hud-state-msg');
+    const html=labelHTML(label);
+    if(html){
+      if(lang==='ja')el.innerHTML=html+'のBOXをスキャンして下さい';
+      else el.innerHTML='Scan BOX: '+html;
+    }else{
+      el.textContent=t('hudBoxFmt',label);
+    }
   }
 }
 function updateHUDStateMsg(msg){document.getElementById('hud-state-msg').textContent=msg;}
