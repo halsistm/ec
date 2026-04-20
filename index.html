@@ -1878,8 +1878,8 @@ function openDrawerPanel(dr,shelf){
   document.getElementById('scan-btn').style.display='none';
   document.getElementById('bgm-wrap').style.display='none';
   const hudEl=document.getElementById('hud');
-  hudEl.style.zIndex='55';
-  document.getElementById('drawer-panel').style.bottom=hudEl.offsetHeight+'px';
+  hudEl.style.display='none';
+  document.getElementById('drawer-panel').style.bottom='0';
   document.getElementById('dp-scanner-bar').style.display='flex';
   updateHUD();
   updateDrawerScannerBar();show('drawer-panel');
@@ -1994,15 +1994,15 @@ function selectDrawerItem(idx){
   hide('dp-confirm');
   const tc=bidx<batch.length?batch[bidx].code:null;const isMatch=code===tc;
   const matchEl=document.getElementById('dpc-match'),iconEl=document.getElementById('dpc-result-icon');
-  if(isMatch){prevPickLabel=currentDrawer?currentDrawer.label:null;iconEl.textContent='✓';matchEl.textContent=t('matchOk');matchEl.className='ok';bidx++;updateHUD();updateDrawerScannerBar();totalPicks++;selItemData.scanned=true;showToast(t('toastPickedItem'),t('toastRemFmt',batch.length-bidx),'ok');}
-  else{iconEl.textContent='✗';matchEl.textContent=t('matchNg');matchEl.className='ng';}
+  if(isMatch){prevPickLabel=currentDrawer?currentDrawer.label:null;bidx++;updateHUD();updateDrawerScannerBar();totalPicks++;selItemData.scanned=true;}
+  else{totalMisses++;}
+  iconEl.textContent='✓';matchEl.textContent=t('matchOk');matchEl.className='ok';showToast(t('toastPickedItem'),t('toastRemFmt',batch.length-bidx),'ok');
   show('dp-confirm');
   if(tutorialMode&&tutStep===4)advanceTut(6);
 }
 
 document.getElementById('dpc-ok').onclick=()=>{
   if(!selItemData)return;const{physIdx,code,drawer}=selItemData;
-  if(!selItemData.scanned){totalMisses++;showToast(t('toastWrongItem'),t('toastMissNote'),'ng');}
   const drItemIdx=drawer.items.indexOf(code);if(drItemIdx>=0)drawer.items.splice(drItemIdx,1);
   physItems.splice(physIdx,1);drawerPhysicsActive=true;renderDrawerCanvas();
   container.push(code);hide('dp-confirm');selItemData=null;
@@ -2021,7 +2021,7 @@ function closeDrawerPanel(){
   selItemData=null;currentDrawer=null;currentDrawerShelf=null;
   document.getElementById('scan-btn').style.display='';
   document.getElementById('bgm-wrap').style.display='';
-  document.getElementById('hud').style.zIndex='';
+  document.getElementById('hud').style.display='';
   document.getElementById('drawer-panel').style.bottom='';
   if(currentShelf)openShelfPanel(currentShelf);
   renderMap();
