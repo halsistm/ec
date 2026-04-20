@@ -1990,24 +1990,34 @@ dpCv.addEventListener('pointercancel',e=>{if(dragIdx>=0){physItems[dragIdx].drag
 
 function selectDrawerItem(idx){
   const phys=physItems[idx],code=phys.code,drItem=DB[code];if(!drItem)return;
+  selItemData={physIdx:idx,code,drawer:currentDrawer,shelf:currentDrawerShelf};
+  hide('dp-confirm');
   const tc=bidx<batch.length?batch[bidx].code:null;const isMatch=code===tc;
-  if(isMatch){
-    prevPickLabel=currentDrawer?currentDrawer.label:null;
-    bidx++;updateHUD();updateDrawerScannerBar();totalPicks++;
-    const drItemIdx=currentDrawer.items.indexOf(code);if(drItemIdx>=0)currentDrawer.items.splice(drItemIdx,1);
-    physItems.splice(idx,1);drawerPhysicsActive=true;renderDrawerCanvas();
-    container.push(code);
-    showToast(t('toastPickedItem'),t('toastRemFmt',batch.length-bidx),'ok');
-    if(tutorialMode&&(tutStep===4||tutStep===6))advanceTut(7);
-    if(bidx>=batch.length){setTimeout(()=>{closeDrawerPanel();gameState=GS.BATCH_DONE;showToast(t('batchDoneToast'),t('batchDoneToastSub'),'ok');updateHUDStateMsg(t('hudReturn'));if(tutorialMode)advanceTut(7);},300);}
-  }else{
-    totalMisses++;showToast(t('matchNg'),'✗','ng');
-  }
+  const matchEl=document.getElementById('dpc-match'),iconEl=document.getElementById('dpc-result-icon');
+  if(isMatch){prevPickLabel=currentDrawer?currentDrawer.label:null;iconEl.textContent='✓';matchEl.textContent=t('matchOk');matchEl.className='ok';bidx++;updateHUD();updateDrawerScannerBar();totalPicks++;selItemData.scanned=true;showToast(t('toastPickedItem'),t('toastRemFmt',batch.length-bidx),'ok');}
+  else{iconEl.textContent='✗';matchEl.textContent=t('matchNg');matchEl.className='ng';}
+  show('dp-confirm');
+  if(tutorialMode&&tutStep===4)advanceTut(6);
 }
+
+document.getElementById('dpc-ok').onclick=()=>{
+  if(!selItemData)return;const{physIdx,code,drawer}=selItemData;
+  if(!selItemData.scanned){totalMisses++;showToast(t('toastWrongItem'),t('toastMissNote'),'ng');}
+  const drItemIdx=drawer.items.indexOf(code);if(drItemIdx>=0)drawer.items.splice(drItemIdx,1);
+  physItems.splice(physIdx,1);drawerPhysicsActive=true;renderDrawerCanvas();
+  container.push(code);hide('dp-confirm');selItemData=null;
+  if(tutorialMode&&tutStep===6)advanceTut(7);
+  if(bidx>=batch.length){setTimeout(()=>{closeDrawerPanel();gameState=GS.BATCH_DONE;showToast(t('batchDoneToast'),t('batchDoneToastSub'),'ok');updateHUDStateMsg(t('hudReturn'));if(tutorialMode)advanceTut(7);},300);}
+};
+document.getElementById('dpc-no').onclick=()=>{
+  if(selItemData&&selItemData.scanned){totalMisses++;totalLost++;}
+  hide('dp-confirm');selItemData=null;
+};
 
 document.getElementById('dp-back').onclick=closeDrawerPanel;
 function closeDrawerPanel(){
-  hide('drawer-panel');drawerOpen=false;
+  if(selItemData&&selItemData.scanned){totalMisses++;totalLost++;}
+  hide('drawer-panel');hide('dp-confirm');drawerOpen=false;
   selItemData=null;currentDrawer=null;currentDrawerShelf=null;
   document.getElementById('scan-btn').style.display='';
   document.getElementById('bgm-wrap').style.display='';
@@ -2226,6 +2236,8 @@ function applyLang(){
   document.getElementById('dp-hint').textContent=L.dpHint;
   document.getElementById('dp-empty').textContent=L.dpEmpty;
   document.getElementById('dsb-box-lbl').textContent=L.dsbLbl;
+  document.getElementById('dpc-ok').textContent=L.containerBtn;
+  document.getElementById('dpc-no').textContent=L.putBackBtn;
   document.getElementById('wf-batch-title').textContent=L.batchTitle;
   document.getElementById('wf-batch-sub').innerHTML=L.batchDoneToastSub;
   document.getElementById('wf-batch-go').textContent=L.batchGoBtn;
